@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
 import { loginSchema } from "@/validation";
 import { useState } from "react";
-import { Eye, EyeClosed } from "lucide-react";
+import { Eye,EyeOff } from "lucide-react";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -85,14 +85,16 @@ export default function LoginForm() {
                       aria-invalid={isInvalid}
                     />
                     <button
-                      className="absolute right-3 top-1/2 -translate-y-1/2"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
                       type="button"
                       onClick={() => setShowPassword((prev) => !prev)}
                     >
                       {showPassword ? (
-                        <EyeClosed className="size-4" />
+                        <EyeOff className="size-4" />
+                 
                       ) : (
                         <Eye className="size-4" />
+                        
                       )}
                     </button>
                   </div>
@@ -102,7 +104,7 @@ export default function LoginForm() {
             }}
           </form.Field>
 
-          <Button type="submit" >Submit</Button>
+          <Button type="submit" className="cursor-pointer">Submit</Button>
         </FieldGroup>
       </form>
     </div>
