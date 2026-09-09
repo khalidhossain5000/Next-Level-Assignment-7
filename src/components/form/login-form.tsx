@@ -1,5 +1,20 @@
 "use client"
+
+import { useForm } from "@tanstack/react-form";
+
 const LoginForm = () => {
+
+
+    const form=useForm({
+        defaultValues:{
+            email:"",
+            password:""
+        },
+        
+    })
+
+
+
     return (
           <div className="flex flex-col gap-5">
       <div className="flex flex-col items-center gap-2 text-center">
@@ -10,7 +25,12 @@ const LoginForm = () => {
           Enter your email below to login to your account
         </p>
       </div>
-            {/* form */}
+            {/* form main*/}
+
+            <form >
+
+
+            </form>
         </div>
     );
 };
