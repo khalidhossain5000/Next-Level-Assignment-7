@@ -1,12 +1,13 @@
 
 import type { ReactNode } from "react";
+import Footer from "@/components/layout/public/Footer/Footer";
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
-  return (
-    <div className="flex flex-col min-h-screen">
-      {/* <Header /> */}
-      <main className="flex-1">{children}</main>
-      {/* <Footer /> */}
-    </div>
-  );
+    return (
+        <div className="flex min-h-screen flex-col">
+            {/* <Header /> */}
+            <main className="flex-1">{children}</main>
+            <Footer />
+        </div>
+    );
 }
