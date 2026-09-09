@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
 import { loginSchema } from "@/validation";
 import { useState } from "react";
-import { Eye,EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -93,10 +93,10 @@ export default function LoginForm() {
                     >
                       {showPassword ? (
                         <EyeOff className="size-4" />
-                 
+
                       ) : (
                         <Eye className="size-4" />
-                        
+
                       )}
                     </button>
                   </div>
