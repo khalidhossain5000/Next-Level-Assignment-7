@@ -27,7 +27,7 @@ export default function LoginForm() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold tracking-tight">
+        <h1 className="text-2xl font-bold tracking-tight font-manrope">
           Login to your account
         </h1>
         <p className="text-balance text-sm text-muted-foreground">
@@ -58,6 +58,7 @@ export default function LoginForm() {
                     value={field.state.value}
                     autoComplete="off"
                     aria-invalid={isInvalid}
+                    className="bg-background rounded-xl shadow-sm"
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
@@ -83,6 +84,7 @@ export default function LoginForm() {
                       value={field.state.value}
                       autoComplete="off"
                       aria-invalid={isInvalid}
+                      className="bg-background rounded-xl shadow-sm"
                     />
                     <button
                       className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
@@ -104,7 +106,7 @@ export default function LoginForm() {
             }}
           </form.Field>
 
-          <Button type="submit" className="cursor-pointer">Submit</Button>
+          <Button type="submit" className="cursor-pointer rounded-full">Submit</Button>
         </FieldGroup>
       </form>
     </div>
