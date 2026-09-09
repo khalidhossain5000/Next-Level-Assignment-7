@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react';
+import QueryProvider from './query.provider';
 
 const Providers = ({children}:{children:ReactNode}) => {
     return (
-        <div>
-            
-        </div>
+        <QueryProvider>
+            {children}
+        </QueryProvider>
     );
 };
 
