@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/theme-provider";
+import QueryProvider from "@/providers/query.provider";
 
 const manropeHeading = Manrope({ subsets: ['latin'], variable: '--font-heading' });
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={cn("h-full", "antialiased", inter.variable, manropeHeading.variable)}
     >
+      <QueryProvider>
       <body className="">
         <ThemeProvider
           attribute="class"
@@ -32,6 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </ThemeProvider>
       </body>
+      </QueryProvider>
     </html>
   );
 }
