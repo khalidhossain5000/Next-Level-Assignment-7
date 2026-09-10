@@ -45,6 +45,7 @@ const NavBar = () => {
                     >
                         Login
                     </Button>
+                    <ModeToggle/>
                 </div>
             </div>
         </header>
