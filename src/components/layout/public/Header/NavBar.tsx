@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import ModeToggle from '@/components/layout/shared/modeToggle/ModeToggle';
 import Link from 'next/link';
 
 const NavBar = () => {
@@ -35,6 +36,7 @@ const NavBar = () => {
                 </nav>
 
                 <div className="flex items-center gap-3">
+                    <ModeToggle />
                     <Button
                         variant="outline"
                         className="rounded-full border-border bg-background/70 px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted dark:bg-input/30 dark:hover:bg-input/50"
