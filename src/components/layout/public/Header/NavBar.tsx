@@ -14,7 +14,7 @@ const NavBar = () => {
                     href="/"
                     className="flex items-center gap-3 text-foreground transition-colors hover:text-foreground/80"
                 >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-sm font-black text-primary-foreground shadow-sm shadow-primary/20">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-sm font-black text-primary-foreground shadow-sm shadow-primary/20 ">
                         PP
                     </span>
                     <span className="font-manrope text-lg font-extrabold tracking-tight sm:text-xl">
