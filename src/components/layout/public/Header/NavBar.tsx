@@ -1,8 +1,13 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import ModeToggle from '@/components/layout/shared/modeToggle/ModeToggle';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const NavBar = () => {
+    const pathname = usePathname();
+
     const routes = [
         { name: 'Home', url: '/' },
         { name: 'About us', url: '/about-us' },
@@ -24,19 +29,29 @@ const NavBar = () => {
                 </Link>
 
                 <nav className="hidden items-center gap-1 rounded-full border border-border/70 bg-muted/40 p-1.5 md:flex">
-                    {routes.map((route) => (
-                        <Link
-                            key={route.url}
-                            href={route.url}
-                            className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-background hover:text-foreground dark:hover:bg-card"
-                        >
-                            {route.name}
-                        </Link>
-                    ))}
+                    {routes.map((route) => {
+                        const isActive = pathname === route.url;
+
+                        return (
+                            <Link
+                                key={route.url}
+                                href={route.url}
+                                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${isActive
+                                        ? 'bg-primary text-primary-foreground shadow-sm'
+                                        : 'text-muted-foreground hover:bg-background hover:text-foreground dark:hover:bg-card'
+                                    }`}
+                            >
+                                {isActive && (
+                                    <span className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-primary-foreground/90" />
+                                )}
+                                {route.name}
+                            </Link>
+                        );
+                    })}
                 </nav>
 
                 <div className="flex items-center gap-3">
-                    <ModeToggle />
+
                     <Button
                         variant="outline"
                         className="rounded-full border-border bg-background/70 px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted dark:bg-input/30 dark:hover:bg-input/50"
@@ -45,7 +60,7 @@ const NavBar = () => {
                     >
                         Login
                     </Button>
-                    <ModeToggle/>
+                    <ModeToggle />
                 </div>
             </div>
         </header>
