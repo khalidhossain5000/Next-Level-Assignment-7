@@ -1,5 +1,5 @@
 import apiClient from "@/lib/apiClient";
-import type { ILoginPayload } from "@/types";
+import type { ILoginPayload, IRegisterPayload } from "@/types";
 
 export function userLogin(payload:ILoginPayload){
     
@@ -18,7 +18,15 @@ export function googleLogin(payload: { idToken: string }){
 
 
 
+//register
 
+
+export function registerUser(payload:IRegisterPayload){
+return apiClient("/auth/register",{
+    method:"POST",
+    body:payload
+})
+}
 
 
 

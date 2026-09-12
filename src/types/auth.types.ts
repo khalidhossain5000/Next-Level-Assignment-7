@@ -8,3 +8,10 @@ export interface ILoginPayload{
 export const USER_ROLES=["CUSTOMER","TECHNICIAN","ADMIN"] as const
 
 export type TUserRole="CUSTOMER" | "TECHNICIAN" | "ADMIN" 
+
+
+export interface IRegisterPayload {
+    name:string;
+    email:string;
+    password:string;
+}
