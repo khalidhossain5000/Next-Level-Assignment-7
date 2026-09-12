@@ -12,5 +12,5 @@ export function userLogin(payload:ILoginPayload){
 
 
 export function getMe(){
-    return apiClient("/auth/me")
+    return apiClient("/auth/get-me")
 }
