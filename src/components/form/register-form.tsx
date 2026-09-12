@@ -30,10 +30,15 @@ const RegisterForm = () => {
         register(registerData,{
             onSuccess:(res)=>{
                 console.log(res,"Register success res")
+                toast.success("Registration Success Otp send to email")
             },
             onError:(err)=>{
+                 const message =
+                    (err as any)?.data?.message ||
+                    err.message ||
+                    "Google login failed";
                 console.log(err,"this is register error")
-                toast.success()
+                toast.error(message || "Register failed try again")
             }
         })
     }
