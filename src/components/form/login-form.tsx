@@ -8,6 +8,7 @@ import { loginSchema } from "@/validation";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useLogin } from "@/hooks";
+import { Spinner } from "../ui/spinner";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +26,19 @@ export default function LoginForm() {
         email:value.email,
         password:value.password
       }
-      mutate
+
+
+
+      login(loginData,{
+        onSuccess:(res)=>{
+          console.log(res,"success res")
+        },
+        onError:(err)=>{
+          console.log(err,'this is error')
+        }
+      })
+
+
       console.log(value);
     },
   });
@@ -115,7 +128,7 @@ export default function LoginForm() {
             }}
           </form.Field>
 
-          <Button type="submit" className="cursor-pointer rounded-full">Submit</Button>
+          <Button type="submit" disabled={isPending} className="cursor-pointer rounded-full">{isPending && <Spinner/>}  {isPending ? "Submitting...." : "Submit"}</Button>
         </FieldGroup>
       </form>
     </div>
