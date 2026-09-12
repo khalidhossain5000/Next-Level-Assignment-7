@@ -9,10 +9,13 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useLogin } from "@/hooks";
 import { Spinner } from "../ui/spinner";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const {mutate:login,isPending} = useLogin()
+  const { mutate: login, isPending } = useLogin()
+  const router = useRouter()
   const form = useForm({
     defaultValues: {
       email: "powerpulse@admin.com",
@@ -22,23 +25,20 @@ export default function LoginForm() {
       onSubmit: loginSchema,
     },
     onSubmit: ({ value }) => {
-      const loginData={
-        email:value.email,
-        password:value.password
+      const loginData = {
+        email: value.email,
+        password: value.password
       }
-
-
-
-      login(loginData,{
-        onSuccess:(res)=>{
-          console.log(res,"success res")
+      login(loginData, {
+        onSuccess: (res) => {
+          toast.success(res.message || "User log-in successfull") \
+          router.push("/")
         },
-        onError:(err)=>{
-          console.log(err,'this is error')
+        onError: (err) => {
+          toast.success(err.message || "Login failed!Somehting went wrong")
+          console.log(err, 'this is error in login')
         }
       })
-
-
       console.log(value);
     },
   });
@@ -128,7 +128,7 @@ export default function LoginForm() {
             }}
           </form.Field>
 
-          <Button type="submit" disabled={isPending} className="cursor-pointer rounded-full">{isPending && <Spinner/>}  {isPending ? "Submitting...." : "Submit"}</Button>
+          <Button type="submit" disabled={isPending} className="cursor-pointer rounded-full">{isPending && <Spinner />}  {isPending ? "Submitting...." : "Submit"}</Button>
         </FieldGroup>
       </form>
     </div>
