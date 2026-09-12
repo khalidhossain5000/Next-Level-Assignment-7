@@ -29,7 +29,9 @@ return apiClient("/auth/register",{
 }
 
 
-
+export function userLogout(){
+    return apiClient("/auth/logout",{method:"POST"})
+}
 
 
 

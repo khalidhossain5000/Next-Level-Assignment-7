@@ -5,7 +5,9 @@ import ModeToggle from "@/components/layout/shared/modeToggle/ModeToggle";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/assets/svg/Logo";
-import { useGetMe } from "@/hooks";
+import { useGetMe, useLogout } from "@/hooks";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const NavBar = () => {
   const pathname = usePathname();
@@ -14,6 +16,30 @@ const NavBar = () => {
     { name: "Home", url: "/" },
     { name: "About us", url: "/about-us" },
   ];
+
+const {mutate:logout}=useLogout()
+
+const queryClient=useQueryClient()
+
+
+const handleLogout=()=>{
+  logout(undefined,{
+    onSuccess:()=>{
+      toast.success(
+        "Log out success",
+
+      )
+        queryClient.removeQueries({
+          queryKey:["user"]
+        })
+    },
+    onError:()=>{
+        toast.error("Log out failed")
+    }
+  })
+}
+
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background  backdrop-blur-md">
@@ -45,22 +71,25 @@ const NavBar = () => {
         <div className="flex items-center gap-3">
           {data && !isPending ? (
             <Button
+            onClick={handleLogout}
+               
               variant="destructive"
               className="rounded-full  border-border  cursor-pointer px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted "
-              nativeButton={false}
+            
             >
               Logout
             </Button>
           ) : (
             <div className="flex items-center gap-6 ">   <Button
               variant="outline"
+                  nativeButton={false}
               className="rounded-full  border-border dark:border-cyan-200 bg-background/70 px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted dark:bg-input/30 dark:hover:bg-input/50"
               render={
                 <Link href="/login" className="flex items-center">
                   Login
                 </Link>
               }
-              nativeButton={false}
+           
             >
               Login
             </Button>
