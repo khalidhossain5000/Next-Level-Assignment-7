@@ -10,8 +10,9 @@ import { Spinner } from "../ui/spinner";
 import GoogleLoginComponet from "../modules/google/GoogleComponent";
 import { useRegisterUser } from "@/hooks";
 import { toast } from "sonner";
+import { TUserRole } from "@/types";
 
-const RegisterForm = () => {
+const RegisterForm = ({role}:{role:TUserRole}) => {
   const [showPassword, setShowPassword] = useState(false);
   const {mutate:register,isPending}  =  useRegisterUser()
   const form = useForm({
@@ -25,7 +26,8 @@ const RegisterForm = () => {
         const registerData={
             name:value.name,
             email:value.email,
-            password:value.password
+            password:value.password,
+            role:role
         }
         register(registerData,{
             onSuccess:(res)=>{
