@@ -7,19 +7,25 @@ import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
 import { loginSchema } from "@/validation";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useLogin } from "@/hooks";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const {mutate:login,isPending} = useLogin()
   const form = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "powerpulse@admin.com",
+      password: "admin",
     },
     validators: {
       onSubmit: loginSchema,
     },
     onSubmit: ({ value }) => {
+      const loginData={
+        email:value.email,
+        password:value.password
+      }
+      mutate
       console.log(value);
     },
   });
@@ -38,6 +44,7 @@ export default function LoginForm() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          e.stopPropagation();
           form.handleSubmit();
         }}
       >
@@ -58,7 +65,8 @@ export default function LoginForm() {
                     value={field.state.value}
                     autoComplete="off"
                     aria-invalid={isInvalid}
-                    className="bg-background rounded-xl shadow-sm"
+                    className="bg-background rounded-xl shadow-sm "
+                    placeholder="Enter Your Email Address"
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
@@ -85,6 +93,7 @@ export default function LoginForm() {
                       autoComplete="off"
                       aria-invalid={isInvalid}
                       className="bg-background rounded-xl shadow-sm"
+                      placeholder="Enter Your Password"
                     />
                     <button
                       className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
