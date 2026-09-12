@@ -31,7 +31,7 @@ export default function LoginForm() {
       }
       login(loginData, {
         onSuccess: (res) => {
-          toast.success(res.message || "User log-in successfull") \
+          toast.success(res.message || "User log-in successfull") 
           router.push("/")
         },
         onError: (err) => {

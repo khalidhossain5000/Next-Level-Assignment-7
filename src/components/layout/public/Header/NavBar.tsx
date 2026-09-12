@@ -8,7 +8,7 @@ import Logo from '@/assets/svg/Logo';
 
 const NavBar = () => {
     const pathname = usePathname();
-
+    
     const routes = [
         { name: 'Home', url: '/' },
         { name: 'About us', url: '/about-us' },

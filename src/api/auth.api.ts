@@ -8,3 +8,9 @@ export function userLogin(payload:ILoginPayload){
         body:payload
     })
 }
+
+
+
+export function getMe(){
+    return apiClient("/auth/me")
+}
