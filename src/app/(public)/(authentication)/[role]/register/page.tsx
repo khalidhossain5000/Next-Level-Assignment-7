@@ -24,7 +24,7 @@ const RegisterPage = async ({ params }: RegisterPageProps) => {
                 </div>
                 <div className="flex flex-1 items-center justify-center">
                     <div className="w-full max-w-xs">
-                        <RegisterForm role={role}/>
+                        <RegisterForm role={role as TUserRole}/>
                     </div>
                 </div>
             </div>
