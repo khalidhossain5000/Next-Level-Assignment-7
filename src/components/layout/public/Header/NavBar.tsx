@@ -28,11 +28,10 @@ const NavBar = () => {
               <Link
                 key={route.url}
                 href={route.url}
-                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                  isActive
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${isActive
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "text-muted-foreground hover:bg-background hover:text-foreground dark:hover:bg-card"
-                }`}
+                  }`}
               >
                 {isActive && (
                   <span className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-primary-foreground/90" />
@@ -53,7 +52,7 @@ const NavBar = () => {
               Logout
             </Button>
           ) : (
-            <Button
+            <div className="flex items-center gap-6 ">   <Button
               variant="outline"
               className="rounded-full  border-border dark:border-cyan-200 bg-background/70 px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted dark:bg-input/30 dark:hover:bg-input/50"
               render={
@@ -65,6 +64,21 @@ const NavBar = () => {
             >
               Login
             </Button>
+
+
+              <Button
+                variant="secondary"
+                className="rounded-full  border-border dark:border-cyan-200  px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted dark:bg-input/30 dark:hover:bg-input/50"
+                render={
+                  <Link href="/select-role" className="flex items-center">
+                    Register
+                  </Link>
+                }
+                nativeButton={false}
+              >
+                Register
+              </Button>
+            </div>
           )}
 
           <ModeToggle />

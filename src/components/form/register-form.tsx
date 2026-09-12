@@ -32,7 +32,7 @@ const RegisterForm = ({role}:{role:TUserRole}) => {
         register(registerData,{
             onSuccess:(res)=>{
                 console.log(res,"Register success res")
-                toast.success("Registration Success Otp send to email")
+                toast.success(res.message || "Registration Success Otp send to email")
             },
             onError:(err)=>{
                  const message =
