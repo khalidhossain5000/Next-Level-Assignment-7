@@ -8,7 +8,7 @@ const roleOptions = [
         description: "Post your problem, compare offers, and hire a verified technician near you.",
         cta: "Continue as Customer",
         icon: HiOutlineUserGroup,
-        href: "/auth/CUSTOMER/register",
+        href: "/CUSTOMER/register",
     },
     {
         id: "2",
@@ -16,13 +16,13 @@ const roleOptions = [
         description: "Create your professional profile, get verified, and start receiving job requests.",
         cta: "Continue as Technician",
         icon: HiOutlineWrenchScrewdriver,
-        href: "/auth/TECHNICIAN/register",
+        href: "/TECHNICIAN/register",
     },
 ];
 
 const SelectUserRolePage = () => {
     return (
-        <section className="min-h-dvh flex items-center justify-center bg-background px-4 sm:px-6 py-12">
+        <section className="min-h-svh flex items-center justify-center bg-background px-4 sm:px-6 py-12">
             <div className="w-full max-w-4xl">
                 {/* title */}
                 <div className="text-center mb-10 lg:mb-14">
