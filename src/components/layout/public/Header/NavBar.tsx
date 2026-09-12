@@ -76,6 +76,27 @@ const NavBar = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <ModeToggle />
                 </div>
             </div>

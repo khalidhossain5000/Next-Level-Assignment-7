@@ -3,14 +3,17 @@
 import { useForm } from "@tanstack/react-form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
+import { Field, FieldError, FieldGroup, FieldLabel, FieldSeparator } from "../ui/field";
 import { loginSchema } from "@/validation";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useLogin } from "@/hooks";
 import { Spinner } from "../ui/spinner";
 import { toast } from "sonner";
+
 import { useRouter } from "next/navigation";
+
+import GoogleLoginComponet from "../modules/google/GoogleComponent";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +34,7 @@ export default function LoginForm() {
       }
       login(loginData, {
         onSuccess: (res) => {
-          toast.success(res.message || "User log-in successfull") 
+          toast.success(res.message || "User log-in successfull")
           router.push("/")
         },
         onError: (err) => {
@@ -130,7 +133,13 @@ export default function LoginForm() {
 
           <Button type="submit" disabled={isPending} className="cursor-pointer rounded-full">{isPending && <Spinner />}  {isPending ? "Submitting...." : "Submit"}</Button>
         </FieldGroup>
+
       </form>
+
+      <FieldSeparator>Or continue with</FieldSeparator>
+
+      <GoogleLoginComponet />
+
     </div>
   );
 }

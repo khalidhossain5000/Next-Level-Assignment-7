@@ -3,8 +3,8 @@ import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/theme-provider";
-import QueryProvider from "@/providers/query.provider";
 import { Toaster } from "@/components/ui/sonner"
+import Providers from "@/providers";
 
 const manropeHeading = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
 
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={cn("h-full", "antialiased", inter.variable, manropeHeading.variable)}
     >
-      <QueryProvider>
+      <Providers>
         <body className="">
           <ThemeProvider
             attribute="class"
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Toaster richColors position="top-center"/>
           </ThemeProvider>
         </body>
-      </QueryProvider>
+      </Providers>
     </html>
   );
 }
