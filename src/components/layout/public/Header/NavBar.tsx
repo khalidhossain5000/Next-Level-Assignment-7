@@ -15,14 +15,14 @@ const NavBar = () => {
     ];
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur-md">
+        <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background  backdrop-blur-md">
             <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
                 <Link
                     href="/"
                     className="flex items-center gap-3 text-foreground transition-colors hover:text-foreground/80"
                 >
                     <Logo />
-                    <h2 className="font-manrope text-lg font-extrabold tracking-tight sm:text-xl "> Power <span className="text-primary">
+                    <h2 className="font-manrope text-lg font-extrabold tracking-tight sm:text-xl "> Power <span className="text-primary dark:text-cyan-400">
                         Pulse
                     </span></h2>
 
@@ -54,7 +54,7 @@ const NavBar = () => {
 
                     <Button
                         variant="outline"
-                        className="rounded-full border-border bg-background/70 px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted dark:bg-input/30 dark:hover:bg-input/50"
+                        className="rounded-full  border-border dark:border-cyan-200 bg-background/70 px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted dark:bg-input/30 dark:hover:bg-input/50"
                         render={<Link href="/login" className="flex items-center">Login</Link>}
                         nativeButton={false}
                     >
