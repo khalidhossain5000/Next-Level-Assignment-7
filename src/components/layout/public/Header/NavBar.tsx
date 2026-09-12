@@ -17,29 +17,23 @@ const NavBar = () => {
     { name: "About us", url: "/about-us" },
   ];
 
-const {mutate:logout}=useLogout()
+  const { mutate: logout } = useLogout();
 
-const queryClient=useQueryClient()
+  const queryClient = useQueryClient();
 
-
-const handleLogout=()=>{
-  logout(undefined,{
-    onSuccess:()=>{
-      toast.success(
-        "Log out success",
-
-      )
+  const handleLogout = () => {
+    logout(undefined, {
+      onSuccess: () => {
+        toast.success("Log out success");
         queryClient.removeQueries({
-          queryKey:["user"]
-        })
-    },
-    onError:()=>{
-        toast.error("Log out failed")
-    }
-  })
-}
-
-
+          queryKey: ["user"],
+        });
+      },
+      onError: () => {
+        toast.error("Log out failed");
+      },
+    });
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background  backdrop-blur-md">
@@ -54,10 +48,11 @@ const handleLogout=()=>{
               <Link
                 key={route.url}
                 href={route.url}
-                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${isActive
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  isActive
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "text-muted-foreground hover:bg-background hover:text-foreground dark:hover:bg-card"
-                  }`}
+                }`}
               >
                 {isActive && (
                   <span className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-primary-foreground/90" />
@@ -71,30 +66,27 @@ const handleLogout=()=>{
         <div className="flex items-center gap-3">
           {data && !isPending ? (
             <Button
-            onClick={handleLogout}
-               
+              onClick={handleLogout}
               variant="destructive"
               className="rounded-full  border-border  cursor-pointer px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted "
-            
             >
               Logout
             </Button>
           ) : (
-            <div className="flex items-center gap-6 ">   <Button
-              variant="outline"
-                  nativeButton={false}
-              className="rounded-full  border-border dark:border-cyan-200 bg-background/70 px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted dark:bg-input/30 dark:hover:bg-input/50"
-              render={
-                <Link href="/login" className="flex items-center">
-                  Login
-                </Link>
-              }
-           
-            >
-              Login
-            </Button>
-
-
+            <div className="flex items-center gap-6 ">
+              {" "}
+              <Button
+                variant="outline"
+                nativeButton={false}
+                className="rounded-full  border-border dark:border-cyan-200 bg-background/70 px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted dark:bg-input/30 dark:hover:bg-input/50"
+                render={
+                  <Link href="/login" className="flex items-center">
+                    Login
+                  </Link>
+                }
+              >
+                Login
+              </Button>
               <Button
                 variant="secondary"
                 className="rounded-full  border-border dark:border-cyan-200  px-5 font-manrope text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted dark:bg-input/30 dark:hover:bg-input/50"
