@@ -11,6 +11,7 @@ import GoogleLoginComponet from "../modules/google/GoogleComponent";
 import { useRegisterUser } from "@/hooks";
 import { toast } from "sonner";
 import { TUserRole } from "@/types";
+import { registerUserValidationSchema } from "@/validation";
 
 const RegisterForm = ({role}:{role:TUserRole}) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,6 +21,9 @@ const RegisterForm = ({role}:{role:TUserRole}) => {
         name:"Main Customer",
         email:"mdshafin5000@gmail.com",
         password:"admin"
+    },
+    validators:{
+      onSubmit:registerUserValidationSchema
     },
     onSubmit:({value})=>{
         console.log(value,"register value")
