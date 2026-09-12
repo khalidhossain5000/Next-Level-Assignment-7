@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import ModeToggle from '@/components/layout/shared/modeToggle/ModeToggle';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Logo from '@/assets/svg/Logo';
 
 const NavBar = () => {
     const pathname = usePathname();
@@ -20,12 +21,11 @@ const NavBar = () => {
                     href="/"
                     className="flex items-center gap-3 text-foreground transition-colors hover:text-foreground/80"
                 >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-sm font-black text-primary-foreground shadow-sm shadow-primary/20 ">
-                        PP
-                    </span>
-                    <span className="font-manrope text-lg font-extrabold tracking-tight sm:text-xl">
-                        Power Pulse
-                    </span>
+                    <Logo />
+                    <h2 className="font-manrope text-lg font-extrabold tracking-tight sm:text-xl "> Power <span className="text-primary">
+                        Pulse
+                    </span></h2>
+
                 </Link>
 
                 <nav className="hidden items-center gap-1 rounded-full border border-border/70 bg-muted/40 p-1.5 md:flex">
@@ -37,8 +37,8 @@ const NavBar = () => {
                                 key={route.url}
                                 href={route.url}
                                 className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${isActive
-                                        ? 'bg-primary text-primary-foreground shadow-sm'
-                                        : 'text-muted-foreground hover:bg-background hover:text-foreground dark:hover:bg-card'
+                                    ? 'bg-primary text-primary-foreground shadow-sm'
+                                    : 'text-muted-foreground hover:bg-background hover:text-foreground dark:hover:bg-card'
                                     }`}
                             >
                                 {isActive && (
