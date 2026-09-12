@@ -8,10 +8,12 @@ import { Eye, EyeOff } from "lucide-react";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 import GoogleLoginComponet from "../modules/google/GoogleComponent";
+import { useRegisterUser } from "@/hooks";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const isPending=false
+  const {mutate:register,isPending}  =  useRegisterUser()
   const form = useForm({
     defaultValues:{
         name:"Main Customer",
@@ -20,6 +22,20 @@ const RegisterForm = () => {
     },
     onSubmit:({value})=>{
         console.log(value,"register value")
+        const registerData={
+            name:value.name,
+            email:value.email,
+            password:value.password
+        }
+        register(registerData,{
+            onSuccess:(res)=>{
+                console.log(res,"Register success res")
+            },
+            onError:(err)=>{
+                console.log(err,"this is register error")
+                toast.success()
+            }
+        })
     }
   });
   return (
