@@ -14,9 +14,9 @@ const RegisterForm = () => {
   const isPending=false
   const form = useForm({
     defaultValues:{
-        name:"",
-        email:"",
-        password:""
+        name:"Main Customer",
+        email:"mdshafin5000@gmail.com",
+        password:"admin"
     },
     onSubmit:({value})=>{
         console.log(value,"register value")
