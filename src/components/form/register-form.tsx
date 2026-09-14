@@ -14,43 +14,44 @@ import type { TUserRole } from "@/types";
 import { registerUserValidationSchema } from "@/validation";
 import { useRouter } from "next/navigation";
 
-const RegisterForm = ({role}:{role:TUserRole}) => {
+const RegisterForm = ({ role }: { role: TUserRole }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const {mutate:register,isPending}  =  useRegisterUser()
-  const router=useRouter()
+  const { mutate: register, isPending } = useRegisterUser()
+  const router = useRouter()
+  console.log(role,'user role')
   const form = useForm({
-    defaultValues:{
-        name:"Main Customer",
-        email:"mdshafin5000@gmail.com",
-        password:"admin"
+    defaultValues: {
+      name: "Main Customer",
+      email: "mdshafin5000@gmail.com",
+      password: "admin"
     },
-    validators:{
-      onSubmit:registerUserValidationSchema
+    validators: {
+      onSubmit: registerUserValidationSchema
     },
-    onSubmit:({value})=>{
-        console.log(value,"register value")
-        const registerData={
-            name:value.name,
-            email:value.email,
-            password:value.password,
-            role:role
+    onSubmit: ({ value }) => {
+      console.log(value, "register value")
+      const registerData = {
+        name: value.name,
+        email: value.email,
+        password: value.password,
+        role: role
+      }
+      register(registerData, {
+        onSuccess: (res) => {
+          console.log(res, "Register success res")
+          toast.success(res.message || "Registration Success Otp send to email")
+          const params = new URLSearchParams({ email: registerData.email })
+          router.push(`/register/verify-account?${params.toString()}`)
+        },
+        onError: (err) => {
+          const message =
+            (err as any)?.data?.message ||
+            err.message ||
+            "Google login failed";
+          console.log(err, "this is register error")
+          toast.error(message || "Register failed try again")
         }
-        register(registerData,{
-            onSuccess:(res)=>{
-                console.log(res,"Register success res")
-                toast.success(res.message || "Registration Success Otp send to email")
-                const params=new URLSearchParams({email:registerData.email})
-                router.push(`/register/verify-account/${params}`)
-            },
-            onError:(err)=>{
-                 const message =
-                    (err as any)?.data?.message ||
-                    err.message ||
-                    "Google login failed";
-                console.log(err,"this is register error")
-                toast.error(message || "Register failed try again")
-            }
-        })
+      })
     }
   });
   return (
@@ -169,7 +170,7 @@ const RegisterForm = ({role}:{role:TUserRole}) => {
             disabled={isPending}
             className="cursor-pointer rounded-full"
           >
-            {isPending && <Spinner />} {isPending ? "Submitting...." : "Submit"}
+            {isPending && <Spinner />} {isPending ? "Submitting...." : "Submits"}
           </Button>
         </FieldGroup>
       </form>
