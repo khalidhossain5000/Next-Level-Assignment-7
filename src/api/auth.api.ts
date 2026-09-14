@@ -36,7 +36,7 @@ export function userLogout(){
 
 //verify user email
 
-export function verifyEmail(){
+export function verifyUserEmail(){
     return apiClient("/auth/verify-email",{
         method:"POST"
     })
