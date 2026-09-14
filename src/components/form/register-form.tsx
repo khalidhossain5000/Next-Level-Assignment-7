@@ -41,7 +41,7 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
           console.log(res, "Register success res")
           toast.success(res.message || "Registration Success Otp send to email")
           const params = new URLSearchParams({ email: registerData.email })
-          router.push(`/register/verify-account?${params.toString()}`)
+          router.push(`/${role}/register/verify-account?${params.toString()}`)
         },
         onError: (err) => {
           const message =
