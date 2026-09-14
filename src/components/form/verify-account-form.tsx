@@ -8,7 +8,7 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Field, FieldDescription, FieldError } from "@/components/ui/field";
-import { useVerifyEmail } from "@/hooks";
+import { useResendOtp, useVerifyEmail } from "@/hooks";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -25,6 +25,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
     const [timer, setTimer] = useState(RESEND_COOLDOWN)
     const [isInvalid, setIsInvalid] = useState(false)
     const { mutate: verifyEmail, isPending } = useVerifyEmail()
+    const { mutate: resendCode, isPending: resendPending } = useResendOtp()
     const router = useRouter()
 
     //resend timer handler
@@ -76,6 +77,30 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
     }
 
 
+    //resend otp handler
+
+    const handleResendOtp = () => {
+        if (timer !== 0) return
+
+        resendCode({ email }, {
+            onSuccess: (res) => {
+                console.log(res, "resend otp res")
+                toast.success(res.message || "OTP resent successfully,check now.")
+                setTimer(RESEND_COOLDOWN)
+            },
+            onError: (err: any) => {
+                console.log(err, "error in otp resend", err?.data?.message ||
+                    err?.response?._data?.message)
+                toast.error(
+                    err?.data?.message ||
+                    err?.response?._data?.message ||
+                    "Something went wrong while OTP resend"
+                );
+            }
+
+        })
+
+    }
 
 
 
@@ -148,16 +173,20 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
                 </Button>
 
                 <Button
-                    type="button"
-                    disabled={timer !== 0}
+                    type="submit"
+                    disabled={timer !== 0 || resendPending}
+                    onClick={handleResendOtp}
                     variant="outline"
-                    className={`w-full rounded-xl h-10 text-muted-foreground hover:text-foreground border-primary/50 ${timer !== 0
-                            ? "cursor-not-allowed"
-                            : "cursor-pointer"
+                    className={`w-full rounded-xl h-10 text-muted-foreground hover:text-foreground border-primary/50 ${timer !== 0 
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer"
                         }`}
 
                 >
-                    Resend Code
+
+                    {
+                        resendPending ? "Resending....." : "Resend Code"
+                    }
                 </Button>
             </CardFooter>
         </Card>
