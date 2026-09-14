@@ -7,7 +7,7 @@ const VerifyAccountPage = async ({ searchParams }: { searchParams: Promise<{ ema
 
     return (
         <section className="min-h-dvh flex items-center justify-center bg-background px-4 sm:px-6 py-12">
-            <div className="w-full max-w-sm">
+            <div className="w-full max-w-xl mx-auto">
                 {/* logo */}
                 <div className="flex justify-center mb-8">
                     <Logo />
