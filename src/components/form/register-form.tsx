@@ -10,12 +10,14 @@ import { Spinner } from "../ui/spinner";
 import GoogleLoginComponet from "../modules/google/GoogleComponent";
 import { useRegisterUser } from "@/hooks";
 import { toast } from "sonner";
-import { TUserRole } from "@/types";
+import type { TUserRole } from "@/types";
 import { registerUserValidationSchema } from "@/validation";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = ({role}:{role:TUserRole}) => {
   const [showPassword, setShowPassword] = useState(false);
   const {mutate:register,isPending}  =  useRegisterUser()
+  const router=useRouter()
   const form = useForm({
     defaultValues:{
         name:"Main Customer",
@@ -37,6 +39,8 @@ const RegisterForm = ({role}:{role:TUserRole}) => {
             onSuccess:(res)=>{
                 console.log(res,"Register success res")
                 toast.success(res.message || "Registration Success Otp send to email")
+                const params=new URLSearchParams({email:registerData.email})
+                router.push(`/register/verify-account/${params}`)
             },
             onError:(err)=>{
                  const message =
