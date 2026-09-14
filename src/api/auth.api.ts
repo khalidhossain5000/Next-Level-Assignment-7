@@ -44,6 +44,13 @@ export function verifyUserEmail(payload:IVerifyEmailPayload){
         body:payload
     })
 }
+//resend verify otp
+export function resendOtp(payload:{email:string}){
+    return apiClient("/auth/resend-otp",{
+        method:"POST",
+        body:payload
+    })
+}
 
 export function getMe(){
     return apiClient("/auth/get-me")

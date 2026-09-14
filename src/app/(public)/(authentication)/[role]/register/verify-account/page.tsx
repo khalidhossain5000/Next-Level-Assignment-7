@@ -24,7 +24,7 @@ const VerifyAccountPage = async ({ searchParams }: { searchParams: Promise<{ ema
                         <h1 className="text-2xl font-bold tracking-tight font-manrope text-card-foreground">
                             Verify your account
                         </h1>
-                        <p className="text-balance text-sm text-muted-foreground">
+                        <p className="text-balance text-sm text-muted-foreground font-inter">
                             We&apos;ve sent a verification code to{" "}
                             <span className="font-medium text-foreground">{email}</span>
                         </p>

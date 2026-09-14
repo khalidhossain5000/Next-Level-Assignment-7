@@ -79,7 +79,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
                     }}
                 >
                     <Field className="w-full items-center text-center gap-4">
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground font-manrope">
                             Enter the 6-digit code sent to your email
                         </p>
 
