@@ -31,7 +31,7 @@ const VerifyAccountPage = async ({ searchParams }: { searchParams: Promise<{ ema
                     </div>
 
                     {/* form */}
-                    <VerifyAccountForm />
+                    <VerifyAccountForm email={email}/>
                 </div>
             </div>
         </section>

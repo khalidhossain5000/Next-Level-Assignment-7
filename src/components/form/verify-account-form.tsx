@@ -8,14 +8,26 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Field, FieldDescription } from "@/components/ui/field";
+import { useVerifyEmail } from "@/hooks";
+import { useState } from "react";
+
+const RESEND_COOLDOWN=120
 
 const otpSlotStyles =
   "size-8 sm:size-11 !rounded-xl border border-input bg-background text-base sm:text-lg font-semibold shadow-sm transition-all data-[active=true]:border-primary data-[active=true]:bg-primary/5 data-[active=true]:text-primary data-[active=true]:ring-4 data-[active=true]:ring-primary/10 data-[active=true]:z-10";
 
-const VerifyAccountForm = () => {
+const VerifyAccountForm = ({email}:{email:string}) => {
+    const [otp,setOtp]=useState("")
+    const [timer,setTimer]=useState(RESEND_COOLDOWN)
+    const [isInvalid,setIsInvalid]=useState(false)
+    const {mutate:verifyEmail,isPending}  =  useVerifyEmail()
+
   return (
     <Card className="border-0 ring-0 shadow-none p-0">
       <CardContent className="px-0">
+        <form
+        
+        >
         <Field className="w-full items-center text-center gap-4">
           <p className="text-sm text-muted-foreground">
             Enter the 6-digit code sent to your email
@@ -39,6 +51,7 @@ const VerifyAccountForm = () => {
             <span className="font-medium text-foreground">Resend in 00:59</span>
           </FieldDescription>
         </Field>
+        </form>
       </CardContent>
 
       <CardFooter className="border-t border-t-slate-300 px-0 pt-6 flex flex-col items-center gap-3">
