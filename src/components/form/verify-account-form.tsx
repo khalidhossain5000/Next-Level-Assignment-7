@@ -46,11 +46,16 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
         verifyEmail(verifyData, {
             onSuccess: (res) => {
                 console.log(res, "otp verify success res")
-                toast.success(res.message || "You account is verified and active now")
+                toast.success("You account is verified and active now")
             },
             onError: (err: any) => {
-                console.log(err, "error in otp verification")
-                toast.error(err.message || "Something went wrong while otp verification")
+                console.log(err, "error in otp verification", err?.data?.message ||
+                    err?.response?._data?.message)
+                toast.error(
+                    err?.data?.message ||
+                    err?.response?._data?.message ||
+                    "Something went wrong while OTP verification"
+                );
             }
         })
     }
@@ -66,6 +71,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
         <Card className="border-0 ring-0 shadow-none p-0">
             <CardContent className="px-0">
                 <form
+                    id="otp-form"
                     onSubmit={(e) => {
                         e.preventDefault()
                         e.stopPropagation()
@@ -117,6 +123,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
             <CardFooter className="border-t border-t-slate-300 px-0 pt-6 flex flex-col items-center gap-3">
                 <Button
                     type="submit"
+                    form="otp-form"
                     className="w-full rounded-xl h-11 font-medium shadow-sm cursor-pointer"
                 >
                     Verify Account
