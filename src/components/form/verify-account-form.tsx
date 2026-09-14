@@ -7,13 +7,13 @@ import {
     InputOTPGroup,
     InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { Field, FieldDescription } from "@/components/ui/field";
+import { Field, FieldDescription, FieldError } from "@/components/ui/field";
 import { useVerifyEmail } from "@/hooks";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import { FieldError } from "@base-ui/react";
+
 
 const RESEND_COOLDOWN = 120
 
