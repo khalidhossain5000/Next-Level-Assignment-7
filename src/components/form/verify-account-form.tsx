@@ -9,13 +9,13 @@ import {
 } from "@/components/ui/input-otp";
 import { Field, FieldDescription, FieldError } from "@/components/ui/field";
 import { useVerifyEmail } from "@/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 
 
-const RESEND_COOLDOWN = 120
+const RESEND_COOLDOWN = 16
 
 const otpSlotStyles =
     "size-8 sm:size-11 !rounded-xl border border-input bg-background text-base sm:text-lg font-semibold shadow-sm transition-all data-[active=true]:border-primary data-[active=true]:bg-primary/5 data-[active=true]:text-primary data-[active=true]:ring-4 data-[active=true]:ring-primary/10 data-[active=true]:z-10";
@@ -27,7 +27,21 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
     const { mutate: verifyEmail, isPending } = useVerifyEmail()
     const router = useRouter()
 
+    //resend timer handler
+    useEffect(() => {
+        const resendTimer = setInterval(() => {
+            setTimer((prev) => {
+                if (prev <= 1) {
+                    clearInterval(resendTimer);
+                    return 0;
+                }
 
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(resendTimer);
+    }, []);
 
     const handleSubmitOtp = () => {
         console.log(otp, 'this is the otp')
@@ -47,6 +61,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
             onSuccess: (res) => {
                 console.log(res, "otp verify success res")
                 toast.success("You account is verified and active now")
+                //* router.push("/")
             },
             onError: (err: any) => {
                 console.log(err, "error in otp verification", err?.data?.message ||
@@ -83,7 +98,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
                             Enter the 6-digit code sent to your email
                         </p>
 
-                        <div className="w-full flex justify-center">
+                        <div className="w-full flex flex-col items-center">
                             <InputOTP
                                 maxLength={6}
                                 id="otp"
@@ -96,7 +111,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
                                 autoComplete="off"
                                 pattern={REGEXP_ONLY_DIGITS}
                             >
-                                <InputOTPGroup className="flex justify-center gap-1 sm:gap-2.5 PB-1">
+                                <InputOTPGroup className="flex justify-center gap-1 sm:gap-2.5 py-1">
                                     <InputOTPSlot index={0} className={otpSlotStyles} />
                                     <InputOTPSlot index={1} className={otpSlotStyles} />
                                     <InputOTPSlot index={2} className={otpSlotStyles} />
@@ -114,7 +129,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
 
                         <FieldDescription className="text-sm text-center">
                             Didn&apos;t receive the code?{" "}
-                            <span className="font-medium text-foreground">Resend in 00:59</span>
+                            <span className="font-medium text-foreground">Resend in {timer} s</span>
                         </FieldDescription>
                     </Field>
                 </form>
@@ -123,16 +138,24 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
             <CardFooter className="border-t border-t-slate-300 px-0 pt-6 flex flex-col items-center gap-3">
                 <Button
                     type="submit"
+                    disabled={isPending}
                     form="otp-form"
-                    className="w-full rounded-xl h-11 font-medium shadow-sm cursor-pointer"
+                    className={`w-full rounded-xl h-11 font-medium shadow-sm cursor-pointer ${isPending && "cursor:not-allowed"}`}
                 >
-                    Verify Account
+                    {
+                        isPending ? "Verifying....." : "Verify Account"
+                    }
                 </Button>
 
                 <Button
                     type="button"
+                    disabled={timer !== 0}
                     variant="outline"
-                    className="w-full rounded-xl h-10 text-muted-foreground hover:text-foreground cursor-pointer border-primary/50"
+                    className={`w-full rounded-xl h-10 text-muted-foreground hover:text-foreground border-primary/50 ${timer !== 0
+                            ? "cursor-not-allowed"
+                            : "cursor-pointer"
+                        }`}
+
                 >
                     Resend Code
                 </Button>
