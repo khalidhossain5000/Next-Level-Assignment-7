@@ -1,5 +1,5 @@
 import apiClient from "@/lib/apiClient";
-import type { ILoginPayload, IRegisterPayload } from "@/types";
+import type { ILoginPayload, IRegisterPayload, IVerifyEmailPayload } from "@/types";
 
 export function userLogin(payload:ILoginPayload){
     
@@ -36,9 +36,12 @@ export function userLogout(){
 
 //verify user email
 
-export function verifyUserEmail(){
+
+
+export function verifyUserEmail(payload:IVerifyEmailPayload){
     return apiClient("/auth/verify-email",{
-        method:"POST"
+        method:"POST",
+        body:payload
     })
 }
 
