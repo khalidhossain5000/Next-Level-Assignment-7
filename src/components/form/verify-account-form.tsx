@@ -10,6 +10,8 @@ import {
 import { Field, FieldDescription } from "@/components/ui/field";
 import { useVerifyEmail } from "@/hooks";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const RESEND_COOLDOWN=120
 
@@ -21,6 +23,42 @@ const VerifyAccountForm = ({email}:{email:string}) => {
     const [timer,setTimer]=useState(RESEND_COOLDOWN)
     const [isInvalid,setIsInvalid]=useState(false)
     const {mutate:verifyEmail,isPending}  =  useVerifyEmail()
+    const router= useRouter()
+
+
+
+    const handleSubmitOtp = ()=>{
+        console.log(otp,'this is the otp')
+        if(otp.length<6){
+            setIsInvalid(true)
+            return
+        }
+        //--prepare the data
+
+        const verifyData = {
+            email,
+            otp
+        }
+
+        //--data is ready go for the api hit
+        verifyEmail(verifyData,{
+            onSuccess:(res)=>{
+                console.log(res,"otp verify success res")
+                toast.success(res.message || "You account is verified and active now")
+            },
+            onError:(err:any)=>{
+                console.log(err,"error in otp verification")
+                toast.error(err.message || "Something went wrong while otp verification")
+            }
+        })
+    }
+
+
+
+
+
+
+
 
   return (
     <Card className="border-0 ring-0 shadow-none p-0">
