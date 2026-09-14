@@ -30,7 +30,7 @@ export function useLogout(){
 }
 
 
-
+export function verifyEmail()
 
 export function useGetMe(){
     return useQuery({
