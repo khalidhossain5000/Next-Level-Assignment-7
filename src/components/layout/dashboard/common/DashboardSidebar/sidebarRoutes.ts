@@ -58,6 +58,6 @@ export const sidebarRoutes: SidebarRoute[] = [
     label: "Work Orders",
     href: "/technician/dashboard",
     icon: FiTool,
-  roles: ["ADMIN","CUSTOMER","TECHNICIAN"],
+    roles: ["ADMIN","CUSTOMER","TECHNICIAN"],
   },
 ];
