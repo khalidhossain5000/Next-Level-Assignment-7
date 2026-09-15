@@ -227,9 +227,7 @@ const AddZoneForm = () => {
                         className="mb-2 block text-sm font-semibold text-card-foreground"
                       >
                         Zone Image
-                        <span className="ml-2 text-xs font-normal text-muted-foreground">
-                          Optional
-                        </span>
+                        <span className="text-destructive">*</span>
                       </Label>
 
                       <Input
