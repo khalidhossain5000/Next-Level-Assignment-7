@@ -96,7 +96,7 @@ const AddSubstationForm = () => {
                 <div className="relative p-6 sm:p-8">
                     <FieldGroup>
                         <div className="grid gap-6 sm:grid-cols-2">
-                            {/* Zone Name */}
+                            {/* Substation Name */}
                             <form.Field name="name">
                                 {(field) => {
                                     const isInvalid =
@@ -108,7 +108,7 @@ const AddSubstationForm = () => {
                                                 htmlFor={field.name}
                                                 className="mb-2 block text-sm font-semibold text-card-foreground"
                                             >
-                                                Zone Name <span className="text-destructive">*</span>
+                                                Substation Name <span className="text-destructive">*</span>
                                             </Label>
 
                                             <div className="group relative">
@@ -135,7 +135,7 @@ const AddSubstationForm = () => {
                                 }}
                             </form.Field>
 
-                            {/* Zone Code */}
+                            {/* Substation Code */}
                             <form.Field name="code">
                                 {(field) => {
                                     const isInvalid =
