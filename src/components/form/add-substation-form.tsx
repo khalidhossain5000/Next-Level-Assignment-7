@@ -213,8 +213,8 @@ const AddSubstationForm = () => {
                                 }}
                             </form.Field>
 
-                            {/* Zone Image */}
-                            <form.Field name="zoneImage">
+                            {/* substion location */}
+                             <form.Field name="capacity">
                                 {(field) => {
                                     const isInvalid =
                                         field.state.meta.isTouched && !field.state.meta.isValid;
@@ -225,70 +225,24 @@ const AddSubstationForm = () => {
                                                 htmlFor={field.name}
                                                 className="mb-2 block text-sm font-semibold text-card-foreground"
                                             >
-                                                Zone Image
-                                                <span className="text-destructive">*</span>
+                                                Capacity <span className="text-destructive">*</span>
                                             </Label>
 
-                                            <Input
-                                                ref={fileInputRef}
-                                                id={field.name}
-                                                type="file"
-                                                accept="image/*"
-                                                name={field.name}
-                                                onBlur={field.handleBlur}
-                                                onChange={(e) => {
-                                                    const file = e.target.files?.[0];
+                                            <div className="group relative">
+                                                <FiFileText className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
 
-                                                    if (!file) return;
-
-                                                    if (imagePreview) {
-                                                        URL.revokeObjectURL(imagePreview);
-                                                    }
-
-                                                    field.handleChange(file);
-
-                                                    const objectUrl = URL.createObjectURL(file);
-
-                                                    setImagePreview(objectUrl);
-                                                }}
-                                                aria-invalid={isInvalid}
-                                                className="h-11 cursor-pointer rounded-xl border-border bg-background text-sm shadow-none transition-all file:mr-3 file:h-7 file:rounded-lg file:border-0 file:bg-primary file:px-3 file:text-xs file:font-semibold file:text-primary-foreground hover:file:bg-primary/90 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                                            />
-
-                                            {/* Image Preview */}
-                                            {imagePreview && (
-                                                <div className="relative mt-3 overflow-hidden rounded-xl border border-border">
-                                                    <Image
-                                                        src={imagePreview}
-                                                        alt="Zone image preview"
-                                                        width={600}
-                                                        height={240}
-                                                        unoptimized
-                                                        className="h-40 w-full object-cover"
-                                                    />
-
-                                                    <Button
-                                                        type="button"
-                                                        variant="destructive"
-                                                        size="icon"
-                                                        aria-label="Remove image"
-                                                        className="absolute right-2 top-2 size-8 cursor-pointer rounded-lg shadow-md"
-                                                        onClick={() => {
-                                                            URL.revokeObjectURL(imagePreview);
-
-                                                            setImagePreview(null);
-
-                                                            field.handleChange(null);
-
-                                                            if (fileInputRef.current) {
-                                                                fileInputRef.current.value = "";
-                                                            }
-                                                        }}
-                                                    >
-                                                        <FiX className="size-4" />
-                                                    </Button>
-                                                </div>
-                                            )}
+                                                <Input
+                                                    id={field.name}
+                                                    placeholder=" capacity of this substation"
+                                                    name={field.name}
+                                                    value={field.state.value}
+                                                    onBlur={field.handleBlur}
+                                                    onChange={(e) => field.handleChange(e.target.value)}
+                                                    aria-invalid={isInvalid}
+                                                    className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                                                    autoComplete="off"
+                                                />
+                                            </div>
 
                                             {isInvalid && (
                                                 <FieldError errors={field.state.meta.errors} />
