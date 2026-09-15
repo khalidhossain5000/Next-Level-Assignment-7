@@ -23,7 +23,7 @@ const DashboardSidebar = () => {
     return (
         <aside className="flex w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground md:sticky md:top-0 md:h-screen">
             {/* Logo */}
-            <div className="flex h-20 items-center border-b border-sidebar-border px-6">
+            <div className="flex h-20 items-center  px-6">
                 <Logo />
             </div>
 
