@@ -174,8 +174,8 @@ const AddSubstationForm = () => {
                                 }}
                             </form.Field>
 
-                            {/* Description */}
-                            <form.Field name="description">
+                            {/* capacity */}
+                            <form.Field name="capacity">
                                 {(field) => {
                                     const isInvalid =
                                         field.state.meta.isTouched && !field.state.meta.isValid;
@@ -186,7 +186,7 @@ const AddSubstationForm = () => {
                                                 htmlFor={field.name}
                                                 className="mb-2 block text-sm font-semibold text-card-foreground"
                                             >
-                                                Description <span className="text-destructive">*</span>
+                                                Capacity <span className="text-destructive">*</span>
                                             </Label>
 
                                             <div className="group relative">
@@ -194,7 +194,7 @@ const AddSubstationForm = () => {
 
                                                 <Input
                                                     id={field.name}
-                                                    placeholder="Short description of this zone"
+                                                    placeholder=" capacity of this substation"
                                                     name={field.name}
                                                     value={field.state.value}
                                                     onBlur={field.handleBlur}
