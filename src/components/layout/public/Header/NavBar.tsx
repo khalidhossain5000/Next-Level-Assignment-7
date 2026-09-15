@@ -15,6 +15,7 @@ const NavBar = () => {
   const routes = [
     { name: "Home", url: "/" },
     { name: "About us", url: "/about-us" },
+    { name: "Dashboard", url: "/admin/dashboard" },
   ];
 
   const { mutate: logout } = useLogout();
