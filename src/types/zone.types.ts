@@ -1,7 +1,9 @@
-export interface IAddZonePayload{
-    zoneImage:File;
-    name:string;
-    code:string;
-    description:string;
+export interface IAddZonePayload {
+    zoneImage: File;
+    data: {
+        name: string;
+        code: string;
+        description: string;
 
+    }
 }
