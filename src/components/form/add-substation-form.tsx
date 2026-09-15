@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FiHash, FiMapPin, FiFileText, FiX } from "react-icons/fi";
 
 
-import {  useGetAllZone } from "@/hooks";
+import {  useAddSubstation, useGetAllZone } from "@/hooks";
 
 import { useForm } from "@tanstack/react-form";
 
@@ -23,7 +23,7 @@ import { toast } from "sonner";
 const AddSubstationForm = () => {
     //need this beacuse of we want zone id which is necessary to add with substation
     const {data:getAllZone, isPending:allZonePending} = useGetAllZone();
-    
+    const {mutate:addSubstation} = useAddSubstation()
 
     const form = useForm({
         defaultValues: {
