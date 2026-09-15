@@ -1,16 +1,29 @@
 "use client";
 
-import { FiHash, FiMapPin, FiFileText } from "react-icons/fi";
+import Image from "next/image";
+import { FiHash, FiMapPin, FiFileText, FiX } from "react-icons/fi";
+import { useRef, useState } from "react";
+
 import { useAddZone } from "@/hooks";
+
 import { useForm } from "@tanstack/react-form";
+
 import { Field, FieldError, FieldGroup } from "../ui/field";
+
 import { Input } from "../ui/input";
+
 import { Label } from "../ui/label";
+
 import { Spinner } from "../ui/spinner";
+
 import { Button } from "../ui/button";
 
 const AddZoneForm = () => {
   const { mutate: addZone, isPending } = useAddZone();
+
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm({
     defaultValues: {
@@ -19,9 +32,10 @@ const AddZoneForm = () => {
       description: "this is the khulna distribution zone",
       zoneImage: null as File | null,
     },
+
     onSubmit: async ({ value }) => {
-        console.log(value,"zone value")
-        
+      console.log(value, "zone value");
+
       const zoneData = {
         name: value.name,
         code: value.code,
@@ -54,6 +68,7 @@ const AddZoneForm = () => {
           <h2 className="font-manrope text-xl font-bold tracking-tight text-card-foreground">
             Add New Zone
           </h2>
+
           <p className="mt-1 text-sm leading-6 text-muted-foreground">
             Create a new distribution zone and provide its basic information.
           </p>
@@ -199,17 +214,65 @@ const AddZoneForm = () => {
                       </Label>
 
                       <Input
+                        ref={fileInputRef}
                         id={field.name}
                         type="file"
                         accept="image/*"
                         name={field.name}
                         onBlur={field.handleBlur}
-                        onChange={(e) =>
-                          field.handleChange(e.target.files?.[0] ?? null)
-                        }
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+
+                          if (!file) return;
+
+                          if (imagePreview) {
+                            URL.revokeObjectURL(imagePreview);
+                          }
+
+                          field.handleChange(file);
+
+                          const objectUrl = URL.createObjectURL(file);
+
+                          setImagePreview(objectUrl);
+                        }}
                         aria-invalid={isInvalid}
                         className="h-11 cursor-pointer rounded-xl border-border bg-background text-sm shadow-none transition-all file:mr-3 file:h-7 file:rounded-lg file:border-0 file:bg-primary file:px-3 file:text-xs file:font-semibold file:text-primary-foreground hover:file:bg-primary/90 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
                       />
+
+                      {/* Image Preview */}
+                      {imagePreview && (
+                        <div className="relative mt-3 overflow-hidden rounded-xl border border-border">
+                          <Image
+                            src={imagePreview}
+                            alt="Zone image preview"
+                            width={600}
+                            height={240}
+                            unoptimized
+                            className="h-40 w-full object-cover"
+                          />
+
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="icon"
+                            aria-label="Remove image"
+                            className="absolute right-2 top-2 size-8 cursor-pointer rounded-lg shadow-md"
+                            onClick={() => {
+                              URL.revokeObjectURL(imagePreview);
+
+                              setImagePreview(null);
+
+                              field.handleChange(null);
+
+                              if (fileInputRef.current) {
+                                fileInputRef.current.value = "";
+                              }
+                            }}
+                          >
+                            <FiX className="size-4" />
+                          </Button>
+                        </div>
+                      )}
 
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
