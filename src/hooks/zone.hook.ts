@@ -9,6 +9,7 @@ export function useAddZone(){
 
 export function useGetAllZone(){
     return useQuery({
+        queryKey:["all-zone"],
         queryFn:getAllZone
     })
 }
