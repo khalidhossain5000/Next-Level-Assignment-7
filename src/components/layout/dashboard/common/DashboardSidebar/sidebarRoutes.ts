@@ -4,6 +4,10 @@ import {
   FiUsers,
 } from "react-icons/fi";
 import type { IconType } from "react-icons";
+import { GiFireZone } from "react-icons/gi";
+import { FaChartArea } from "react-icons/fa";
+import { MdElectricBolt } from "react-icons/md";
+import { MdSolarPower } from "react-icons/md";
 
 export type SidebarRoute = {
   label: string;
@@ -26,11 +30,30 @@ export const sidebarRoutes: SidebarRoute[] = [
     roles: ["ADMIN","CUSTOMER","TECHNICIAN"],
   },
   {
-    label: "My Dashboard",
-    href: "/customer/dashboard",
-    icon: FiGrid,
-  roles: ["ADMIN","CUSTOMER","TECHNICIAN"],
+    label: "Add Zone",
+    href: "/admin/add-zone",
+    icon: GiFireZone ,
+    roles: ["ADMIN"],
   },
+     {
+    label: "Add Substation",
+    href: "/admin/add-substation",
+    icon: MdSolarPower ,
+    roles: ["ADMIN"],
+  },
+     {
+    label: "Add Feeder",
+    href: "/admin/add-feeder",
+    icon: MdElectricBolt ,
+    roles: ["ADMIN"],
+  },
+    {
+    label: "Add Area",
+    href: "/admin/add-area",
+    icon: FaChartArea ,
+    roles: ["ADMIN"],
+  },
+ 
   {
     label: "Work Orders",
     href: "/technician/dashboard",
