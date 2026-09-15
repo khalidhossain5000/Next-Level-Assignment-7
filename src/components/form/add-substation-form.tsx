@@ -24,7 +24,7 @@ const AddSubstationForm = () => {
     //need this beacuse of we want zone id which is necessary to add with substation
     const {data:getAllZone, isPending:allZonePending} = useGetAllZone();
     const {mutate:addSubstation , isPending:substationPending} = useAddSubstation()
-
+console.log(getAllZone,"this is all zone here")
     const form = useForm({
         defaultValues: {
             name: "Khulna Distrubution zone",
