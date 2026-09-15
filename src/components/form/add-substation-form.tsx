@@ -1,10 +1,16 @@
 "use client";
 
-import Image from "next/image";
-import { FiHash, FiMapPin, FiFileText, FiX } from "react-icons/fi";
+import {
+  FiHash,
+  FiMapPin,
+  FiFileText,
+  FiZap,
+  FiActivity,
+  FiGrid,
+  FiChevronDown,
+} from "react-icons/fi";
 
-
-import {  useAddSubstation, useGetAllZone } from "@/hooks";
+import { useAddSubstation, useGetAllZone } from "@/hooks";
 
 import { useForm } from "@tanstack/react-form";
 
@@ -21,259 +27,319 @@ import { addSubstationSchema } from "@/validation";
 import { toast } from "sonner";
 
 const AddSubstationForm = () => {
-    //need this beacuse of we want zone id which is necessary to add with substation
-    const {data:getAllZone, isPending:allZonePending} = useGetAllZone();
-    const {mutate:addSubstation , isPending:substationPending} = useAddSubstation()
-    const allZoneIds=getAllZone.data
-console.log(getAllZone,"this is all zone here",allZoneIds)
-    const form = useForm({
-        defaultValues: {
-            name: "Khulna Distrubution zone",
-            code: "KYS-005",
-            capacity: "this is the khulna distribution zone",
-            location:"jashore sadar",
-            zoneId:"sdhfjdsk"
+  // need this because we want zone id which is necessary to add with substation
+  const { data: getAllZone, isPending: allZonePending } = useGetAllZone();
+  const { mutate: addSubstation, isPending: substationPending } =
+    useAddSubstation();
+
+  const zones = getAllZone?.data ?? [];
+
+  const form = useForm({
+    defaultValues: {
+      name: "Khulna Central Substation",
+      code: "SS-KHL-001",
+      capacity: "100MW",
+      location: "Khulna Sadar",
+      zoneId: "",
+    },
+    validators: {
+      onSubmit: addSubstationSchema,
+    },
+
+    onSubmit: async ({ value }) => {
+      console.log(value, "substation value");
+
+      const substationData = {
+        name: value.name,
+        code: value.code,
+        capacity: value.capacity,
+        location: value.location,
+        zoneId: value.zoneId,
+      };
+
+      addSubstation(substationData, {
+        onSuccess: (res) => {
+          console.log(res, "Substation Added Successfully");
+          form.reset();
+          toast.success(res.message || "Substation Added Successfully");
         },
-        validators: {
-            onSubmit: addSubstationSchema
+        onError: (err) => {
+          const message =
+            (err as any)?.data?.message ||
+            err.message ||
+            "Failed when creating new substation";
+          console.log(err, "this is substation error");
+          toast.error(
+            message || "Something went wrong when adding substation"
+          );
         },
+      });
+    },
+  });
 
-        onSubmit: async ({ value }) => {
-            console.log(value, "value value");
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        form.handleSubmit();
+      }}
+      className="mx-auto w-full max-w-3xl"
+    >
+      {/* Main Card */}
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+        {/* Decorative gradient glow */}
+        <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
 
-            const substationData = {
-                name: value.name,
-                code: value.code,
-                capacity: value.capacity,
-                location: value.location,
-                zoneId:value.zoneId
-            };
+        {/* Header */}
+        <div className="relative border-b border-border px-6 py-6 sm:px-8">
+          <h2 className="font-manrope text-xl font-bold tracking-tight text-card-foreground">
+            Add New Substation
+          </h2>
 
-            addSubstation( substationData , {
-                onSuccess: (res) => {
-                    console.log(res, "substation Added Successfully")
-                    form.reset()
-                    toast.success(res.message || "substation Added Successfully")
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Create a new distribution substation and assign it to a zone.
+          </p>
+        </div>
 
-                },
-                onError: (err) => {
-                    const message =
-                        (err as any)?.data?.message ||
-                        err.message ||
-                        "Failed when creating new substation";
-                    console.log(err, "this is substation error")
-                    toast.error(message || "Something went wrong when adding substation")
-                }
-            });
-        },
-    });
+        {/* Form Body */}
+        <div className="relative p-6 sm:p-8">
+          <FieldGroup>
+            <div className="grid gap-6 sm:grid-cols-2">
+              {/* Substation Name */}
+              <form.Field name="name">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
 
-    return (
-        <form
-            onSubmit={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                form.handleSubmit();
-            }}
-            className="mx-auto w-full max-w-3xl"
-        >
-            {/* Main Card */}
-            <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-                {/* Decorative gradient glow */}
-                <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <Label
+                        htmlFor={field.name}
+                        className="mb-2 block text-sm font-semibold text-card-foreground"
+                      >
+                        Substation Name{" "}
+                        <span className="text-destructive">*</span>
+                      </Label>
 
-                {/* Header */}
-                <div className="relative border-b border-border px-6 py-6 sm:px-8">
-                    <h2 className="font-manrope text-xl font-bold tracking-tight text-card-foreground">
-                        Add New Substation
-                    </h2>
+                      <div className="group relative">
+                        <FiZap className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
 
-                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                        Create a new distribution Substation and provide its basic information.
-                    </p>
-                </div>
+                        <Input
+                          id={field.name}
+                          placeholder="e.g. Khulna Central Substation"
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          autoComplete="name"
+                        />
+                      </div>
 
-                {/* Form Body */}
-                <div className="relative p-6 sm:p-8">
-                    <FieldGroup>
-                        <div className="grid gap-6 sm:grid-cols-2">
-                            {/* Substation Name */}
-                            <form.Field name="name">
-                                {(field) => {
-                                    const isInvalid =
-                                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
 
-                                    return (
-                                        <Field data-invalid={isInvalid}>
-                                            <Label
-                                                htmlFor={field.name}
-                                                className="mb-2 block text-sm font-semibold text-card-foreground"
-                                            >
-                                                Substation Name <span className="text-destructive">*</span>
-                                            </Label>
+              {/* Substation Code */}
+              <form.Field name="code">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
 
-                                            <div className="group relative">
-                                                <FiMapPin className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <Label
+                        htmlFor={field.name}
+                        className="mb-2 block text-sm font-semibold text-card-foreground"
+                      >
+                        Substation Code{" "}
+                        <span className="text-destructive">*</span>
+                      </Label>
 
-                                                <Input
-                                                    id={field.name}
-                                                    placeholder="e.g. Dhaka Zone"
-                                                    name={field.name}
-                                                    value={field.state.value}
-                                                    onBlur={field.handleBlur}
-                                                    onChange={(e) => field.handleChange(e.target.value)}
-                                                    aria-invalid={isInvalid}
-                                                    className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                                                    autoComplete="name"
-                                                />
-                                            </div>
+                      <div className="group relative">
+                        <FiHash className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
 
-                                            {isInvalid && (
-                                                <FieldError errors={field.state.meta.errors} />
-                                            )}
-                                        </Field>
-                                    );
-                                }}
-                            </form.Field>
+                        <Input
+                          id={field.name}
+                          placeholder="e.g. SS-KHL-001"
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm font-medium tracking-wide shadow-none transition-all placeholder:font-normal placeholder:tracking-normal placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          autoComplete="off"
+                        />
+                      </div>
 
-                            {/* Substation Code */}
-                            <form.Field name="code">
-                                {(field) => {
-                                    const isInvalid =
-                                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
 
-                                    return (
-                                        <Field data-invalid={isInvalid}>
-                                            <Label
-                                                htmlFor={field.name}
-                                                className="mb-2 block text-sm font-semibold text-card-foreground"
-                                            >
-                                                Substation Code <span className="text-destructive">*</span>
-                                            </Label>
+              {/* Capacity */}
+              <form.Field name="capacity">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
 
-                                            <div className="group relative">
-                                                <FiHash className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <Label
+                        htmlFor={field.name}
+                        className="mb-2 block text-sm font-semibold text-card-foreground"
+                      >
+                        Capacity <span className="text-destructive">*</span>
+                      </Label>
 
-                                                <Input
-                                                    id={field.name}
-                                                    placeholder="e.g. DHK-001"
-                                                    name={field.name}
-                                                    value={field.state.value}
-                                                    onBlur={field.handleBlur}
-                                                    onChange={(e) => field.handleChange(e.target.value)}
-                                                    aria-invalid={isInvalid}
-                                                    className="h-11 rounded-xl border-border bg-background pl-10 text-sm font-medium tracking-wide shadow-none transition-all placeholder:font-normal placeholder:tracking-normal placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                                                    autoComplete="off"
-                                                />
-                                            </div>
+                      <div className="group relative">
+                        <FiActivity className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
 
-                                            {isInvalid && (
-                                                <FieldError errors={field.state.meta.errors} />
-                                            )}
-                                        </Field>
-                                    );
-                                }}
-                            </form.Field>
+                        <Input
+                          id={field.name}
+                          placeholder="e.g. 100MW or 50 MVA"
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          autoComplete="off"
+                        />
+                      </div>
 
-                            {/* capacity */}
-                            <form.Field name="capacity">
-                                {(field) => {
-                                    const isInvalid =
-                                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
 
-                                    return (
-                                        <Field data-invalid={isInvalid}>
-                                            <Label
-                                                htmlFor={field.name}
-                                                className="mb-2 block text-sm font-semibold text-card-foreground"
-                                            >
-                                                Capacity <span className="text-destructive">*</span>
-                                            </Label>
+              {/* Location */}
+              <form.Field name="location">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
 
-                                            <div className="group relative">
-                                                <FiFileText className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <Label
+                        htmlFor={field.name}
+                        className="mb-2 block text-sm font-semibold text-card-foreground"
+                      >
+                        Location <span className="text-destructive">*</span>
+                      </Label>
 
-                                                <Input
-                                                    id={field.name}
-                                                    placeholder=" capacity of this substation"
-                                                    name={field.name}
-                                                    value={field.state.value}
-                                                    onBlur={field.handleBlur}
-                                                    onChange={(e) => field.handleChange(e.target.value)}
-                                                    aria-invalid={isInvalid}
-                                                    className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                                                    autoComplete="off"
-                                                />
-                                            </div>
+                      <div className="group relative">
+                        <FiMapPin className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
 
-                                            {isInvalid && (
-                                                <FieldError errors={field.state.meta.errors} />
-                                            )}
-                                        </Field>
-                                    );
-                                }}
-                            </form.Field>
+                        <Input
+                          id={field.name}
+                          placeholder="e.g. Khulna Sadar"
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          autoComplete="off"
+                        />
+                      </div>
 
-                            {/* substion location */}
-                             <form.Field name="location">
-                                {(field) => {
-                                    const isInvalid =
-                                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
 
-                                    return (
-                                        <Field data-invalid={isInvalid}>
-                                            <Label
-                                                htmlFor={field.name}
-                                                className="mb-2 block text-sm font-semibold text-card-foreground"
-                                            >
-                                                Location <span className="text-destructive">*</span>
-                                            </Label>
+              {/* Zone ID (single select) */}
+              <form.Field name="zoneId">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
 
-                                            <div className="group relative">
-                                                <FiFileText className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
-
-                                                <Input
-                                                    id={field.name}
-                                                    placeholder=" Location of this substation"
-                                                    name={field.name}
-                                                    value={field.state.value}
-                                                    onBlur={field.handleBlur}
-                                                    onChange={(e) => field.handleChange(e.target.value)}
-                                                    aria-invalid={isInvalid}
-                                                    className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                                                    autoComplete="off"
-                                                />
-                                            </div>
-
-                                            {isInvalid && (
-                                                <FieldError errors={field.state.meta.errors} />
-                                            )}
-                                        </Field>
-                                    );
-                                }}
-                            </form.Field>
-                        </div>
-                    </FieldGroup>
-                </div>
-
-                {/* Footer */}
-                <div className="relative border-t border-border bg-muted/30 px-6 py-5 sm:px-8">
-                    <p className="mb-3 text-xs text-muted-foreground">
-                        Make sure the zone information is accurate before submitting.
-                    </p>
-
-                    <Button
-                        type="submit"
-                        disabled={substationPending}
-                        className="h-11 w-full cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+                  return (
+                    <Field
+                      data-invalid={isInvalid}
+                      className="sm:col-span-2"
                     >
-                        {substationPending && <Spinner />}
-                        {substationPending ? "Adding Zone..." : "Add Zone"}
-                    </Button>
-                </div>
+                      <Label
+                        htmlFor={field.name}
+                        className="mb-2 block text-sm font-semibold text-card-foreground"
+                      >
+                        Assign Zone <span className="text-destructive">*</span>
+                      </Label>
+
+                      <div className="group relative">
+                        <FiGrid className="pointer-events-none absolute left-3.5 top-1/2 z-10 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
+
+                        <select
+                          id={field.name}
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          disabled={allZonePending}
+                          className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-background pl-10 pr-10 text-sm shadow-none transition-all focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/15 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-background"
+                        >
+                          <option value="" disabled>
+                            {allZonePending
+                              ? "Loading zones..."
+                              : "Select a zone"}
+                          </option>
+
+                          {zones.map((zone: any) => (
+                            <option key={zone.id} value={zone.id}>
+                              {zone.name} ({zone.code})
+                            </option>
+                          ))}
+                        </select>
+
+                        <FiChevronDown className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                      </div>
+
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
             </div>
-        </form>
-    );
+          </FieldGroup>
+        </div>
+
+        {/* Footer */}
+        <div className="relative border-t border-border bg-muted/30 px-6 py-5 sm:px-8">
+          <p className="mb-3 text-xs text-muted-foreground">
+            Make sure the substation information is accurate before submitting.
+          </p>
+
+          <Button
+            type="submit"
+            disabled={substationPending}
+            className="h-11 w-full cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {substationPending && <Spinner />}
+            {substationPending ? "Adding Substation..." : "Add Substation"}
+          </Button>
+        </div>
+      </div>
+    </form>
+  );
 };
 
 export default AddSubstationForm;
