@@ -38,7 +38,7 @@ const AddSubstationForm = () => {
         },
 
         onSubmit: async ({ value }) => {
-            console.log(value, "zone value");
+            console.log(value, "value value");
 
             const substationData = {
                 name: value.name,
@@ -84,11 +84,11 @@ const AddSubstationForm = () => {
                 {/* Header */}
                 <div className="relative border-b border-border px-6 py-6 sm:px-8">
                     <h2 className="font-manrope text-xl font-bold tracking-tight text-card-foreground">
-                        Add New Zone
+                        Add New Substation
                     </h2>
 
                     <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                        Create a new distribution zone and provide its basic information.
+                        Create a new distribution Substation and provide its basic information.
                     </p>
                 </div>
 
