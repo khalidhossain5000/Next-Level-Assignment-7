@@ -18,6 +18,7 @@ import { Spinner } from "../ui/spinner";
 
 import { Button } from "../ui/button";
 import { addZoneSchema } from "@/validation";
+import { toast } from "sonner";
 
 const AddZoneForm = () => {
   const { mutate: addZone, isPending } = useAddZone();
@@ -49,6 +50,20 @@ const AddZoneForm = () => {
       addZone({
         data: zoneData,
         zoneImage: value.zoneImage as File,
+      },{
+        onSuccess: (res) => {
+          console.log(res, "Zone Added Successfully")
+          toast.success(res.message || "Zone Added Successfully")
+         
+        },
+        onError: (err) => {
+          const message =
+            (err as any)?.data?.message ||
+            err.message ||
+            "Failed when creating new zone";
+          console.log(err, "this is register error")
+          toast.error(message || "Something went wrong when adding zone")
+        }
       });
     },
   });
