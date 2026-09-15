@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { FiHash, FiImage, FiMapPin, FiFileText } from "react-icons/fi";
+import { FiHash, FiMapPin, FiFileText } from "react-icons/fi";
 import { useAddZone } from "@/hooks";
 import { useForm } from "@tanstack/react-form";
 import { Field, FieldError, FieldGroup } from "../ui/field";
@@ -10,252 +10,234 @@ import { Spinner } from "../ui/spinner";
 import { Button } from "../ui/button";
 
 const AddZoneForm = () => {
-    const { mutate: addZone, isPending } = useAddZone()
+  const { mutate: addZone, isPending } = useAddZone();
 
-    const form = useForm({
-        defaultValues: {
-            name: "Khulna Distrubution zone",
-            code: "KHD-005",
-            description: "this is the khulna distribution zone",
-            zoneImage: null as File | null
-        },
-        onSubmit: async ({ value }) => {
-            const zoneData = {
-                name: value.name,
-                code: value.code,
-                description: value.description
-            }
+  const form = useForm({
+    defaultValues: {
+      name: "Khulna Distrubution zone",
+      code: "KHD-005",
+      description: "this is the khulna distribution zone",
+      zoneImage: null as File | null,
+    },
+    onSubmit: async ({ value }) => {
+      const zoneData = {
+        name: value.name,
+        code: value.code,
+        description: value.description,
+      };
 
-            addZone({
-                data: zoneData,
-                zoneImage: value.zoneImage as File
-            })
-        }
-    })
+      addZone({
+        data: zoneData,
+        zoneImage: value.zoneImage as File,
+      });
+    },
+  });
 
-    return (
-        <form
-            onSubmit={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                form.handleSubmit()
-            }}
-            className="mx-auto w-full max-w-3xl"
-        >
-            {/* Main Card */}
-            <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        form.handleSubmit();
+      }}
+      className="mx-auto w-full max-w-3xl"
+    >
+      {/* Main Card */}
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+        {/* Decorative gradient glow, top-right */}
+        <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
 
-                {/* Decorative gradient glow, top-right */}
-                <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
+        {/* Header */}
+        <div className="relative border-b border-border px-6 py-6 sm:px-8">
+          <h2 className="font-manrope text-xl font-bold tracking-tight text-card-foreground">
+            Add New Zone
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            Create a new distribution zone and provide its basic information.
+          </p>
+        </div>
 
-                {/* Header */}
-                <div className="relative border-b border-border px-6 py-6 sm:px-8">
-                    <h2 className="font-manrope text-xl font-bold tracking-tight text-card-foreground">
-                        Add New Zone
-                    </h2>
-                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                        Create a new distribution zone and provide its basic information.
-                    </p>
-                </div>
+        {/* Form Body */}
+        <div className="relative p-6 sm:p-8">
+          <FieldGroup>
+            <div className="grid gap-6 sm:grid-cols-2">
+              {/* Zone Name */}
+              <form.Field name="name">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
 
-                {/* Form Body */}
-                <div className="relative p-6 sm:p-8">
-                    <FieldGroup>
-                        <div className="grid gap-6 sm:grid-cols-2">
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <Label
+                        htmlFor={field.name}
+                        className="mb-2 block text-sm font-semibold text-card-foreground"
+                      >
+                        Zone Name <span className="text-destructive">*</span>
+                      </Label>
 
-                            {/* Zone Name */}
-                            <form.Field name="name">
-                                {(field) => {
-                                    const isInvalid =
-                                        field.state.meta.isTouched &&
-                                        !field.state.meta.isValid;
+                      <div className="group relative">
+                        <FiMapPin className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
 
-                                    return (
-                                        <Field data-invalid={isInvalid}>
-                                            <Label
-                                                htmlFor={field.name}
-                                                className="mb-2 block text-sm font-semibold text-card-foreground"
-                                            >
-                                                Zone Name
-                                            </Label>
+                        <Input
+                          id={field.name}
+                          placeholder="e.g. Dhaka Zone"
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          autoComplete="name"
+                        />
+                      </div>
 
-                                            <div className="group relative">
-                                                <FiMapPin className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
 
-                                                <Input
-                                                    id={field.name}
-                                                    placeholder="e.g. Dhaka Zone"
-                                                    name={field.name}
-                                                    value={field.state.value}
-                                                    onBlur={field.handleBlur}
-                                                    onChange={(e) =>
-                                                        field.handleChange(e.target.value)
-                                                    }
-                                                    aria-invalid={isInvalid}
-                                                    className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                                                    autoComplete="name"
-                                                />
-                                            </div>
+              {/* Zone Code */}
+              <form.Field name="code">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
 
-                                            {isInvalid && (
-                                                <FieldError errors={field.state.meta.errors} />
-                                            )}
-                                        </Field>
-                                    )
-                                }}
-                            </form.Field>
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <Label
+                        htmlFor={field.name}
+                        className="mb-2 block text-sm font-semibold text-card-foreground"
+                      >
+                        Zone Code <span className="text-destructive">*</span>
+                      </Label>
 
-                            {/* Zone Code */}
-                            <form.Field name="code">
-                                {(field) => {
-                                    const isInvalid =
-                                        field.state.meta.isTouched &&
-                                        !field.state.meta.isValid;
+                      <div className="group relative">
+                        <FiHash className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
 
-                                    return (
-                                        <Field data-invalid={isInvalid}>
-                                            <Label
-                                                htmlFor={field.name}
-                                                className="mb-2 block text-sm font-semibold text-card-foreground"
-                                            >
-                                                Zone Code
-                                            </Label>
+                        <Input
+                          id={field.name}
+                          placeholder="e.g. DHK-001"
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm font-medium tracking-wide shadow-none transition-all placeholder:font-normal placeholder:tracking-normal placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          autoComplete="off"
+                        />
+                      </div>
 
-                                            <div className="group relative">
-                                                <FiHash className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
 
-                                                <Input
-                                                    id={field.name}
-                                                    placeholder="e.g. DHK-001"
-                                                    name={field.name}
-                                                    value={field.state.value}
-                                                    onBlur={field.handleBlur}
-                                                    onChange={(e) =>
-                                                        field.handleChange(e.target.value)
-                                                    }
-                                                    aria-invalid={isInvalid}
-                                                    className="h-11 rounded-xl border-border bg-background pl-10 text-sm font-medium tracking-wide shadow-none transition-all placeholder:font-normal placeholder:tracking-normal placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                                                    autoComplete="off"
-                                                />
-                                            </div>
+              {/* Description */}
+              <form.Field name="description">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
 
-                                            {isInvalid && (
-                                                <FieldError errors={field.state.meta.errors} />
-                                            )}
-                                        </Field>
-                                    )
-                                }}
-                            </form.Field>
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <Label
+                        htmlFor={field.name}
+                        className="mb-2 block text-sm font-semibold text-card-foreground"
+                      >
+                        Description <span className="text-destructive">*</span>
+                      </Label>
 
-                            {/* Description */}
-                            <form.Field name="description">
-                                {(field) => {
-                                    const isInvalid =
-                                        field.state.meta.isTouched &&
-                                        !field.state.meta.isValid;
+                      <div className="group relative">
+                        <FiFileText className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
 
-                                    return (
-                                        <Field data-invalid={isInvalid}>
-                                            <Label
-                                                htmlFor={field.name}
-                                                className="mb-2 block text-sm font-semibold text-card-foreground"
-                                            >
-                                                Description
-                                            </Label>
+                        <Input
+                          id={field.name}
+                          placeholder="Short description of this zone"
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          autoComplete="off"
+                        />
+                      </div>
 
-                                            <div className="group relative">
-                                                <FiFileText className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
 
-                                                <Input
-                                                    id={field.name}
-                                                    placeholder="Short description of this zone"
-                                                    name={field.name}
-                                                    value={field.state.value}
-                                                    onBlur={field.handleBlur}
-                                                    onChange={(e) =>
-                                                        field.handleChange(e.target.value)
-                                                    }
-                                                    aria-invalid={isInvalid}
-                                                    className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                                                    autoComplete="off"
-                                                />
-                                            </div>
+              {/* Zone Image */}
+              <form.Field name="zoneImage">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
 
-                                            {isInvalid && (
-                                                <FieldError errors={field.state.meta.errors} />
-                                            )}
-                                        </Field>
-                                    )
-                                }}
-                            </form.Field>
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <Label
+                        htmlFor={field.name}
+                        className="mb-2 block text-sm font-semibold text-card-foreground"
+                      >
+                        Zone Image
+                        <span className="ml-2 text-xs font-normal text-muted-foreground">
+                          Optional
+                        </span>
+                      </Label>
 
-                            {/* Zone Image */}
-                            <form.Field name="zoneImage">
-                                {(field) => {
-                                    const isInvalid =
-                                        field.state.meta.isTouched &&
-                                        !field.state.meta.isValid;
+                      <Input
+                        id={field.name}
+                        type="file"
+                        accept="image/*"
+                        name={field.name}
+                        onBlur={field.handleBlur}
+                        onChange={(e) =>
+                          field.handleChange(e.target.files?.[0] ?? null)
+                        }
+                        aria-invalid={isInvalid}
+                        className="h-11 cursor-pointer rounded-xl border-border bg-background text-sm shadow-none transition-all file:mr-3 file:h-7 file:rounded-lg file:border-0 file:bg-primary file:px-3 file:text-xs file:font-semibold file:text-primary-foreground hover:file:bg-primary/90 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                      />
 
-                                    return (
-                                        <Field data-invalid={isInvalid}>
-                                            <Label
-                                                htmlFor={field.name}
-                                                className="mb-2 block text-sm font-semibold text-card-foreground"
-                                            >
-                                                Zone Image
-                                                <span className="ml-2 text-xs font-normal text-muted-foreground">
-                                                    Optional
-                                                </span>
-                                            </Label>
-
-                                            <div className="group relative">
-                                                <FiImage className="pointer-events-none absolute left-3.5 top-1/2 z-10 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
-
-                                                <Input
-                                                    id={field.name}
-                                                    type="file"
-                                                    accept="image/*"
-                                                    name={field.name}
-                                                    onBlur={field.handleBlur}
-                                                    onChange={(e) =>
-                                                        field.handleChange(
-                                                            e.target.files?.[0] ?? null
-                                                        )
-                                                    }
-                                                    aria-invalid={isInvalid}
-                                                    className="h-11 cursor-pointer rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all file:mr-3 file:h-7 file:rounded-lg file:border-0 file:bg-primary file:px-3 file:text-xs file:font-semibold file:text-primary-foreground hover:file:bg-primary/90 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                                                />
-                                            </div>
-
-                                            {isInvalid && (
-                                                <FieldError errors={field.state.meta.errors} />
-                                            )}
-                                        </Field>
-                                    )
-                                }}
-                            </form.Field>
-                        </div>
-                    </FieldGroup>
-                </div>
-
-                {/* Footer */}
-                <div className="relative border-t border-border bg-muted/30 px-6 py-5 sm:px-8">
-                    <p className="mb-3 text-xs text-muted-foreground">
-                        Make sure the zone information is accurate before submitting.
-                    </p>
-
-                    <Button
-                        type="submit"
-                        disabled={isPending}
-                        className="h-11 w-full rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                        {isPending && <Spinner />}
-                        {isPending ? "Adding Zone..." : "Add Zone"}
-                    </Button>
-                </div>
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
             </div>
-        </form>
-    );
+          </FieldGroup>
+        </div>
+
+        {/* Footer */}
+        <div className="relative border-t border-border bg-muted/30 px-6 py-5 sm:px-8">
+          <p className="mb-3 text-xs text-muted-foreground">
+            Make sure the zone information is accurate before submitting.
+          </p>
+
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="h-11 w-full cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isPending && <Spinner />}
+            {isPending ? "Adding Zone..." : "Add Zone"}
+          </Button>
+        </div>
+      </div>
+    </form>
+  );
 };
 
 export default AddZoneForm;
