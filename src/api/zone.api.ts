@@ -12,3 +12,9 @@ export function addZone(payload:IAddZonePayload){
         body:formData
     })
 }
+
+
+export function getAllZone(){
+    
+    return apiClient("/zone")
+}
