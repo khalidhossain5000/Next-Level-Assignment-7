@@ -3,10 +3,10 @@ import DashboardHeader from "@/components/layout/dashboard/common/DashboardHeade
 
 const AddZonePage = () => {
     return (
-        <div>
+        <section>
             <DashboardHeader title  = "Add Distribution Infrastracture Zone"/>
             <AddZoneForm/>
-        </div>
+        </section>
     );
 };
 
