@@ -263,11 +263,11 @@ const AddSubstationForm = () => {
 
                     <Button
                         type="submit"
-                        disabled={isPending}
+                        disabled={substationPending}
                         className="h-11 w-full cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                        {isPending && <Spinner />}
-                        {isPending ? "Adding Zone..." : "Add Zone"}
+                        {substationPending && <Spinner />}
+                        {substationPending ? "Adding Zone..." : "Add Zone"}
                     </Button>
                 </div>
             </div>
