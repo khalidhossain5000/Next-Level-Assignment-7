@@ -1,5 +1,5 @@
 export interface IAddZonePayload {
-    zoneImage: File;
+    zoneImage: File ;
     data: {
         name: string;
         code: string;
