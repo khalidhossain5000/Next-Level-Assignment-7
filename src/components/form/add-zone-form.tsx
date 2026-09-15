@@ -20,6 +20,8 @@ const AddZoneForm = () => {
       zoneImage: null as File | null,
     },
     onSubmit: async ({ value }) => {
+        console.log(value,"zone value")
+        
       const zoneData = {
         name: value.name,
         code: value.code,
@@ -44,7 +46,7 @@ const AddZoneForm = () => {
     >
       {/* Main Card */}
       <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-        {/* Decorative gradient glow, top-right */}
+        {/* Decorative gradient glow */}
         <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
 
         {/* Header */}
