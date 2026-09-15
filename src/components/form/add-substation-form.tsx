@@ -17,7 +17,7 @@ import { Label } from "../ui/label";
 import { Spinner } from "../ui/spinner";
 
 import { Button } from "../ui/button";
-import { addZoneSchema } from "@/validation";
+import { addSubstationSchema } from "@/validation";
 import { toast } from "sonner";
 
 const AddSubstationForm = () => {
@@ -28,22 +28,24 @@ const AddSubstationForm = () => {
     const form = useForm({
         defaultValues: {
             name: "Khulna Distrubution zone",
-            code: "KHD-005",
+            code: "KYS-005",
             capacity: "this is the khulna distribution zone",
             location:"jashore sadar",
             zoneId:"sdhfjdsk"
         },
         validators: {
-            onSubmit: addZoneSchema
+            onSubmit: addSubstationSchema
         },
 
         onSubmit: async ({ value }) => {
             console.log(value, "zone value");
 
-            const zoneData = {
+            const substationData = {
                 name: value.name,
                 code: value.code,
-                description: value.description,
+                capacity: value.capacity,
+                location: value.location,
+                zoneId:value.zoneId
             };
 
             addZone({
