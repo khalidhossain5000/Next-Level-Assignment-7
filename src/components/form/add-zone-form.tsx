@@ -31,6 +31,7 @@ const AddZoneForm = () => {
                 e.stopPropagation()
                 form.handleSubmit()
             }}
+            className="max-w-2xl mx-auto"
         >
             <FieldGroup>
                 <div className="grid gap-5 sm:grid-cols-2">
