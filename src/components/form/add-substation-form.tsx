@@ -147,7 +147,7 @@ const AddSubstationForm = () => {
                                                 htmlFor={field.name}
                                                 className="mb-2 block text-sm font-semibold text-card-foreground"
                                             >
-                                                Zone Code <span className="text-destructive">*</span>
+                                                Substation Code <span className="text-destructive">*</span>
                                             </Label>
 
                                             <div className="group relative">
