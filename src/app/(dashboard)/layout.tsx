@@ -6,8 +6,8 @@ import MobileSidebar from "@/components/layout/dashboard/common/DashboardSidebar
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
     return (
-        <div className="flex min-h-screen flex-col bg-background md:flex-row">
-            <div className="hidden md:block">
+        <div className="flex min-h-screen flex-col bg-background lg:flex-row">
+            <div className="hidden lg:block">
                 <DashboardSidebar />
             </div>
             <MobileSidebar />
