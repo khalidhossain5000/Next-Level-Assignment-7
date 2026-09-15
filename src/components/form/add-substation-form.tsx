@@ -48,10 +48,7 @@ const AddSubstationForm = () => {
                 zoneId:value.zoneId
             };
 
-            addZone({
-                data: zoneData,
-                zoneImage: value.zoneImage as File,
-            }, {
+            addSubstation({ substationData }, {
                 onSuccess: (res) => {
                     console.log(res, "Zone Added Successfully")
                     form.reset()
