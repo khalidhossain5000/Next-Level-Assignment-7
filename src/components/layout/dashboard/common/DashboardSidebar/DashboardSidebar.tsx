@@ -28,31 +28,14 @@ const DashboardSidebar = () => {
             </div>
 
             <div className="flex min-h-0 flex-1 flex-col px-4 py-6">
-                {/* Workspace / Role */}
-                <div className="mb-6 flex items-center gap-3 rounded-lg border border-sidebar-border bg-sidebar-accent/50 px-3 py-3">
-                    <div className="flex size-9 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
-                        <FiShield className="size-4" aria-hidden="true" />
-                    </div>
-
-                    <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-sidebar-foreground">
-                            {currentRole}
-                        </p>
-
-                        <p className="text-xs text-sidebar-foreground/60">
-                            Workspace
-                        </p>
-                    </div>
-                </div>
+           
 
                 {/* Navigation */}
                 <nav
                     aria-label="Dashboard navigation"
                     className="flex-1"
                 >
-                    <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-sidebar-foreground/50">
-                        Workspace
-                    </p>
+                   
 
                     <div className="flex flex-col gap-1">
                         {visibleRoutes.map((route) => {
@@ -77,7 +60,7 @@ const DashboardSidebar = () => {
                                         aria-hidden="true"
                                     />
 
-                                    <span>{route.label}</span>
+                                    <span className="font-manrope">{route.label}</span>
                                 </Link>
                             );
                         })}
@@ -85,7 +68,7 @@ const DashboardSidebar = () => {
                 </nav>
 
                 {/* Bottom Actions */}
-                <div className="mt-6 flex flex-col gap-1 border-t border-sidebar-border pt-4">
+                <div className="mt-6 flex flex-col gap-1 border-t border-slate-100 dark:border-slate-600 pt-4">
                     <Link
                         href="/settings"
                         className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
@@ -95,19 +78,19 @@ const DashboardSidebar = () => {
                             aria-hidden="true"
                         />
 
-                        <span>Settings</span>
+                        <span className="font-manrope">Settings</span>
                     </Link>
 
                     <button
                         type="button"
-                        className="flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-destructive/10 hover:text-destructive"
+                        className="flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-destructive/10 hover:text-destructive cursor-pointer "
                     >
                         <FiLogOut
                             className="size-4"
                             aria-hidden="true"
                         />
 
-                        <span>Log out</span>
+                        <span className="font-manrope">Log out</span>
                     </button>
                 </div>
             </div>
