@@ -17,6 +17,7 @@ import { Label } from "../ui/label";
 import { Spinner } from "../ui/spinner";
 
 import { Button } from "../ui/button";
+import { addZoneSchema } from "@/validation";
 
 const AddZoneForm = () => {
   const { mutate: addZone, isPending } = useAddZone();
@@ -31,6 +32,9 @@ const AddZoneForm = () => {
       code: "KHD-005",
       description: "this is the khulna distribution zone",
       zoneImage: null as File | null,
+    },
+    validators:{
+        onSubmit:addZoneSchema
     },
 
     onSubmit: async ({ value }) => {
