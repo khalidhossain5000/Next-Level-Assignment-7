@@ -29,21 +29,21 @@ const DashboardHeader = ({
   return (
     <section className="flex flex-col gap-4  pb-5 sm:flex-row sm:items-center sm:justify-between">
       <div className="min-w-0">
-        <h1 className="truncate text-2xl font-semibold tracking-tight text-foreground">
+        <h1 className="truncate text-2xl font-semibold tracking-tight text-foreground font-manrope">
           {title}
         </h1>
 
         {description && (
-          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+          <p className="mt-1 text-sm text-muted-foreground font-inter">{description}</p>
         )}
       </div>
 
       <div className="flex shrink-0 items-center gap-3">
         {showDateTime && now && (
           <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/40 px-3 py-1.5 text-sm text-muted-foreground">
-            <FiClock className="size-4 text-primary" />
+            <FiClock className="size-4 text-black" />
 
-            <span className="tabular-nums">
+            <span className="tabular-nums font-inter">
               {now.toLocaleDateString(undefined, {
                 weekday: "short",
                 day: "2-digit",
@@ -53,7 +53,7 @@ const DashboardHeader = ({
 
             <span className="h-3.5 w-px bg-border" />
 
-            <span className="tabular-nums font-medium text-foreground/80">
+            <span className="tabular-nums font-medium text-foreground/80 font-inter">
               {now.toLocaleTimeString(undefined, {
                 hour: "2-digit",
                 minute: "2-digit",
