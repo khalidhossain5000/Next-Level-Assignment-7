@@ -6,5 +6,8 @@ export const addZoneSchema = z.object({
     description: z.string("Not a string").min(5, "Description should minimum have 5 char").max(150, "Max 150 chars"),
     zoneImage: z.instanceof(File, {
     message: "Zone image is required",
-  }), 
+  }).refine(
+    (file) => file.size <= 5 * 1024 * 1024,
+    "Image must be less than 5MB"
+  ), 
 })
