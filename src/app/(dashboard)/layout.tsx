@@ -1,13 +1,17 @@
 
 import type { ReactNode } from "react";
+import DashboardSidebar from "@/components/layout/dashboard/common/DashboardSidebar/DashboardSidebar";
+import MobileSidebar from "@/components/layout/dashboard/common/DashboardSidebar/MobileSidebar";
 
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
     return (
-        <div className="flex min-h-screen flex-col">
-         
-            <main className="flex-1">{children}</main>
-         
+        <div className="flex min-h-screen flex-col bg-background md:flex-row">
+            <div className="hidden md:block">
+                <DashboardSidebar />
+            </div>
+            <MobileSidebar />
+            <main className="min-w-0 flex-1">{children}</main>
         </div>
     );
 }
