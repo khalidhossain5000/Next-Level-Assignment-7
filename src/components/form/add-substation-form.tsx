@@ -23,7 +23,7 @@ import { toast } from "sonner";
 const AddSubstationForm = () => {
     //need this beacuse of we want zone id which is necessary to add with substation
     const {data:getAllZone, isPending:allZonePending} = useGetAllZone();
-    const {mutate:addSubstation} = useAddSubstation()
+    const {mutate:addSubstation , isPending:substationPending} = useAddSubstation()
 
     const form = useForm({
         defaultValues: {
