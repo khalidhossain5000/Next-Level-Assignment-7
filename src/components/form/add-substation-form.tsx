@@ -29,8 +29,9 @@ const AddSubstationForm = () => {
         defaultValues: {
             name: "Khulna Distrubution zone",
             code: "KHD-005",
-            description: "this is the khulna distribution zone",
-            zoneImage: null as File | null,
+            capacity: "this is the khulna distribution zone",
+            location:"jashore sadar",
+            zoneId:"sdhfjdsk"
         },
         validators: {
             onSubmit: addZoneSchema
