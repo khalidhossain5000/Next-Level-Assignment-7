@@ -1,174 +1,149 @@
 "use client";
 
 import { useState } from "react";
-import {
-  FiLogOut,
-  FiMenu,
-  FiSettings,
-  FiShield,
-  FiX,
-} from "react-icons/fi";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FiLogOut, FiMenu, FiSettings, FiX } from "react-icons/fi";
 
 import Logo from "@/assets/svg/Logo";
 import { sidebarRoutes } from "./sidebarRoutes";
+import type { TUserRole } from "@/types";
 
 const MobileSidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   // Temporary role for UI development.
-  // Later, replace this with the authenticated user's role.
-  const currentRole = "ADMIN";
+  // Later, replace this with the role from your API/auth data.
+  const currentRole: TUserRole = "ADMIN";
 
-  const visibleRoutes = sidebarRoutes.filter((route) =>
-    route.roles.includes(currentRole),
+  const navItems = sidebarRoutes.filter((route) =>
+    route.roles.includes(currentRole)
   );
 
-  const closeDrawer = () => {
-    setIsOpen(false);
-  };
-
   return (
-    <div className="relative z-50 md:hidden">
-      {/* Mobile Header */}
-      <header className="flex h-16 items-center justify-between border-b border-border bg-background px-4">
+    <section>
+      {/* Mobile Navbar */}
+      <div className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/80 lg:hidden">
         <Logo />
 
         <button
           type="button"
-          aria-label={
-            isOpen
-              ? "Close navigation menu"
-              : "Open navigation menu"
-          }
-          aria-expanded={isOpen}
-          onClick={() => setIsOpen((open) => !open)}
-          className="flex size-10 items-center justify-center rounded-md border border-border text-foreground transition-colors hover:bg-muted"
+          onClick={() => setOpen(true)}
+          aria-label="Open menu"
+          className="rounded-full p-2.5 text-foreground/70 transition-colors hover:bg-muted hover:text-foreground active:scale-95"
         >
-          {isOpen ? (
-            <FiX className="size-5" />
-          ) : (
-            <FiMenu className="size-5" />
-          )}
+          <FiMenu className="size-5" />
         </button>
-      </header>
+      </div>
 
       {/* Overlay */}
-      {isOpen && (
-        <button
-          type="button"
-          aria-label="Close navigation menu"
-          onClick={closeDrawer}
-          className="fixed inset-0 top-16 bg-foreground/20"
-        />
-      )}
+      <button
+        type="button"
+        onClick={() => setOpen(false)}
+        aria-label="Close menu overlay"
+        className={`fixed inset-0 z-40 cursor-default bg-black/60 backdrop-blur-[2px] transition-opacity duration-300 lg:hidden ${
+          open ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      />
 
       {/* Drawer */}
       <aside
-        aria-label="Mobile dashboard navigation"
-        className={`absolute left-0 top-16 w-[min(19rem,calc(100vw-2rem))] border-r border-sidebar-border bg-sidebar text-sidebar-foreground shadow-xl transition-transform duration-200 ${
-          isOpen
-            ? "translate-x-0"
-            : "-translate-x-full"
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-sidebar text-sidebar-foreground shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${
+          open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex min-h-[calc(100vh-4rem)] flex-col px-4 py-6">
-          {/* Workspace / Role */}
-          <div className="mb-6 flex items-center gap-3 rounded-lg border border-sidebar-border bg-sidebar-accent/50 px-3 py-3">
-            <div className="flex size-9 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
-              <FiShield
-                className="size-4"
-                aria-hidden="true"
-              />
-            </div>
+        {/* Drawer Header */}
+        <div className="flex h-16 shrink-0 items-center justify-between border-b border-sidebar-border px-4">
+          <Logo />
 
-            <div className="min-w-0">
-              <p className="truncate text-sm font-semibold">
-                {currentRole}
-              </p>
-
-              <p className="text-xs text-sidebar-foreground/60">
-                Workspace
-              </p>
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <nav
-            aria-label="Dashboard navigation"
-            className="flex-1"
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Close menu"
+            className="rounded-full p-2 text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground active:scale-95"
           >
-            <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-sidebar-foreground/50">
-              Workspace
-            </p>
+            <FiX className="size-5" />
+          </button>
+        </div>
 
-            <div className="flex flex-col gap-1">
-              {visibleRoutes.map((route) => {
-                const Icon = route.icon;
+        {/* Navigation */}
+        <nav
+          aria-label="Dashboard navigation"
+          className="flex-1 space-y-1 overflow-y-auto px-3 py-5"
+        >
+          <p className="mb-3 px-3 text-xs font-medium text-sidebar-foreground/45">
+            Workspace
+          </p>
 
-                const isActive =
-                  pathname === route.href ||
-                  pathname.startsWith(`${route.href}/`);
+          {navItems.map((item) => {
+            const Icon = item.icon;
 
-                return (
-                  <Link
-                    key={route.href}
-                    href={route.href}
-                    aria-current={
-                      isActive ? "page" : undefined
-                    }
-                    onClick={closeDrawer}
-                    className={`flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
-                      isActive
-                        ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
-                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                    }`}
-                  >
-                    <Icon
-                      className="size-4"
-                      aria-hidden="true"
-                    />
+            const isActive =
+              pathname === item.href || pathname.startsWith(`${item.href}/`);
 
-                    <span>{route.label}</span>
-                  </Link>
-                );
-              })}
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                aria-current={isActive ? "page" : undefined}
+                className={`group relative flex items-center gap-3 rounded-lg py-2.5 pl-4 pr-3 text-sm font-medium transition-colors ${
+                  isActive
+                    ? "bg-sidebar-primary/10 text-sidebar-primary"
+                    : "text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                }`}
+              >
+                {isActive && (
+                  <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-sidebar-primary" />
+                )}
+                <Icon className="size-5 shrink-0" />
+                <span className="truncate">{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Bottom Section */}
+        <div className="shrink-0 border-t border-sidebar-border px-3 py-4">
+          {/* Settings */}
+          <Link
+            href="/settings"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-sidebar-foreground/65 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+          >
+            <FiSettings className="size-5 shrink-0" />
+            <span>Settings</span>
+          </Link>
+
+          {/* User */}
+          <div className="mt-3 flex items-center gap-3 rounded-lg bg-sidebar-accent/40 px-3 py-2.5">
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-sidebar-primary text-sidebar-primary-foreground">
+              <span className="text-sm font-medium">KH</span>
             </div>
-          </nav>
 
-          {/* Bottom Actions */}
-          <div className="mt-6 flex flex-col gap-1 border-t border-sidebar-border pt-4">
-            <Link
-              href="/settings"
-              onClick={closeDrawer}
-              className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-            >
-              <FiSettings
-                className="size-4"
-                aria-hidden="true"
-              />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-sidebar-foreground">
+                Khalid Hossain
+              </p>
 
-              <span>Settings</span>
-            </Link>
+              <p className="truncate text-xs text-sidebar-foreground/55">
+                khalid@example.com
+              </p>
+            </div>
 
             <button
               type="button"
-              onClick={closeDrawer}
-              className="flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-destructive/10 hover:text-destructive"
+              onClick={() => setOpen(false)}
+              aria-label="Log out"
+              className="shrink-0 rounded-md p-1.5 text-sidebar-foreground/50 transition-colors hover:bg-sidebar-background hover:text-sidebar-foreground"
             >
-              <FiLogOut
-                className="size-4"
-                aria-hidden="true"
-              />
-
-              <span>Log out</span>
+              <FiLogOut className="size-4" />
             </button>
           </div>
         </div>
       </aside>
-    </div>
+    </section>
   );
 };
 
