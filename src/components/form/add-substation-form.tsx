@@ -48,31 +48,20 @@ const AddSubstationForm = () => {
                 zoneId:value.zoneId
             };
 
-            addSubstation({ substationData }, {
+            addSubstation( substationData , {
                 onSuccess: (res) => {
-                    console.log(res, "Zone Added Successfully")
+                    console.log(res, "substation Added Successfully")
                     form.reset()
-                    // Remove image preview
-                    if (imagePreview) {
-                        URL.revokeObjectURL(imagePreview);
-                    }
-
-                    setImagePreview(null);
-
-                    // Reset file input
-                    if (fileInputRef.current) {
-                        fileInputRef.current.value = "";
-                    }
-                    toast.success(res.message || "Zone Added Successfully")
+                    toast.success(res.message || "substation Added Successfully")
 
                 },
                 onError: (err) => {
                     const message =
                         (err as any)?.data?.message ||
                         err.message ||
-                        "Failed when creating new zone";
-                    console.log(err, "this is register error")
-                    toast.error(message || "Something went wrong when adding zone")
+                        "Failed when creating new substation";
+                    console.log(err, "this is substation error")
+                    toast.error(message || "Something went wrong when adding substation")
                 }
             });
         },
