@@ -1,8 +1,14 @@
-import { addZone } from "@/api";
-import { useMutation } from "@tanstack/react-query";
+import { addZone, getAllZone } from "@/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useAddZone(){
     return useMutation({
         mutationFn:addZone
+    })
+}
+
+export function useGetAllZone(){
+    return useQuery({
+        queryFn:getAllZone
     })
 }
