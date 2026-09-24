@@ -7,3 +7,7 @@ export function addSubstation(payload:IAddSubstationPayload){
         body:payload
     })
 }
+
+export function getSubstation(){
+    return apiClient("/substation")
+}
