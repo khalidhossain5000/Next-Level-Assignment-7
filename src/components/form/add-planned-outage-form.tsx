@@ -116,7 +116,7 @@ const PlannedOutageForm = () => {
         <div className="relative p-6 sm:p-8">
           <FieldGroup>
             <div className="grid gap-6 sm:grid-cols-2">
-              {/* Title */}
+              {/* Title - Full Width */}
               <form.Field name="title">
                 {(field) => {
                   const isInvalid =
@@ -141,46 +141,6 @@ const PlannedOutageForm = () => {
                         <Input
                           id={field.name}
                           placeholder="e.g. Emergency Network Inspection"
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                          autoComplete="off"
-                        />
-                      </div>
-
-                      {isInvalid && (
-                        <FieldError errors={field.state.meta.errors} />
-                      )}
-                    </Field>
-                  );
-                }}
-              </form.Field>
-
-              {/* Reason */}
-              <form.Field name="reason">
-                {(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid;
-
-                  return (
-                    <Field data-invalid={isInvalid}>
-                      <Label
-                        htmlFor={field.name}
-                        className="mb-2 block text-sm font-semibold text-card-foreground"
-                      >
-                        Reason{" "}
-                        <span className="text-destructive">*</span>
-                      </Label>
-
-                      <div className="group relative">
-                        <FiTool className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
-
-                        <Input
-                          id={field.name}
-                          placeholder="e.g. Preventive maintenance"
                           name={field.name}
                           value={field.state.value}
                           onBlur={field.handleBlur}
@@ -277,37 +237,35 @@ const PlannedOutageForm = () => {
                 }}
               </form.Field>
 
-              {/* Description */}
-              <form.Field name="description">
+              {/* Reason */}
+              <form.Field name="reason">
                 {(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
 
                   return (
-                    <Field
-                      data-invalid={isInvalid}
-                      className="sm:col-span-2"
-                    >
+                    <Field data-invalid={isInvalid}>
                       <Label
                         htmlFor={field.name}
                         className="mb-2 block text-sm font-semibold text-card-foreground"
                       >
-                        Description{" "}
+                        Reason{" "}
                         <span className="text-destructive">*</span>
                       </Label>
 
                       <div className="group relative">
-                        <FiActivity className="pointer-events-none absolute left-3.5 top-4 size-4 text-muted-foreground transition-colors group-focus-within:text-primary" />
+                        <FiTool className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
 
-                        <Textarea
+                        <Input
                           id={field.name}
-                          placeholder="Describe the planned outage..."
+                          placeholder="e.g. Preventive maintenance"
                           name={field.name}
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
                           aria-invalid={isInvalid}
-                          className="min-h-28 rounded-xl border-border bg-background pl-10 pt-3.5 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          autoComplete="off"
                         />
                       </div>
 
@@ -319,17 +277,14 @@ const PlannedOutageForm = () => {
                 }}
               </form.Field>
 
-              {/* Area Select */}
+              {/* Area */}
               <form.Field name="areaId">
                 {(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
 
                   return (
-                    <Field
-                      data-invalid={isInvalid}
-                      className="sm:col-span-2"
-                    >
+                    <Field data-invalid={isInvalid}>
                       <Label
                         htmlFor={field.name}
                         className="mb-2 block text-sm font-semibold text-card-foreground"
@@ -365,6 +320,48 @@ const PlannedOutageForm = () => {
                         </select>
 
                         <FiChevronDown className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                      </div>
+
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
+
+              {/* Description - Full Width */}
+              <form.Field name="description">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+
+                  return (
+                    <Field
+                      data-invalid={isInvalid}
+                      className="sm:col-span-2"
+                    >
+                      <Label
+                        htmlFor={field.name}
+                        className="mb-2 block text-sm font-semibold text-card-foreground"
+                      >
+                        Description{" "}
+                        <span className="text-destructive">*</span>
+                      </Label>
+
+                      <div className="group relative">
+                        <FiActivity className="pointer-events-none absolute left-3.5 top-4 size-4 text-muted-foreground transition-colors group-focus-within:text-primary" />
+
+                        <Textarea
+                          id={field.name}
+                          placeholder="Describe the planned outage..."
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          className="min-h-28 rounded-xl border-border bg-background pl-10 pt-3.5 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                        />
                       </div>
 
                       {isInvalid && (

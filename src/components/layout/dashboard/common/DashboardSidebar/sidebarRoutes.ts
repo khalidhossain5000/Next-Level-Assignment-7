@@ -9,6 +9,7 @@ import { FaChartArea } from "react-icons/fa";
 import { MdElectricBolt } from "react-icons/md";
 import { MdSolarPower } from "react-icons/md";
 import { GiElectricalCrescent } from "react-icons/gi";
+import { FaRegFilePowerpoint } from "react-icons/fa6";
 
 export type SidebarRoute = {
   label: string;
@@ -58,6 +59,12 @@ export const sidebarRoutes: SidebarRoute[] = [
     label: "Add Load Shedding Schedule",
     href: "/admin/add-load-shedding-schedule",
     icon: GiElectricalCrescent ,
+    roles: ["ADMIN"],
+  },
+   {
+    label: "Add Planned Outage",
+    href: "/admin/add-planned-outage",
+    icon: FaRegFilePowerpoint ,
     roles: ["ADMIN"],
   },
   {
