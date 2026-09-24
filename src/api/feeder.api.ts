@@ -7,3 +7,9 @@ export function addFeeder(payload:IFeederInterface){
         body:payload
     })
 }
+
+
+
+export function getFeeder(){
+    return apiClient("/feeder")
+}
