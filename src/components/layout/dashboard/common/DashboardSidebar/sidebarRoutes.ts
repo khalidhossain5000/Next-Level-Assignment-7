@@ -10,6 +10,7 @@ import { MdElectricBolt } from "react-icons/md";
 import { MdSolarPower } from "react-icons/md";
 import { GiElectricalCrescent } from "react-icons/gi";
 import { FaRegFilePowerpoint } from "react-icons/fa6";
+import { MdPowerOff } from "react-icons/md";
 
 export type SidebarRoute = {
   label: string;
@@ -72,6 +73,12 @@ export const sidebarRoutes: SidebarRoute[] = [
     label: "Dashboard",
     href: "/customer/dashboard",
     icon: FiGrid,
+    roles: ["CUSTOMER"],
+  },
+   {
+    label: "Report Outage",
+    href: "/customer/report-outage",
+    icon: MdPowerOff,
     roles: ["CUSTOMER"],
   },
   {

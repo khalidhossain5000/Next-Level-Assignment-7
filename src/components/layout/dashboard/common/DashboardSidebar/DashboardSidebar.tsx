@@ -15,7 +15,7 @@ import { useGetMe } from "@/hooks";
 const DashboardSidebar = () => {
     const pathname = usePathname();
     const {data:getMe,isPending} = useGetMe()
-    console.log(getMe,'get me data now')
+
 
     const currentRole = getMe?.data?.role;
 
