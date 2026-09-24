@@ -56,7 +56,7 @@ export const sidebarRoutes: SidebarRoute[] = [
   },
   {
     label: "Add Load Shedding Schedule",
-    href: "/admin/add-loadshedding-schedule",
+    href: "/admin/add-load-shedding-schedule",
     icon: GiElectricalCrescent ,
     roles: ["ADMIN"],
   },
