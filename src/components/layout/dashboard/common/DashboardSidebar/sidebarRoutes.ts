@@ -8,6 +8,7 @@ import { GiFireZone } from "react-icons/gi";
 import { FaChartArea } from "react-icons/fa";
 import { MdElectricBolt } from "react-icons/md";
 import { MdSolarPower } from "react-icons/md";
+import { GiElectricalCrescent } from "react-icons/gi";
 
 export type SidebarRoute = {
   label: string;
@@ -53,7 +54,12 @@ export const sidebarRoutes: SidebarRoute[] = [
     icon: FaChartArea ,
     roles: ["ADMIN"],
   },
- 
+  {
+    label: "Add Load Shedding Schedule",
+    href: "/admin/add-loadshedding-schedule",
+    icon: GiElectricalCrescent ,
+    roles: ["ADMIN"],
+  },
   {
     label: "Work Orders",
     href: "/technician/dashboard",
