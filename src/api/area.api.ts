@@ -7,3 +7,8 @@ export function addArea(payload:IAreaInterface){
         body:payload
     })
 }
+
+
+export function getArea(){
+    return apiClient("/area")
+}

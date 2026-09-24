@@ -10,7 +10,7 @@ export function useAddFeeder(){
 
 export function useGetFeeder(){
     return useQuery({
-        queryKey:["all-areas"],
+        queryKey:["all-feeder"],
         queryFn:getFeeder
     })
 }
