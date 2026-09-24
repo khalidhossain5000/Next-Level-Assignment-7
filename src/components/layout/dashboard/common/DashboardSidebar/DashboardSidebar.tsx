@@ -10,11 +10,14 @@ import { usePathname } from "next/navigation";
 
 import Logo from "@/assets/svg/Logo";
 import { sidebarRoutes } from "./sidebarRoutes";
+import { useGetMe } from "@/hooks";
 
 const DashboardSidebar = () => {
     const pathname = usePathname();
+    const {data:getMe,isPending} = useGetMe()
+    console.log(getMe,'get me data now')
 
-    const currentRole = "ADMIN";
+    const currentRole = getMe?.data?.role;
 
     const visibleRoutes = sidebarRoutes.filter((route) =>
         route.roles.includes(currentRole),

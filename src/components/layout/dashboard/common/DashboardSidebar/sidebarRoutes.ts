@@ -23,13 +23,13 @@ export const sidebarRoutes: SidebarRoute[] = [
     label: "Dashboard",
     href: "/admin/dashboard",
     icon: FiGrid,
-  roles: ["ADMIN","CUSTOMER","TECHNICIAN"],
+    roles: ["ADMIN"],
   },
   {
     label: "Manage Users",
     href: "/admin/manage-user",
     icon: FiUsers,
-    roles: ["ADMIN","CUSTOMER","TECHNICIAN"],
+    roles: ["ADMIN"],
   },
   {
     label: "Add Zone",
@@ -66,6 +66,13 @@ export const sidebarRoutes: SidebarRoute[] = [
     href: "/admin/add-planned-outage",
     icon: FaRegFilePowerpoint ,
     roles: ["ADMIN"],
+  },
+  // customer part
+    {
+    label: "Dashboard",
+    href: "/customer/dashboard",
+    icon: FiGrid,
+    roles: ["CUSTOMER"],
   },
   {
     label: "Work Orders",
