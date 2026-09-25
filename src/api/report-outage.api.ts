@@ -9,3 +9,6 @@ export function reportOutage(payload:IReportOutagePayload){
 }
 
 
+export function getMyOutages(){
+    return apiClient("/outage/my-outage")
+}

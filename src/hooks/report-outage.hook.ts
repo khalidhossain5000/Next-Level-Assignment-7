@@ -1,5 +1,5 @@
-import { reportOutage } from "@/api";
-import { useMutation } from "@tanstack/react-query";
+import { getMyOutages, reportOutage } from "@/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useReportOutage(){
     return useMutation({
@@ -7,3 +7,11 @@ export function useReportOutage(){
     })
 }
 
+
+
+export function useGetMyOutages(){
+    return useQuery({
+        queryKey:["my-outages"],
+        queryFn:getMyOutages
+    })
+}
