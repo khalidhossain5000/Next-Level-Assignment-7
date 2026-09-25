@@ -11,3 +11,8 @@ export function makePayment(outageReportId:string){
 export function getPayments(){
     return apiClient("/payment")
 }
+
+
+export function getPaymentDetails(id:string){
+    return apiClient(`/payment/${id}`)
+}
