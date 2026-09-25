@@ -96,29 +96,9 @@ const MyOutages = () => {
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
-      {/* Header */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h2 className="font-manrope text-2xl font-bold tracking-tight text-card-foreground">
-            My Outages
-          </h2>
+  
 
-          <p className="mt-1 text-sm text-muted-foreground">
-            Track and manage the power outages you have reported.
-          </p>
-        </div>
-
-        <Badge
-          variant="outline"
-          className="w-fit rounded-full px-3 py-1 text-xs font-medium"
-        >
-          {outages.length} {outages.length === 1 ? "Outage" : "Outages"}
-        </Badge>
-      </div>
-
-      {/* =====================================================
-          XL AND ABOVE → TABLE VIEW
-      ====================================================== */}
+  
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
@@ -252,18 +232,14 @@ const MyOutages = () => {
         </div>
       </div>
 
-      {/* =====================================================
-          BELOW XL → COMPACT LIST / CARD VIEW
-      ====================================================== */}
+   
       <div className="space-y-3 xl:hidden">
         {outages.map((outage: IMyOutage) => (
           <Card
             key={outage.id}
             className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
           >
-            {/* =============================================
-                SM TO BELOW XL → HORIZONTAL COMPACT LIST
-            ============================================== */}
+   
             <CardContent className="hidden px-4 py-3 sm:block sm:px-5 sm:py-3.5">
               <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                 {/* Cause + Area */}
@@ -356,9 +332,7 @@ const MyOutages = () => {
               </div>
             </CardContent>
 
-            {/* =============================================
-                MOBILE → SMALL COMPACT LIST
-            ============================================== */}
+         
             <CardContent className="px-4 py-3 sm:hidden">
               {/* Top Info: title + status in same row, wraps if needed */}
               <div className="flex items-start justify-between gap-2">
