@@ -77,7 +77,7 @@ const PriorityInfoModal = ({ outageId }: PriorityInfoModalProps) => {
           </div>
 
           {/* Info note */}
-          <div className="flex items-start gap-2 rounded-xl bg-muted/40 px-3.5 py-3 text-xs text-muted-foreground">
+          <div className="flex items-start gap-2 rounded-xl bg-destructive/10 px-3.5 py-3 text-xs text-muted-foreground">
             <FiAlertCircle className="mt-0.5 size-3.5 shrink-0" />
             <p>
               This payment is charged only once per outage and moves your
