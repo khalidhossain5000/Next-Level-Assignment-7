@@ -1,3 +1,4 @@
+import AllReportedOutages from "@/components/layout/dashboard/admin/reported-outages/AllReportedOutages";
 import DashboardHeader from "@/components/layout/dashboard/common/DashboardHeader/DashboardHeader";
 
 const AllReportedOutagesPage = () => {
@@ -9,7 +10,7 @@ const AllReportedOutagesPage = () => {
             />
 
             <div className="mt-6">
-             
+             <AllReportedOutages/>
             </div>
         </section>
     );
