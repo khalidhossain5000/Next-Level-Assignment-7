@@ -346,16 +346,10 @@ const AllReportedOutages = () => {
 
                 {/* Actions */}
                 <div className="flex shrink-0 items-center gap-1">
-                  <Button
-                    type="button"
-                    size="sm"
-                    className="h-8 rounded-lg bg-primary px-2.5 text-[11px] font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
-                    onClick={() => handleUpdateStatus(outage.id)}
-                  >
-                    <FiRefreshCw className="size-3.5" />
-                    <span className="hidden md:inline">Update Status</span>
-                    <span className="md:hidden">Status</span>
-                  </Button>
+                  <UpdateReportedOutageStatus
+  outageId={outage.id}
+  currentStatus={outage.status}
+/>
 
                   <Button
                     type="button"
