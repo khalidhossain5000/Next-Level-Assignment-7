@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { TbCurrencyTaka } from "react-icons/tb";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 interface PriorityInfoModalProps {
   outageId: string;
@@ -29,7 +29,7 @@ const PriorityInfoModal = ({ outageId }: PriorityInfoModalProps) => {
           <Button
             type="button"
             size="sm"
-            className="h-9 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
+            className="h-9 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 cursor-pointer"
             title="Pay for Priority Restoration"
           >
             <FiZap className="size-3.5" />
@@ -63,8 +63,8 @@ const PriorityInfoModal = ({ outageId }: PriorityInfoModalProps) => {
           <div className="flex items-center justify-between rounded-xl border border-border bg-muted/30 px-4 py-3.5">
             <div>
               <p className="text-xs text-muted-foreground">One-time fee</p>
-              <p className="font-manrope text-2xl font-bold text-card-foreground">
-                <TbCurrencyTaka/>1299
+              <p className="font-manrope text-2xl font-bold text-card-foreground flex items-center gap-.5">
+                <FaBangladeshiTakaSign/>1299
               </p>
             </div>
 
