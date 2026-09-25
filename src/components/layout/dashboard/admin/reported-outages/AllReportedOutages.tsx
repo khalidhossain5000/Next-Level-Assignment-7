@@ -1,6 +1,12 @@
 "use client";
 
-import { FiMapPin, FiTrash2, FiUserPlus, FiZap } from "react-icons/fi";
+import {
+  FiMapPin,
+  FiRefreshCw,
+  FiTrash2,
+  FiUserPlus,
+  FiZap,
+} from "react-icons/fi";
 
 import { useGetAllOutages } from "@/hooks";
 
@@ -17,8 +23,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import type { IAllOutage } from "@/types";
 
+import type { IAllOutage } from "@/types";
 
 const AllReportedOutages = () => {
   const { data, isPending } = useGetAllOutages();
@@ -135,7 +141,7 @@ const AllReportedOutages = () => {
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow className="bg-muted/30 hover:bg-muted/30">
+                <TableRow className="border-border bg-muted/30 hover:bg-muted/30">
                   <TableHead className="h-12 whitespace-nowrap pl-6">
                     Cause
                   </TableHead>
@@ -170,7 +176,7 @@ const AllReportedOutages = () => {
                 {outages.map((outage) => (
                   <TableRow
                     key={outage.id}
-                    className="transition-colors hover:bg-muted/30"
+                    className="border-border transition-colors hover:bg-muted/20"
                   >
                     {/* Cause */}
                     <TableCell className="pl-6">
@@ -211,11 +217,9 @@ const AllReportedOutages = () => {
                     {/* Technician */}
                     <TableCell>
                       {outage.techician ? (
-                        <div className="flex items-center gap-1.5">
-                          <span className="max-w-28 truncate text-sm font-medium text-card-foreground">
-                            {outage.techician.name}
-                          </span>
-                        </div>
+                        <span className="block max-w-28 truncate text-sm font-medium text-card-foreground">
+                          {outage.techician.name}
+                        </span>
                       ) : (
                         <span className="text-xs text-muted-foreground">
                           Unassigned
@@ -244,10 +248,10 @@ const AllReportedOutages = () => {
                         <Button
                           type="button"
                           size="sm"
-                          variant="outline"
-                          className="h-9 gap-1.5 rounded-lg px-3 text-xs font-semibold"
+                          className="h-8 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
                           onClick={() => handleUpdateStatus(outage.id)}
                         >
+                          <FiRefreshCw className="size-3.5" />
                           Update Status
                         </Button>
 
@@ -255,7 +259,7 @@ const AllReportedOutages = () => {
                           type="button"
                           size="sm"
                           variant="outline"
-                          className="h-9 gap-1.5 rounded-lg px-3 text-xs font-semibold"
+                          className="h-8 rounded-lg border-primary/25 bg-primary/5 px-3 text-xs font-semibold text-primary shadow-none hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
                           onClick={() =>
                             handleAssignTechnician(outage.id)
                           }
@@ -268,7 +272,7 @@ const AllReportedOutages = () => {
                           type="button"
                           variant="ghost"
                           size="icon"
-                          className="size-9 cursor-pointer rounded-lg text-muted-foreground hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30"
+                          className="size-8 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                           title="Delete outage"
                           aria-label="Delete outage"
                           onClick={() => handleDelete(outage.id)}
@@ -294,9 +298,9 @@ const AllReportedOutages = () => {
             key={outage.id}
             className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
           >
-            <CardContent className="px-4 py-3 sm:px-5 sm:py-3.5">
+            <CardContent className="px-4 py-3.5 sm:px-5">
               {/* SM AND ABOVE */}
-              <div className="hidden items-center gap-3 sm:flex sm:gap-4">
+              <div className="hidden items-center gap-3 sm:flex">
                 {/* Cause + Area */}
                 <div className="min-w-0 flex-1">
                   <div className="flex min-w-0 items-center gap-2">
@@ -361,9 +365,7 @@ const AllReportedOutages = () => {
                 {/* Status */}
                 <Badge
                   variant="outline"
-                  className={`shrink-0 ${getStatusClassName(
-                    outage.status,
-                  )}`}
+                  className={`shrink-0 ${getStatusClassName(outage.status)}`}
                 >
                   {outage.status.replace("_", " ")}
                 </Badge>
@@ -373,33 +375,37 @@ const AllReportedOutages = () => {
                   <Button
                     type="button"
                     size="sm"
-                    variant="outline"
-                    className="h-8 rounded-lg px-2.5 text-xs font-semibold"
+                    className="h-8 rounded-lg bg-primary px-2.5 text-[11px] font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
                     onClick={() => handleUpdateStatus(outage.id)}
                   >
-                    Status
+                    <FiRefreshCw className="size-3.5" />
+                    <span className="hidden md:inline">Update Status</span>
+                    <span className="md:hidden">Status</span>
                   </Button>
 
                   <Button
                     type="button"
                     size="sm"
                     variant="outline"
-                    className="h-8 gap-1.5 rounded-lg px-2.5 text-xs font-semibold"
+                    className="h-8 rounded-lg border-primary/25 bg-primary/5 px-2.5 text-[11px] font-semibold text-primary shadow-none hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
                     onClick={() =>
                       handleAssignTechnician(outage.id)
                     }
                   >
                     <FiUserPlus className="size-3.5" />
+
                     <span className="hidden md:inline">
-                      Assign
+                      Assign Technician
                     </span>
+
+                    <span className="md:hidden">Assign</span>
                   </Button>
 
                   <Button
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="size-8 rounded-lg text-muted-foreground hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30"
+                    className="size-8 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                     title="Delete outage"
                     aria-label="Delete outage"
                     onClick={() => handleDelete(outage.id)}
@@ -465,14 +471,14 @@ const AllReportedOutages = () => {
                 </div>
 
                 {/* Mobile Actions */}
-                <div className="mt-2.5 flex items-center justify-end gap-1.5 border-t border-border pt-2.5">
+                <div className="mt-2.5 grid grid-cols-[1fr_1fr_auto] gap-1.5 border-t border-border pt-2.5">
                   <Button
                     type="button"
                     size="sm"
-                    variant="outline"
-                    className="h-8 rounded-lg px-3 text-xs font-semibold"
+                    className="h-9 rounded-lg bg-primary px-2 text-[11px] font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
                     onClick={() => handleUpdateStatus(outage.id)}
                   >
+                    <FiRefreshCw className="size-3.5" />
                     Update Status
                   </Button>
 
@@ -480,7 +486,7 @@ const AllReportedOutages = () => {
                     type="button"
                     size="sm"
                     variant="outline"
-                    className="h-8 gap-1.5 rounded-lg px-3 text-xs font-semibold"
+                    className="h-9 rounded-lg border-primary/25 bg-primary/5 px-2 text-[11px] font-semibold text-primary shadow-none hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
                     onClick={() =>
                       handleAssignTechnician(outage.id)
                     }
@@ -493,12 +499,12 @@ const AllReportedOutages = () => {
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="size-8 rounded-lg text-muted-foreground hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30"
+                    className="size-9 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                     title="Delete outage"
                     aria-label="Delete outage"
                     onClick={() => handleDelete(outage.id)}
                   >
-                    <FiTrash2 className="size-3.5" />
+                    <FiTrash2 className="size-4" />
                   </Button>
                 </div>
               </div>
