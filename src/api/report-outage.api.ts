@@ -26,11 +26,10 @@ export interface IUpdateStatus{
     id:string;
     status:string
 }
-export function updateOutageStatus({id,status}:IUpdateStatus){
-    return apiClient(`/outage/${id}/status`,{
+export function updateOutageStatus(payload:IUpdateStatus){
+    return apiClient(`/outage/${payload.id}/status`,{
         method:"PATCH",
-        body:
-            status
+        body: payload.status
         
     })
 }
