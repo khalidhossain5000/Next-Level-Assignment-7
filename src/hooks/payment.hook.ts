@@ -1,4 +1,4 @@
-import { getPayments, makePayment } from "@/api";
+import { getPaymentDetails, getPayments, makePayment } from "@/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useMakePayment(){
@@ -11,5 +11,12 @@ export function useGetPayments(){
     return useQuery({
         queryKey:["payments"],
         queryFn:getPayments
+    })
+}
+
+export function useGetPaymentDetails(){
+      return useQuery({
+        queryKey:["payment-details"],
+        queryFn:getPaymentDetails
     })
 }
