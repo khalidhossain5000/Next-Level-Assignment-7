@@ -13,6 +13,7 @@ import { FaRegFilePowerpoint } from "react-icons/fa6";
 import { MdPowerOff } from "react-icons/md";
 import { GiGreenPower } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { TbSunElectricity } from "react-icons/tb";
 
 export type SidebarRoute = {
   label: string;
@@ -68,6 +69,12 @@ export const sidebarRoutes: SidebarRoute[] = [
     label: "Add Planned Outage",
     href: "/admin/add-planned-outage",
     icon: FaRegFilePowerpoint ,
+    roles: ["ADMIN"],
+  },
+   {
+    label: "Manage Reported Outages",
+    href: "/admin/reported-outages",
+    icon: TbSunElectricity ,
     roles: ["ADMIN"],
   },
   // customer part
