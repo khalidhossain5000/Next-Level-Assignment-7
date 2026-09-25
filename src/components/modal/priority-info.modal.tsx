@@ -101,7 +101,7 @@ const PriorityInfoModal = ({ outageId }: PriorityInfoModalProps) => {
             nativeButton={false}
             className="flex-1 gap-1.5 rounded-lg bg-primary font-semibold text-primary-foreground hover:bg-primary/90"
             render={
-              <Link href={`/payment?outageId=${outageId}&type=priority`} />
+              <Link href={`/customer/my-outages/${outageId}/pay`} />
             }
           >
             <FiZap className="size-3.5" />
