@@ -77,6 +77,18 @@ export const sidebarRoutes: SidebarRoute[] = [
     icon: TbSunElectricity ,
     roles: ["ADMIN"],
   },
+  {
+    label: "Manage Planned Outages",
+    href: "/admin/planned-outages",
+    icon: TbSunElectricity ,
+    roles: ["ADMIN"],
+  },
+    {
+    label: "Manage Load Shedding",
+    href: "/admin/manage-load-shedding",
+    icon: TbSunElectricity ,
+    roles: ["ADMIN"],
+  },
   // customer part
     {
     label: "Dashboard",
