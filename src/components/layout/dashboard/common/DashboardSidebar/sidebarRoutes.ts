@@ -12,6 +12,7 @@ import { GiElectricalCrescent } from "react-icons/gi";
 import { FaRegFilePowerpoint } from "react-icons/fa6";
 import { MdPowerOff } from "react-icons/md";
 import { GiGreenPower } from "react-icons/gi";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
 
 export type SidebarRoute = {
   label: string;
@@ -86,6 +87,12 @@ export const sidebarRoutes: SidebarRoute[] = [
     label: "My Outages",
     href: "/customer/my-outages",
     icon: GiGreenPower,
+    roles: ["CUSTOMER"],
+  },
+   {
+    label: "Payment History",
+    href: "/customer/payment-history",
+    icon: FaRegMoneyBillAlt,
     roles: ["CUSTOMER"],
   },
   {
