@@ -1,4 +1,4 @@
-import { getMyOutages, reportOutage } from "@/api";
+import { getAllOutages, getMyOutages, reportOutage } from "@/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useReportOutage(){
@@ -13,5 +13,13 @@ export function useGetMyOutages(){
     return useQuery({
         queryKey:["my-outages"],
         queryFn:getMyOutages
+    })
+}
+
+
+export function useGetAllOutages(){
+    return useQuery({
+        queryKey:["all-outages"],
+        queryFn:getAllOutages
     })
 }
