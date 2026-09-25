@@ -6,3 +6,8 @@ export function makePayment(outageReportId:string){
         body:{outageReportId}
     })
 }
+
+
+export function getPayments(){
+    return apiClient("/payment")
+}
