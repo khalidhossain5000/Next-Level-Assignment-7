@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 interface PriorityInfoModalProps {
   outageId: string;
@@ -63,7 +64,7 @@ const PriorityInfoModal = ({ outageId }: PriorityInfoModalProps) => {
             <div>
               <p className="text-xs text-muted-foreground">One-time fee</p>
               <p className="font-manrope text-2xl font-bold text-card-foreground">
-                ৳1299
+                <TbCurrencyTaka/>1299
               </p>
             </div>
 
@@ -97,6 +98,7 @@ const PriorityInfoModal = ({ outageId }: PriorityInfoModalProps) => {
 
           <Button
             type="button"
+            nativeButton={false}
             className="flex-1 gap-1.5 rounded-lg bg-primary font-semibold text-primary-foreground hover:bg-primary/90"
             render={
               <Link href={`/payment?outageId=${outageId}&type=priority`} />
