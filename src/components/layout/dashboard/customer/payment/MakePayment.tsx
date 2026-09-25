@@ -15,7 +15,8 @@ const MakePayment = ({ outageReportId }: { outageReportId: string }) => {
   const { mutate: makePayment, isPending } = useMakePayment();
 
   const handlePay = () => {
-    makePayment(outageReportId);
+   const res= makePayment(outageReportId);
+   console.log(res,'res payment')
   };
 
   return (
