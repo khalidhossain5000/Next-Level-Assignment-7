@@ -9,7 +9,7 @@ const PriorityOutagePaymentPage = async ({
   params,
 }: PriorityOutagePaymentPageProps) => {
   const { id } = await params;
-  console.log(id, "outage report id is here");
+
 
   return (
     <section>

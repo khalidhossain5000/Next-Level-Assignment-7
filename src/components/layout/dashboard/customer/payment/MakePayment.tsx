@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
 
 const PRIORITY_FEE = 1299;
 
@@ -16,8 +17,19 @@ const MakePayment = ({ outageReportId }: { outageReportId: string }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-   const res= makePayment(outageReportId);
-   console.log(res,'res this one')
+
+    makePayment(outageReportId, {
+      onSuccess: (data) => {
+        toast.success(data.message);
+
+        // External payment gateway — router.push কাজ করবে না,
+        // full browser redirect দরকার তাই window.location.href
+        window.location.href = data.data.paymentGatewayUrl;
+      },
+      onError: (error) => {
+        toast.error(error?.message || "Payment failed, please try again.");
+      },
+    });
   };
 
   return (
@@ -110,7 +122,7 @@ const MakePayment = ({ outageReportId }: { outageReportId: string }) => {
             >
               <FiZap className="size-4" />
               {isPending
-                ? "Processing..."
+                ? "Redirecting to payment..."
                 : `Pay ৳${PRIORITY_FEE.toLocaleString("en-BD")} Now`}
             </Button>
           </CardContent>
