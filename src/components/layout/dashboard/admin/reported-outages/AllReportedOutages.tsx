@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
 import type { IAllOutage } from "@/types";
+import UpdateReportedOutageStatus from "@/components/modal/update-outage-status.modal";
 
 const AllReportedOutages = () => {
   const { data, isPending } = useGetAllOutages();
@@ -113,9 +114,9 @@ const AllReportedOutages = () => {
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
-      
 
-   
+
+
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
@@ -225,15 +226,10 @@ const AllReportedOutages = () => {
                     {/* Actions */}
                     <TableCell className="pr-6">
                       <div className="flex items-center justify-end gap-1.5">
-                        <Button
-                          type="button"
-                          size="sm"
-                          className="h-8 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
-                          onClick={() => handleUpdateStatus(outage.id)}
-                        >
-                          <FiRefreshCw className="size-3.5" />
-                          Update Status
-                        </Button>
+                        <UpdateReportedOutageStatus
+                          outageId={outage.id}
+                          currentStatus={outage.status}
+                        />
 
                         <Button
                           type="button"
