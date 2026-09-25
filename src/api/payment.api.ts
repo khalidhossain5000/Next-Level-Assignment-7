@@ -13,6 +13,8 @@ export function getPayments(){
 }
 
 
+
+
 export function getPaymentDetails(id:string){
     return apiClient(`/payment/${id}`)
 }
