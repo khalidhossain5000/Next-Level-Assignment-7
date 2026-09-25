@@ -218,15 +218,7 @@ const MyOutages = () => {
                     <TableCell className="pr-6">
                       <div className="flex items-center justify-end gap-1.5">
                         {outage.priority === "NORMAL" && (
-                          <Button
-                            type="button"
-                            size="sm"
-                            className="h-9 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
-                            title="Pay for Priority Restoration"
-                          >
-                            <FiZap className="size-3.5" />
-                            Priority Restore
-                          </Button>
+                          <PriorityInfoModal outageId={outage.id} />
                         )}
 
                         <Button
@@ -336,15 +328,7 @@ const MyOutages = () => {
                 {/* Actions */}
                 <div className="flex shrink-0 items-center gap-1">
                   {outage.priority === "NORMAL" && (
-                    <Button
-                      type="button"
-                      size="sm"
-                      className="h-8 gap-1.5 rounded-lg px-3 text-xs font-semibold"
-                      title="Pay for Priority Restoration"
-                    >
-                      <FiZap className="size-3.5" />
-                      <span>Priority Restore</span>
-                    </Button>
+                    <PriorityInfoModal outageId={outage.id} />
                   )}
 
                   <Button
@@ -427,15 +411,7 @@ const MyOutages = () => {
 
                 <div className="flex shrink-0 items-center gap-1">
                   {outage.priority === "NORMAL" && (
-                    <Button
-                      type="button"
-                      size="sm"
-                      className="h-8 gap-1.5 rounded-lg px-2.5 text-[11px] font-semibold"
-                      title="Pay for Priority Restoration"
-                    >
-                      <FiZap className="size-3.5" />
-                      Priority Restore
-                    </Button>
+                    <PriorityInfoModal outageId={outage.id} />
                   )}
 
                   <Button
