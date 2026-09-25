@@ -54,3 +54,36 @@ export interface IMyOutage {
     updatedAt: string;
   };
 }
+
+
+export interface IOutageUser {
+  id: string;
+  name: string;
+  email: string;
+  profileImage?: string;
+}
+
+export interface IOutageArea {
+  id: string;
+  name: string;
+  code: string;
+}
+
+export interface IAllOutage {
+  id: string;
+  cause: string;
+  description: string;
+  priority: "NORMAL" | "HIGH";
+  status:
+    | "REPORTED"
+    | "ACKNOWLEDGED"
+    | "ASSIGNED"
+    | "IN_PROGRESS"
+    | "RESTORED"
+    | "CANCELLED";
+  reported_At: string;
+  technicianId: string | null;
+  techician: IOutageUser | null;
+  area: IOutageArea | null;
+  user: IOutageUser | null;
+}
