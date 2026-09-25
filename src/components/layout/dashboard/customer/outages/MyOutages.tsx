@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
 import type { IMyOutage } from "@/types";
+import PriorityInfoModal from "@/components/modal/priority-info.modal";
 
 const MyOutages = () => {
   const { data: myOutages, isPending } = useGetMyOutages();
