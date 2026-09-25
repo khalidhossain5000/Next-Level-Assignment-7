@@ -248,7 +248,7 @@ const AllReportedOutages = () => {
                           type="button"
                           variant="ghost"
                           size="icon"
-                          className="size-8 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                          className="size-8 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive cursor-pointer"
                           title="Delete outage"
                           aria-label="Delete outage"
                           onClick={() => handleDelete(outage.id)}
@@ -347,15 +347,15 @@ const AllReportedOutages = () => {
                 {/* Actions */}
                 <div className="flex shrink-0 items-center gap-1">
                   <UpdateReportedOutageStatus
-  outageId={outage.id}
-  currentStatus={outage.status}
-/>
+                    outageId={outage.id}
+                    currentStatus={outage.status}
+                  />
 
                   <Button
                     type="button"
                     size="sm"
                     variant="outline"
-                    className="h-8 rounded-lg border-primary/25 bg-primary/5 px-2.5 text-[11px] font-semibold text-primary shadow-none hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
+                    className="h-8 rounded-lg border-primary/25 bg-primary/5 px-2.5 text-[11px] font-semibold text-primary shadow-none hover:border-primary/40 hover:bg-primary/10 hover:text-primary dark:text-white"
                     onClick={() =>
                       handleAssignTechnician(outage.id)
                     }
