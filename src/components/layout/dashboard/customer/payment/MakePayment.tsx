@@ -102,7 +102,7 @@ const MakePayment = ({ outageReportId }: { outageReportId: string }) => {
             type="button"
             disabled={isPending}
             onClick={handlePay}
-            className="h-11 w-full gap-2 rounded-xl bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
+            className="h-11 w-full gap-2 rounded-xl bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 cursor-pointer"
           >
             <FiZap className="size-4" />
             {isPending
