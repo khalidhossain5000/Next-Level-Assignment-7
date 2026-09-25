@@ -64,7 +64,7 @@ const PriorityInfoModal = ({ outageId }: PriorityInfoModalProps) => {
             <div>
               <p className="text-xs text-muted-foreground">One-time fee</p>
               <p className="font-manrope text-2xl font-bold text-card-foreground flex items-center gap-.5">
-                <TbCoinTaka/>1299
+                <TbCoinTaka className="text-primary" size={25}/>1299
               </p>
             </div>
 
