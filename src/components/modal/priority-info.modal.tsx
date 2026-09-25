@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import { TbCoinTaka } from "react-icons/tb";
 
 interface PriorityInfoModalProps {
   outageId: string;
@@ -64,7 +64,7 @@ const PriorityInfoModal = ({ outageId }: PriorityInfoModalProps) => {
             <div>
               <p className="text-xs text-muted-foreground">One-time fee</p>
               <p className="font-manrope text-2xl font-bold text-card-foreground flex items-center gap-.5">
-                <FaBangladeshiTakaSign/>1299
+                <TbCoinTaka/>1299
               </p>
             </div>
 
