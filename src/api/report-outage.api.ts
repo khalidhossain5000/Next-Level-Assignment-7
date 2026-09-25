@@ -18,3 +18,19 @@ export function getMyOutages(){
 export function getAllOutages(){
     return apiClient("/outage")
 }
+
+
+//update status
+// 1/outage/898951b4-bc7d-4b70-a234-7a7454c11907/status
+export interface IUpdateStatus{
+    id:string;
+    status:string
+}
+export function updateOutageStatus({id,status}:IUpdateStatus){
+    return apiClient(`/outage/${id}/status`,{
+        method:"PATCH",
+        body:
+            status
+        
+    })
+}
