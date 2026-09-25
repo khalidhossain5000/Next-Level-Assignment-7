@@ -14,7 +14,7 @@ import { useGetMe } from "@/hooks";
 
 const DashboardSidebar = () => {
     const pathname = usePathname();
-    const {data:getMe,isPending} = useGetMe()
+    const { data: getMe, isPending } = useGetMe()
 
 
     const currentRole = getMe?.data?.role;
@@ -31,14 +31,14 @@ const DashboardSidebar = () => {
             </div>
 
             <div className="flex min-h-0 flex-1 flex-col px-4 py-6">
-           
+
 
                 {/* Navigation */}
                 <nav
                     aria-label="Dashboard navigation"
-                    className="flex-1"
+                    className="min-h-0 flex-1 overflow-y-auto"
                 >
-                   
+
 
                     <div className="flex flex-col gap-1">
                         {visibleRoutes.map((route) => {
@@ -54,8 +54,8 @@ const DashboardSidebar = () => {
                                     href={route.href}
                                     aria-current={isActive ? "page" : undefined}
                                     className={`flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${isActive
-                                            ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
-                                            : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                        ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
+                                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                                         }`}
                                 >
                                     <Icon
