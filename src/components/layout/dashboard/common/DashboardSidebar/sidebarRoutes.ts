@@ -130,10 +130,11 @@ export const sidebarRoutes: SidebarRoute[] = [
     icon: FaRegMoneyBillAlt,
     roles: ["CUSTOMER"],
   },
-  {
-    label: "Work Orders",
-    href: "/technician/dashboard",
-    icon: FiTool,
-    roles: ["ADMIN","CUSTOMER","TECHNICIAN"],
+  // technician routes are here
+    {
+    label: "Assigned Outages",
+    href: "/technician/assigned-outages",
+    icon: FaRegMoneyBillAlt,
+    roles: ["TECHNICIAN"],
   },
 ];
