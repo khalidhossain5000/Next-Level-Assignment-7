@@ -15,6 +15,7 @@ import { GiGreenPower } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { TbSunElectricity } from "react-icons/tb";
 import { GrUserWorker } from "react-icons/gr";
+import { FaMoneyCheckAlt } from "react-icons/fa";
 
 export type SidebarRoute = {
   label: string;
@@ -94,6 +95,11 @@ export const sidebarRoutes: SidebarRoute[] = [
     label: "Manage Load Shedding",
     href: "/admin/manage-load-shedding",
     icon: TbSunElectricity ,
+    roles: ["ADMIN"],
+  }, {
+    label: "Payment Records",
+    href: "/admin/payment-record",
+    icon: FaMoneyCheckAlt ,
     roles: ["ADMIN"],
   },
   
