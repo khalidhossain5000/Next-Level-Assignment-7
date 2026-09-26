@@ -341,23 +341,7 @@ const AllReportedOutages = () => {
                     currentStatus={outage.status}
                   />
 
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    className="h-8 rounded-lg border-primary/25 bg-primary/5 px-2.5 text-[11px] font-semibold text-primary shadow-none hover:border-primary/40 hover:bg-primary/10 hover:text-primary dark:text-white"
-                    onClick={() =>
-                      handleAssignTechnician(outage.id)
-                    }
-                  >
-                    <FiUserPlus className="size-3.5" />
-
-                    <span className="hidden md:inline">
-                      Assign Technician
-                    </span>
-
-                    <span className="md:hidden">Assign</span>
-                  </Button>
+                 <AssignTechnicianModal outageId={outage.id} />
 
                   <Button
                     type="button"
