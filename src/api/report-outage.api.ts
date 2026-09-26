@@ -64,5 +64,5 @@ export function assignTechnician(payload:IAssignTechnician){
 //get current technican assinged
 
 export function getCurrentTechnicainOutage(){
-    return apiClient("/my-assigned-outages")
+    return apiClient("/outage/my-assigned-outages")
 }
