@@ -160,7 +160,7 @@ const AssignTechnicianModal = ({
               <Select
                 value={selectedTechnicianId}
                 onValueChange={(value) =>
-                  setSelectedTechnicianId(value)
+                  setSelectedTechnicianId(value as string)
                 }
               >
                 <SelectTrigger className="h-10 w-full rounded-lg border-border bg-background">
