@@ -55,3 +55,10 @@ export function resendOtp(payload:{email:string}){
 export function getMe(){
     return apiClient("/auth/get-me")
 }
+
+
+//admin get all technician
+
+export function getAllTechnician(){
+    return apiClient("/admin/technician")
+}
