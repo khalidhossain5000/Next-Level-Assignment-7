@@ -1,5 +1,7 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
 "use client";
 
+import { toast } from "sonner";
 import {
   FiCheckCircle,
   FiClock,
@@ -8,7 +10,7 @@ import {
   FiZap,
 } from "react-icons/fi";
 
-import { useGetTechnicanAssignedOutages } from "@/hooks";
+import { useGetTechnicanAssignedOutages, useUpdateStatus } from "@/hooks";
 
 import {
   Table,
@@ -87,11 +89,40 @@ const formatDate = (date: string) => {
 
 const AssignedOutages = () => {
   const { data, isPending } = useGetTechnicanAssignedOutages();
+  const {
+    mutate: updateOutageStatus,
+    isPending: statusUpdating,
+    variables,
+  } = useUpdateStatus();
 
   const outages: IAssignedOutage[] = data?.data ?? [];
 
+  const handleStatusChange = (outageId: string, newStatus: string) => {
+    updateOutageStatus(
+      { id: outageId, status: newStatus },
+      {
+        onSuccess: () => {
+          toast.success(
+            newStatus === "RESTORED"
+              ? "Outage marked as restored."
+              : "Outage marked as rejected.",
+          );
+        },
+        onError: (error: any) => {
+          toast.error(
+            error?.data?.message ||
+              error?.message ||
+              "Failed to update status.",
+          );
+        },
+      },
+    );
+  };
+
   const StatusSelect = ({ outage }: { outage: IAssignedOutage }) => {
     const isFinalized = outage.status === "RESTORED";
+    const isThisRowUpdating =
+      statusUpdating && (variables as any)?.id === outage.id;
 
     if (isFinalized) {
       return (
@@ -107,8 +138,20 @@ const AssignedOutages = () => {
       );
     }
 
+    if (isThisRowUpdating) {
+      return (
+        <div className="flex h-8 w-[140px] items-center gap-1.5 rounded-lg border border-border px-2.5 text-xs text-muted-foreground">
+          <Spinner className="size-3.5" />
+          Updating...
+        </div>
+      );
+    }
+
     return (
-      <Select value={outage.status}>
+      <Select
+        value={outage.status}
+        onValueChange={(value) => handleStatusChange(outage.id, value as string)}
+      >
         <SelectTrigger
           className={`h-8 w-[140px] rounded-lg border text-xs font-semibold ${getStatusClassName(
             outage.status,
@@ -279,7 +322,6 @@ const AssignedOutages = () => {
         </div>
       </div>
 
-    
       <div className="space-y-3 xl:hidden">
         {outages.map((outage) => (
           <Card
