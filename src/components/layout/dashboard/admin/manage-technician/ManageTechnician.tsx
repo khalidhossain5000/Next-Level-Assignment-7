@@ -5,7 +5,7 @@ import {
   FiAward,
   FiCheckCircle,
   FiClock,
-  FiZap,
+  FiX,
 } from "react-icons/fi";
 
 import { useApproveTechnician, useGetAllTechnician } from "@/hooks";
@@ -23,12 +23,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
+type VerificationStatus = "PENDING" | "APPROVED" | "REJECTED";
+
 interface TechnicianProfile {
   availability?: "AVAILABLE" | "BUSY";
   expertise?: string[];
   experience?: number;
   bio?: string;
-  technicianvProfileVerificationStatus?: "APPROVED" | "PENDING" | "REJECTED";
+  technicianvProfileVerificationStatus?: VerificationStatus;
 }
 
 interface Technician {
@@ -63,27 +65,38 @@ const ManageTechnician = () => {
   const { data: technician, isPending: technicianPending } =
     useGetAllTechnician();
 
-  const { mutate: approveTechnician, isPending: approving } =
-    useApproveTechnician();
+  const {
+    mutate: approveTechnician,
+    isPending: approving,
+    variables,
+  } = useApproveTechnician();
 
   const technicians: Technician[] = Array.isArray(technician)
     ? technician
     : (technician?.data ?? []);
 
-  const handleApprove = (technicianId: string) => {
-    const payload={
-        technicianId,
-        status:"APPROVED"
-    }
+  const handleUpdateStatus = (
+    technicianId: string,
+    status: VerificationStatus,
+  ) => {
+    const payload = {
+      technicianId,
+      status,
+    };
+
     approveTechnician(payload, {
       onSuccess: () => {
-        toast.success("Technician approved successfully." );
+        toast.success(
+          status === "APPROVED"
+            ? "Technician approved successfully."
+            : "Technician rejected.",
+        );
       },
       onError: (error: any) => {
         toast.error(
           error?.data?.message ||
             error?.message ||
-            "Failed to approve technician.",
+            `Failed to ${status === "APPROVED" ? "approve" : "reject"} technician.`,
         );
       },
     });
@@ -176,6 +189,9 @@ const ManageTechnician = () => {
                     item.technicianProfile
                       ?.technicianvProfileVerificationStatus;
                   const isApproved = verificationStatus === "APPROVED";
+                  const isThisRowPending =
+                    approving &&
+                    (variables as any)?.technicianId === item.id;
 
                   return (
                     <TableRow
@@ -261,23 +277,41 @@ const ManageTechnician = () => {
 
                       {/* Actions */}
                       <TableCell className="pr-6">
-                        <div className="flex items-center justify-end">
+                        <div className="flex items-center justify-end gap-1.5">
                           {isApproved ? (
                             <span className="flex items-center gap-1 text-xs text-muted-foreground">
                               <FiCheckCircle className="size-3.5 text-green-600" />
                               Approved
                             </span>
                           ) : (
-                            <Button
-                              type="button"
-                              size="sm"
-                              disabled={approving}
-                              onClick={() => handleApprove(item.id)}
-                              className="h-9 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
-                            >
-                              <FiCheckCircle className="size-3.5" />
-                              Approve
-                            </Button>
+                            <>
+                              <Button
+                                type="button"
+                                size="sm"
+                                disabled={isThisRowPending}
+                                onClick={() =>
+                                  handleUpdateStatus(item.id, "APPROVED")
+                                }
+                                className="h-9 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
+                              >
+                                <FiCheckCircle className="size-3.5" />
+                                Approve
+                              </Button>
+
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                disabled={isThisRowPending}
+                                onClick={() =>
+                                  handleUpdateStatus(item.id, "REJECTED")
+                                }
+                                className="h-9 gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30"
+                              >
+                                <FiX className="size-3.5" />
+                                Reject
+                              </Button>
+                            </>
                           )}
                         </div>
                       </TableCell>
@@ -290,12 +324,16 @@ const ManageTechnician = () => {
         </div>
       </div>
 
-  
+      {/* =====================================================
+          BELOW XL → CARD VIEW
+      ====================================================== */}
       <div className="space-y-3 xl:hidden">
         {technicians.map((item) => {
           const verificationStatus =
             item.technicianProfile?.technicianvProfileVerificationStatus;
           const isApproved = verificationStatus === "APPROVED";
+          const isThisRowPending =
+            approving && (variables as any)?.technicianId === item.id;
 
           return (
             <Card
@@ -368,23 +406,41 @@ const ManageTechnician = () => {
                 </div>
 
                 {/* Action */}
-                <div className="flex items-center justify-end border-t border-border pt-2.5">
+                <div className="flex items-center justify-end gap-1.5 border-t border-border pt-2.5">
                   {isApproved ? (
                     <span className="flex items-center gap-1 text-xs text-muted-foreground">
                       <FiCheckCircle className="size-3.5 text-green-600" />
                       Approved
                     </span>
                   ) : (
-                    <Button
-                      type="button"
-                      size="sm"
-                      disabled={approving}
-                      onClick={() => handleApprove(item.id)}
-                      className="h-8 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
-                    >
-                      <FiCheckCircle className="size-3.5" />
-                      Approve
-                    </Button>
+                    <>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        disabled={isThisRowPending}
+                        onClick={() =>
+                          handleUpdateStatus(item.id, "REJECTED")
+                        }
+                        className="h-8 gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30"
+                      >
+                        <FiX className="size-3.5" />
+                        Reject
+                      </Button>
+
+                      <Button
+                        type="button"
+                        size="sm"
+                        disabled={isThisRowPending}
+                        onClick={() =>
+                          handleUpdateStatus(item.id, "APPROVED")
+                        }
+                        className="h-8 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
+                      >
+                        <FiCheckCircle className="size-3.5" />
+                        Approve
+                      </Button>
+                    </>
                   )}
                 </div>
               </CardContent>
