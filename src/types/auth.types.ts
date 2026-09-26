@@ -22,10 +22,10 @@ export interface IVerifyEmailPayload{
     otp:string;
 }
 
-enum TechnicianProfileStatus {
-  PENDING,
-  APPROVED,
-  REJECTED
+export enum TechnicianProfileStatus {
+  PENDING = "PENDING",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
 }
 
 export interface ITechnicanPayload{

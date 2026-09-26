@@ -1,14 +1,10 @@
 "use client";
 
 import { toast } from "sonner";
-import {
-  FiAward,
-  FiCheckCircle,
-  FiClock,
-  FiX,
-} from "react-icons/fi";
+import { FiAward, FiCheckCircle, FiClock, FiX } from "react-icons/fi";
 
 import { useApproveTechnician, useGetAllTechnician } from "@/hooks";
+import { TechnicianProfileStatus } from "@/types"; // 👈 আপনার আসল enum যেখানে আছে সেই path বসান
 
 import {
   Table,
@@ -23,14 +19,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
-type VerificationStatus = "PENDING" | "APPROVED" | "REJECTED";
-
 interface TechnicianProfile {
   availability?: "AVAILABLE" | "BUSY";
   expertise?: string[];
   experience?: number;
   bio?: string;
-  technicianvProfileVerificationStatus?: VerificationStatus;
+  technicianvProfileVerificationStatus?: TechnicianProfileStatus;
 }
 
 interface Technician {
@@ -50,14 +44,25 @@ const getAvailabilityClassName = (availability?: string) => {
   return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
 };
 
-const getVerificationClassName = (status?: string) => {
+const getVerificationClassName = (status?: TechnicianProfileStatus) => {
   switch (status) {
-    case "APPROVED":
+    case TechnicianProfileStatus.APPROVED:
       return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
-    case "REJECTED":
+    case TechnicianProfileStatus.REJECTED:
       return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
     default:
       return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
+  }
+};
+
+const getVerificationLabel = (status?: TechnicianProfileStatus) => {
+  switch (status) {
+    case TechnicianProfileStatus.APPROVED:
+      return "APPROVED";
+    case TechnicianProfileStatus.REJECTED:
+      return "REJECTED";
+    default:
+      return "PENDING";
   }
 };
 
@@ -77,7 +82,7 @@ const ManageTechnician = () => {
 
   const handleUpdateStatus = (
     technicianId: string,
-    status: VerificationStatus,
+    status: TechnicianProfileStatus,
   ) => {
     const payload = {
       technicianId,
@@ -87,7 +92,7 @@ const ManageTechnician = () => {
     approveTechnician(payload, {
       onSuccess: () => {
         toast.success(
-          status === "APPROVED"
+          status === TechnicianProfileStatus.APPROVED
             ? "Technician approved successfully."
             : "Technician rejected.",
         );
@@ -96,7 +101,11 @@ const ManageTechnician = () => {
         toast.error(
           error?.data?.message ||
             error?.message ||
-            `Failed to ${status === "APPROVED" ? "approve" : "reject"} technician.`,
+            `Failed to ${
+              status === TechnicianProfileStatus.APPROVED
+                ? "approve"
+                : "reject"
+            } technician.`,
         );
       },
     });
@@ -188,7 +197,8 @@ const ManageTechnician = () => {
                   const verificationStatus =
                     item.technicianProfile
                       ?.technicianvProfileVerificationStatus;
-                  const isApproved = verificationStatus === "APPROVED";
+                  const isApproved =
+                    verificationStatus === TechnicianProfileStatus.APPROVED;
                   const isThisRowPending =
                     approving &&
                     (variables as any)?.technicianId === item.id;
@@ -271,7 +281,7 @@ const ManageTechnician = () => {
                             verificationStatus,
                           )}
                         >
-                          {verificationStatus ?? "PENDING"}
+                          {getVerificationLabel(verificationStatus)}
                         </Badge>
                       </TableCell>
 
@@ -290,7 +300,10 @@ const ManageTechnician = () => {
                                 size="sm"
                                 disabled={isThisRowPending}
                                 onClick={() =>
-                                  handleUpdateStatus(item.id, "APPROVED")
+                                  handleUpdateStatus(
+                                    item.id,
+                                    TechnicianProfileStatus.APPROVED,
+                                  )
                                 }
                                 className="h-9 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
                               >
@@ -304,7 +317,10 @@ const ManageTechnician = () => {
                                 size="sm"
                                 disabled={isThisRowPending}
                                 onClick={() =>
-                                  handleUpdateStatus(item.id, "REJECTED")
+                                  handleUpdateStatus(
+                                    item.id,
+                                    TechnicianProfileStatus.REJECTED,
+                                  )
                                 }
                                 className="h-9 gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30"
                               >
@@ -331,7 +347,8 @@ const ManageTechnician = () => {
         {technicians.map((item) => {
           const verificationStatus =
             item.technicianProfile?.technicianvProfileVerificationStatus;
-          const isApproved = verificationStatus === "APPROVED";
+          const isApproved =
+            verificationStatus === TechnicianProfileStatus.APPROVED;
           const isThisRowPending =
             approving && (variables as any)?.technicianId === item.id;
 
@@ -363,7 +380,7 @@ const ManageTechnician = () => {
                       verificationStatus,
                     )}`}
                   >
-                    {verificationStatus ?? "PENDING"}
+                    {getVerificationLabel(verificationStatus)}
                   </Badge>
                 </div>
 
@@ -420,7 +437,10 @@ const ManageTechnician = () => {
                         size="sm"
                         disabled={isThisRowPending}
                         onClick={() =>
-                          handleUpdateStatus(item.id, "REJECTED")
+                          handleUpdateStatus(
+                            item.id,
+                            TechnicianProfileStatus.REJECTED,
+                          )
                         }
                         className="h-8 gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30"
                       >
@@ -433,7 +453,10 @@ const ManageTechnician = () => {
                         size="sm"
                         disabled={isThisRowPending}
                         onClick={() =>
-                          handleUpdateStatus(item.id, "APPROVED")
+                          handleUpdateStatus(
+                            item.id,
+                            TechnicianProfileStatus.APPROVED,
+                          )
                         }
                         className="h-8 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
                       >
