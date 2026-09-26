@@ -18,3 +18,10 @@ export function getPayments(){
 export function getPaymentDetails(id:string){
     return apiClient(`/payment/${id}`)
 }
+
+
+//get all payment record for admin
+
+export function getAllPaymentRecords(){
+    return apiClient("/admin/payment-record")
+}
