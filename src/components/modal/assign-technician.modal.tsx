@@ -3,8 +3,12 @@
 import { useState } from "react";
 
 import { FiAlertCircle, FiUserPlus } from "react-icons/fi";
+import { toast } from "sonner";
 
-import { useGetAllTechnician } from "@/hooks";
+import {
+  useAssignTechnician,
+  useGetAllTechnician,
+} from "@/hooks";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -51,14 +55,18 @@ interface Technician {
 const AssignTechnicianModal = ({
   outageId,
 }: AssignTechnicianModalProps) => {
-  const { data: technician, isPending } = useGetAllTechnician();
+  const { data: technician, isPending: technicianPending } =
+    useGetAllTechnician();
 
-  const [selectedTechnicianId, setSelectedTechnicianId] = useState("");
+  const {
+    mutate: assignTechnician,
+    isPending: assigning,
+  } = useAssignTechnician();
 
-  /*
-   * Backend already returns available technicians,
-   * so don't filter them again on the frontend.
-   */
+  const [selectedTechnicianId, setSelectedTechnicianId] =
+    useState("");
+
+  // Backend already returns available technicians
   const technicians: Technician[] = Array.isArray(technician)
     ? technician
     : (technician?.data ?? []);
@@ -67,17 +75,45 @@ const AssignTechnicianModal = ({
     (item) => item.id === selectedTechnicianId,
   );
 
-  const handleAssignTechnician = () => {
-    if (!selectedTechnicianId) return;
+  const handleAssignTechnician = (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
+
+    if (!selectedTechnicianId) {
+      toast.error("Please select a technician.");
+      return;
+    }
 
     const payload = {
       outageId,
       technicianId: selectedTechnicianId,
     };
 
-    console.log("Assign technician:", payload);
+    assignTechnician(payload, {
+      onSuccess: (res) => {
+        console.log("Assign technician response:", res);
 
-    // API mutation will go here
+        toast.success(
+          "Technician assigned successfully.",
+        );
+
+        setSelectedTechnicianId("");
+      },
+
+      onError: (error) => {
+        console.error(
+          "Assign technician error:",
+          error,
+        );
+
+        toast.error(
+          (error as any)?.data?.message ||
+            error?.message ||
+            "Failed to assign technician.",
+        );
+      },
+    });
   };
 
   return (
@@ -97,7 +133,7 @@ const AssignTechnicianModal = ({
         }
       />
 
-      {/* Modal */}
+      {/* Dialog */}
       <DialogContent className="max-w-sm gap-0 overflow-hidden rounded-2xl p-0">
         {/* Header */}
         <div className="flex flex-col items-center gap-3 bg-gradient-to-b from-primary/10 to-transparent px-6 pb-5 pt-7">
@@ -116,178 +152,204 @@ const AssignTechnicianModal = ({
           </DialogHeader>
         </div>
 
-        {/* Body */}
-        <div className="space-y-5 px-6 py-5">
-          {/* Outage Info */}
-          <div className="flex items-center justify-between rounded-xl border border-border bg-muted/30 px-4 py-3.5">
-            <div>
-              <p className="text-xs text-muted-foreground">
-                Outage ID
-              </p>
+        {/* Form */}
+        <form onSubmit={handleAssignTechnician}>
+          {/* Body */}
+          <div className="space-y-5 px-6 py-5">
+            {/* Outage Info */}
+            <div className="flex items-center justify-between rounded-xl border border-border bg-muted/30 px-4 py-3.5">
+              <div>
+                <p className="text-xs text-muted-foreground">
+                  Outage ID
+                </p>
 
-              <p className="mt-1 font-mono text-sm font-semibold text-card-foreground">
-                #{outageId.slice(0, 8)}
-              </p>
+                <p className="mt-1 font-mono text-sm font-semibold text-card-foreground">
+                  #{outageId.slice(0, 8)}
+                </p>
+              </div>
+
+              <Badge
+                variant="outline"
+                className="border-primary/20 bg-primary/5 text-primary"
+              >
+                Assignment
+              </Badge>
             </div>
 
-            <Badge
-              variant="outline"
-              className="border-primary/20 bg-primary/5 text-primary"
-            >
-              Assignment
-            </Badge>
-          </div>
+            {/* Technician Select */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground">
+                Available Technician
+              </label>
 
-          {/* Technician Select */}
-          <div className="space-y-2">
-            <h5 className="text-sm font-medium text-card-foreground">
-              Available Technician
-            </h5>
-
-            {isPending ? (
-              <div className="flex h-10 items-center justify-center rounded-lg border border-border bg-muted/20">
-                <Spinner className="size-4 text-primary" />
-              </div>
-            ) : technicians.length === 0 ? (
-              <div className="flex items-center gap-2 rounded-xl border border-border bg-muted/30 px-3.5 py-3 text-xs text-muted-foreground">
-                <FiAlertCircle className="size-3.5 shrink-0 text-primary" />
-
-                <span>
-                  No available technicians found at the moment.
-                </span>
-              </div>
-            ) : (
-              <Select
-                value={selectedTechnicianId}
-                onValueChange={(value) =>
-                  setSelectedTechnicianId(value as string)
-                }
-              >
-                <SelectTrigger className="h-10 w-full rounded-lg border-border bg-background">
-                  <SelectValue placeholder="Select a technician" />
-                </SelectTrigger>
-
-                <SelectContent>
-                  {technicians.map((item) => (
-                    <SelectItem key={item.id} value={item.id}>
-                      <div className="flex min-w-0 items-center gap-2">
-                        {/* Avatar */}
-                        <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                          {item.name.charAt(0).toUpperCase()}
-                        </div>
-
-                        {/* Name + Email */}
-                        <div className="min-w-0">
-                          <p className="truncate text-sm font-medium">
-                            {item.name}
-                          </p>
-
-                          <p className="truncate text-[11px] text-muted-foreground">
-                            {item.email}
-                          </p>
-                        </div>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          </div>
-
-          {/* Selected Technician */}
-          {selectedTechnician && (
-            <div className="rounded-xl border border-primary/15 bg-primary/5 px-4 py-3.5">
-              <div className="flex items-start gap-3">
-                {/* Avatar */}
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 font-semibold text-primary">
-                  {selectedTechnician.name
-                    .charAt(0)
-                    .toUpperCase()}
+              {technicianPending ? (
+                <div className="flex h-10 items-center justify-center rounded-lg border border-border bg-muted/20">
+                  <Spinner className="size-4 text-primary" />
                 </div>
+              ) : technicians.length === 0 ? (
+                <div className="flex items-center gap-2 rounded-xl border border-border bg-muted/30 px-3.5 py-3 text-xs text-muted-foreground">
+                  <FiAlertCircle className="size-3.5 shrink-0 text-primary" />
 
-                {/* Info */}
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <p className="truncate text-sm font-semibold text-card-foreground">
-                      {selectedTechnician.name}
-                    </p>
+                  <span>
+                    No available technicians found at the moment.
+                  </span>
+                </div>
+              ) : (
+                <Select
+                  value={selectedTechnicianId}
+                  onValueChange={(value) =>
+                    setSelectedTechnicianId(value)
+                  }
+                >
+                  <SelectTrigger className="h-10 w-full rounded-lg border-border bg-background">
+                    <SelectValue placeholder="Select a technician" />
+                  </SelectTrigger>
 
-                    <Badge
-                      variant="outline"
-                      className="border-green-200 bg-green-50 px-2 py-0.5 text-[10px] font-semibold text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300"
-                    >
-                      Available
-                    </Badge>
+                  <SelectContent>
+                    {technicians.map((item) => (
+                      <SelectItem
+                        key={item.id}
+                        value={item.id}
+                      >
+                        <div className="flex min-w-0 items-center gap-2">
+                          {/* Avatar */}
+                          <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+                            {item.name
+                              .charAt(0)
+                              .toUpperCase()}
+                          </div>
+
+                          {/* Name + Email */}
+                          <div className="min-w-0">
+                            <p className="truncate text-sm font-medium">
+                              {item.name}
+                            </p>
+
+                            <p className="truncate text-[11px] text-muted-foreground">
+                              {item.email}
+                            </p>
+                          </div>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
+
+            {/* Selected Technician */}
+            {selectedTechnician && (
+              <div className="rounded-xl border border-primary/15 bg-primary/5 px-4 py-3.5">
+                <div className="flex items-start gap-3">
+                  {/* Avatar */}
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 font-semibold text-primary">
+                    {selectedTechnician.name
+                      .charAt(0)
+                      .toUpperCase()}
                   </div>
 
-                  <p className="mt-0.5 truncate text-xs text-muted-foreground">
-                    {selectedTechnician.email}
-                  </p>
+                  {/* Info */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="truncate text-sm font-semibold text-card-foreground">
+                        {selectedTechnician.name}
+                      </p>
 
-                  {selectedTechnician.technicianProfile
-                    ?.expertise &&
-                    selectedTechnician.technicianProfile.expertise
-                      .length > 0 && (
-                      <p className="mt-1.5 line-clamp-2 text-[11px] text-muted-foreground">
-                        {selectedTechnician.technicianProfile.expertise.join(
-                          " • ",
-                        )}
+                      <Badge
+                        variant="outline"
+                        className="border-green-200 bg-green-50 px-2 py-0.5 text-[10px] font-semibold text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300"
+                      >
+                        Available
+                      </Badge>
+                    </div>
+
+                    <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                      {selectedTechnician.email}
+                    </p>
+
+                    {selectedTechnician.technicianProfile
+                      ?.expertise &&
+                      selectedTechnician.technicianProfile
+                        .expertise.length > 0 && (
+                        <p className="mt-1.5 line-clamp-2 text-[11px] text-muted-foreground">
+                          {selectedTechnician.technicianProfile.expertise.join(
+                            " • ",
+                          )}
+                        </p>
+                      )}
+
+                    {typeof selectedTechnician
+                      .technicianProfile?.experience ===
+                      "number" && (
+                      <p className="mt-1 text-[11px] text-muted-foreground">
+                        {
+                          selectedTechnician
+                            .technicianProfile
+                            .experience
+                        }{" "}
+                        {selectedTechnician
+                          .technicianProfile
+                          .experience === 1
+                          ? "year"
+                          : "years"}{" "}
+                        experience
                       </p>
                     )}
-
-                  {typeof selectedTechnician.technicianProfile
-                    ?.experience === "number" && (
-                    <p className="mt-1 text-[11px] text-muted-foreground">
-                      {selectedTechnician.technicianProfile.experience}{" "}
-                      {selectedTechnician.technicianProfile.experience ===
-                      1
-                        ? "year"
-                        : "years"}{" "}
-                      experience
-                    </p>
-                  )}
+                  </div>
                 </div>
               </div>
+            )}
+
+            {/* Information */}
+            <div className="flex items-start gap-2 rounded-xl bg-primary/5 px-3.5 py-3 text-xs text-muted-foreground">
+              <FiAlertCircle className="mt-0.5 size-3.5 shrink-0 text-primary" />
+
+              <p>
+                Assigning a technician will make them responsible
+                for handling this outage.
+              </p>
             </div>
-          )}
-
-          {/* Information */}
-          <div className="flex items-start gap-2 rounded-xl bg-primary/5 px-3.5 py-3 text-xs text-muted-foreground">
-            <FiAlertCircle className="mt-0.5 size-3.5 shrink-0 text-primary" />
-
-            <p>
-              Assigning a technician will make them responsible for
-              handling this outage.
-            </p>
           </div>
-        </div>
 
-        {/* Footer */}
-        <DialogFooter className="gap-2 border-t border-border px-6 py-4 sm:gap-2">
-          <DialogClose
-            render={
-              <Button
-                type="button"
-                variant="outline"
-                className="flex-1 rounded-lg"
-              >
-                Cancel
-              </Button>
-            }
-          />
+          {/* Footer */}
+          <DialogFooter className="gap-2 border-t border-border px-6 py-4 sm:gap-2">
+            <DialogClose
+              render={
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1 rounded-lg"
+                  disabled={assigning}
+                >
+                  Cancel
+                </Button>
+              }
+            />
 
-          <Button
-            type="button"
-            className="flex-1 gap-1.5 rounded-lg bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
-            disabled={
-              !selectedTechnicianId || isPending || technicians.length === 0
-            }
-            onClick={handleAssignTechnician}
-          >
-            <FiUserPlus className="size-3.5" />
-            Assign Technician
-          </Button>
-        </DialogFooter>
+            <Button
+              type="submit"
+              className="flex-1 gap-1.5 rounded-lg bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
+              disabled={
+                !selectedTechnicianId ||
+                technicianPending ||
+                assigning ||
+                technicians.length === 0
+              }
+            >
+              {assigning ? (
+                <>
+                  <Spinner className="size-4" />
+                  Assigning...
+                </>
+              ) : (
+                <>
+                  <FiUserPlus className="size-3.5" />
+                  Assign Technician
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
