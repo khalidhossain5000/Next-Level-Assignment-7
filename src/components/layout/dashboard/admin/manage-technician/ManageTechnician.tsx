@@ -71,7 +71,11 @@ const ManageTechnician = () => {
     : (technician?.data ?? []);
 
   const handleApprove = (technicianId: string) => {
-    approveTechnician(technicianId, {
+    const payload={
+        technicianId,
+        status:"APPROVED"
+    }
+    approveTechnician(payload, {
       onSuccess: () => {
         toast.success("Technician approved successfully.");
       },
