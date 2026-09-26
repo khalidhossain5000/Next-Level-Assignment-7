@@ -14,6 +14,7 @@ import { MdPowerOff } from "react-icons/md";
 import { GiGreenPower } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { TbSunElectricity } from "react-icons/tb";
+import { GrUserWorker } from "react-icons/gr";
 
 export type SidebarRoute = {
   label: string;
@@ -33,6 +34,12 @@ export const sidebarRoutes: SidebarRoute[] = [
     label: "Manage Users",
     href: "/admin/manage-user",
     icon: FiUsers,
+    roles: ["ADMIN"],
+  },
+    {
+    label: "Manage Technician",
+    href: "/admin/manage-technician",
+    icon: GrUserWorker  ,
     roles: ["ADMIN"],
   },
   {
@@ -89,6 +96,7 @@ export const sidebarRoutes: SidebarRoute[] = [
     icon: TbSunElectricity ,
     roles: ["ADMIN"],
   },
+  
   // customer part
     {
     label: "Dashboard",
