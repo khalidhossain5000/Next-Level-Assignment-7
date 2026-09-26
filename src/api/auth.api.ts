@@ -73,3 +73,12 @@ export function approveTechnicanProfile(payload:ITechnicanPayload){
         body:payload
     })
 }
+
+
+
+//get all users for admin
+
+
+export function getAllUsers(){
+    return apiClient("/admin/users")
+}
