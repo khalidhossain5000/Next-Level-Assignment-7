@@ -7,3 +7,11 @@ export function createLoadShedding(payload:ILoadSheddingPayload){
         body:payload
     })
 }
+
+
+
+
+
+export function getLoadSheddingSchedule(page: number = 1, limit: number = 10) {
+  return apiClient(`/load-shedding?page=${page}&limit=${limit}`);
+}
