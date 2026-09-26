@@ -77,7 +77,7 @@ const ManageTechnician = () => {
     }
     approveTechnician(payload, {
       onSuccess: () => {
-        toast.success("Technician approved successfully.");
+        toast.success("Technician approved successfully." );
       },
       onError: (error: any) => {
         toast.error(
