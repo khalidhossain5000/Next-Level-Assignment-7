@@ -86,7 +86,7 @@ export function getAllUsers(){
 
 export interface IUpdateUserStatus {
     userId:string;
-    status:"BAN" | "UNBAN"
+    status:"BAN" | "ACTIVE"
 }
 export function updateUserStatus(payload:IUpdateUserStatus){
     return apiClient(`/admin/users/${payload.userId}`,{

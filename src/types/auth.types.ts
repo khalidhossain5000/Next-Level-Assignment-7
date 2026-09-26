@@ -9,6 +9,20 @@ export const USER_ROLES=["CUSTOMER","TECHNICIAN","ADMIN"] as const
 
 export type TUserRole="CUSTOMER" | "TECHNICIAN" | "ADMIN" 
 
+export type UserStatus = "BAN" | "ACTIVE" ;
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  profileImage?: string | null;
+  role: "ADMIN" | "CUSTOMER" | "TECHNICIAN";
+  status: UserStatus;
+  createdAt: string;
+  reportedOutages?: { id: string }[];
+  payments?: { id: string; status: string }[];
+}
+
 
 export interface IRegisterPayload {
     name:string;
