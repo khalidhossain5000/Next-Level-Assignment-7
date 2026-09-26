@@ -55,36 +55,7 @@ const AssignTechnicianModal = ({
 
   const [selectedTechnicianId, setSelectedTechnicianId] = useState("");
 
-  const technicians: Technician[] = useMemo(() => {
-    const list = Array.isArray(technician)
-      ? technician
-      : (technician?.data ?? []);
-
-    return list;
-  }, [technician]);
-
-  const availableTechnicians = useMemo(() => {
-    return technicians.filter(
-      (item) =>
-        item.technicianProfile?.availability === "AVAILABLE",
-    );
-  }, [technicians]);
-
-  const selectedTechnician = availableTechnicians.find(
-    (item) => item.id === selectedTechnicianId,
-  );
-
-  const handleAssignTechnician = () => {
-    if (!selectedTechnicianId) return;
-
-    console.log({
-      outageId,
-      technicianId: selectedTechnicianId,
-    });
-
-    // API integration will go here
-  };
-
+  
   return (
     <Dialog>
       {/* Trigger */}
@@ -94,7 +65,7 @@ const AssignTechnicianModal = ({
             type="button"
             size="sm"
             variant="outline"
-            className="h-8 gap-1.5 rounded-lg border-primary/25 bg-primary/5 px-3 text-xs font-semibold text-primary shadow-none transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
+            className="h-8 gap-1.5 rounded-lg border-primary/25 bg-primary/5 px-3 text-xs font-semibold text-primary shadow-none transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary cursor-pointer dark:text-white"
           >
             <FiUserPlus className="size-3.5" />
             Assign Technician
