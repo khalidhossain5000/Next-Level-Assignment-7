@@ -1,4 +1,4 @@
-import { getAllTechnician, getMe, googleLogin, registerUser, resendOtp, userLogin, userLogout, verifyUserEmail } from "@/api";
+import { approveTechnicanProfile, getAllTechnician, getMe, googleLogin, registerUser, resendOtp, userLogin, userLogout, verifyUserEmail } from "@/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useLogin(){
@@ -59,5 +59,13 @@ export function useGetAllTechnician(){
         queryKey:["technican"],
         queryFn:getAllTechnician,
         retry:false
+    })
+}
+
+
+
+export function useApproveTechnician(){
+    return useMutation({
+        mutationFn:approveTechnicanProfile
     })
 }
