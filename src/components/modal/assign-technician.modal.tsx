@@ -2,13 +2,10 @@
 
 import { useState } from "react";
 
-import { FiAlertCircle, FiUserPlus } from "react-icons/fi";
+import { FiAlertCircle, FiUserPlus, FiZap } from "react-icons/fi";
 import { toast } from "sonner";
 
-import {
-  useAssignTechnician,
-  useGetAllTechnician,
-} from "@/hooks";
+import { useAssignTechnician, useGetAllTechnician } from "@/hooks";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -42,6 +39,7 @@ interface TechnicianProfile {
   availability?: "AVAILABLE" | "BUSY";
   expertise?: string[];
   experience?: number;
+  bio?: string;
 }
 
 interface Technician {
@@ -52,20 +50,21 @@ interface Technician {
   technicianProfile?: TechnicianProfile | null;
 }
 
-const AssignTechnicianModal = ({
-  outageId,
-}: AssignTechnicianModalProps) => {
+const getAvailabilityClassName = (availability?: string) => {
+  if (availability === "AVAILABLE") {
+    return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
+  }
+  return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
+};
+
+const AssignTechnicianModal = ({ outageId }: AssignTechnicianModalProps) => {
   const { data: technician, isPending: technicianPending } =
     useGetAllTechnician();
-console.log(technician,'tech data')
-  const {
-    mutate: assignTechnician,
-    isPending: assigning,
-  } = useAssignTechnician();
 
-  const [selectedTechnicianId, setSelectedTechnicianId] =
-    useState("");
+  const { mutate: assignTechnician, isPending: assigning } =
+    useAssignTechnician();
 
+  const [selectedTechnicianId, setSelectedTechnicianId] = useState("");
 
   const technicians: Technician[] = Array.isArray(technician)
     ? technician
@@ -75,9 +74,7 @@ console.log(technician,'tech data')
     (item) => item.id === selectedTechnicianId,
   );
 
-  const handleAssignTechnician = (
-    event: React.FormEvent<HTMLFormElement>,
-  ) => {
+  const handleAssignTechnician = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!selectedTechnicianId) {
@@ -85,35 +82,22 @@ console.log(technician,'tech data')
       return;
     }
 
-    const payload = {
-      outageId,
-      technicianId: selectedTechnicianId,
-    };
-
-    assignTechnician(payload, {
-      onSuccess: (res) => {
-        console.log("Assign technician response:", res);
-
-        toast.success(
-          "Technician assigned successfully.",
-        );
-
-        setSelectedTechnicianId("");
+    assignTechnician(
+      { outageId, technicianId: selectedTechnicianId },
+      {
+        onSuccess: () => {
+          toast.success("Technician assigned successfully.");
+          setSelectedTechnicianId("");
+        },
+        onError: (error) => {
+          toast.error(
+            (error as any)?.data?.message ||
+              error?.message ||
+              "Failed to assign technician.",
+          );
+        },
       },
-
-      onError: (error) => {
-        console.error(
-          "Assign technician error:",
-          error,
-        );
-
-        toast.error(
-          (error as any)?.data?.message ||
-            error?.message ||
-            "Failed to assign technician.",
-        );
-      },
-    });
+    );
   };
 
   return (
@@ -155,14 +139,11 @@ console.log(technician,'tech data')
         {/* Form */}
         <form onSubmit={handleAssignTechnician}>
           {/* Body */}
-          <div className="space-y-5 px-6 py-5">
+          <div className="space-y-4 px-6 py-5">
             {/* Outage Info */}
             <div className="flex items-center justify-between rounded-xl border border-border bg-muted/30 px-4 py-3.5">
               <div>
-                <p className="text-xs text-muted-foreground">
-                  Outage ID
-                </p>
-
+                <p className="text-xs text-muted-foreground">Outage ID</p>
                 <p className="mt-1 font-mono text-sm font-semibold text-card-foreground">
                   #{outageId.slice(0, 8)}
                 </p>
@@ -179,7 +160,7 @@ console.log(technician,'tech data')
             {/* Technician Select */}
             <div className="space-y-2">
               <h5 className="text-sm font-medium text-card-foreground">
-                Available Technician
+                Select Technician
               </h5>
 
               {technicianPending ? (
@@ -189,10 +170,7 @@ console.log(technician,'tech data')
               ) : technicians.length === 0 ? (
                 <div className="flex items-center gap-2 rounded-xl border border-border bg-muted/30 px-3.5 py-3 text-xs text-muted-foreground">
                   <FiAlertCircle className="size-3.5 shrink-0 text-primary" />
-
-                  <span>
-                    No available technicians found at the moment.
-                  </span>
+                  <span>No technicians found at the moment.</span>
                 </div>
               ) : (
                 <Select
@@ -202,33 +180,23 @@ console.log(technician,'tech data')
                   }
                 >
                   <SelectTrigger className="h-10 w-full rounded-lg border-border bg-background">
-                    <SelectValue placeholder="Select a technician" />
+                    <SelectValue placeholder="Choose a technician" />
                   </SelectTrigger>
 
                   <SelectContent>
                     {technicians.map((item) => (
-                      <SelectItem
-                        key={item.id}
-                        value={item.id}
-                      >
-                        <div className="flex min-w-0 items-center gap-2">
-                          {/* Avatar */}
-                          <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                            {item.name
-                              .charAt(0)
-                              .toUpperCase()}
-                          </div>
+                      <SelectItem key={item.id} value={item.id}>
+                        <div className="flex w-full items-center justify-between gap-2">
+                          <span className="truncate">{item.name}</span>
 
-                          {/* Name + Email */}
-                          <div className="min-w-0">
-                            <p className="truncate text-sm font-medium">
-                              {item.name}
-                            </p>
-
-                            <p className="truncate text-[11px] text-muted-foreground">
-                              {item.email}
-                            </p>
-                          </div>
+                          <Badge
+                            variant="outline"
+                            className={`shrink-0 text-[10px] ${getAvailabilityClassName(
+                              item.technicianProfile?.availability,
+                            )}`}
+                          >
+                            {item.technicianProfile?.availability ?? "N/A"}
+                          </Badge>
                         </div>
                       </SelectItem>
                     ))}
@@ -237,14 +205,68 @@ console.log(technician,'tech data')
               )}
             </div>
 
-         
-            {/* Information */}
+            {/* Selected Technician Info */}
+            {selectedTechnician && (
+              <div className="space-y-3 rounded-xl border border-border bg-muted/30 px-4 py-3.5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-card-foreground">
+                      {selectedTechnician.name}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {selectedTechnician.email}
+                    </p>
+                  </div>
+
+                  <Badge
+                    variant="outline"
+                    className={getAvailabilityClassName(
+                      selectedTechnician.technicianProfile?.availability,
+                    )}
+                  >
+                    {selectedTechnician.technicianProfile?.availability ??
+                      "N/A"}
+                  </Badge>
+                </div>
+
+                <div className="flex items-center gap-4 border-t border-border pt-3 text-xs">
+                  <div>
+                    <span className="text-muted-foreground">
+                      Experience:{" "}
+                    </span>
+                    <span className="font-medium text-card-foreground">
+                      {selectedTechnician.technicianProfile?.experience ?? 0}{" "}
+                      yr
+                    </span>
+                  </div>
+                </div>
+
+                {selectedTechnician.technicianProfile?.expertise &&
+                  selectedTechnician.technicianProfile.expertise.length >
+                    0 && (
+                    <div className="flex flex-wrap gap-1.5 border-t border-border pt-3">
+                      {selectedTechnician.technicianProfile.expertise.map(
+                        (skill) => (
+                          <Badge
+                            key={skill}
+                            variant="outline"
+                            className="text-[10px] font-normal text-muted-foreground"
+                          >
+                            {skill}
+                          </Badge>
+                        ),
+                      )}
+                    </div>
+                  )}
+              </div>
+            )}
+
+            {/* Info note */}
             <div className="flex items-start gap-2 rounded-xl bg-primary/5 px-3.5 py-3 text-xs text-muted-foreground">
               <FiAlertCircle className="mt-0.5 size-3.5 shrink-0 text-primary" />
-
               <p>
-                Assigning a technician will make them responsible
-                for handling this outage.
+                Assigning a technician will make them responsible for
+                handling this outage.
               </p>
             </div>
           </div>
@@ -281,7 +303,7 @@ console.log(technician,'tech data')
                 </>
               ) : (
                 <>
-                  <FiUserPlus className="size-3.5" />
+                  <FiZap className="size-3.5" />
                   Assign Technician
                 </>
               )}
