@@ -1,5 +1,5 @@
 import apiClient from "@/lib/apiClient";
-import type { ILoginPayload, IRegisterPayload, IVerifyEmailPayload } from "@/types";
+import type { ILoginPayload, IRegisterPayload, ITechnicanPayload, IVerifyEmailPayload } from "@/types";
 
 export function userLogin(payload:ILoginPayload){
     
@@ -61,4 +61,15 @@ export function getMe(){
 
 export function getAllTechnician(){
     return apiClient("/admin/technician")
+}
+
+
+
+//approve tehnicna profile 
+
+export function approveTechnicanProfile(payload:ITechnicanPayload){
+    return apiClient("/admin/technician/update-status",{
+        method:"PATCH",
+        body:payload
+    })
 }

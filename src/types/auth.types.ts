@@ -21,3 +21,14 @@ export interface IVerifyEmailPayload{
     email:string;
     otp:string;
 }
+
+enum TechnicianProfileStatus {
+  PENDING,
+  APPROVED,
+  REJECTED
+}
+
+export interface ITechnicanPayload{
+    technicianId:string;
+    status:TechnicianProfileStatus
+}
