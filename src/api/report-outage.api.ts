@@ -37,13 +37,15 @@ export function updateOutageStatus(payload:IUpdateStatus){
 
 //assign technician /api/v1/outage/898951b4-bc7d-4b70-a234-7a7454c11907/assign-technician
 export interface IAssignTechnician{
-    id:string;
+    outageId:string;
     technicianId:string
 }
 export function assignTechnician(payload:IAssignTechnician){
- return apiClient(`/outage/${payload.id}/assign-technician`,{
+ return apiClient(`/outage/${payload.outageId}/assign-technician`,{
         method:"PATCH",
-        body: payload.technicianId
+         body: {
+      technicianId: payload.technicianId,
+    },
         
     })
 }

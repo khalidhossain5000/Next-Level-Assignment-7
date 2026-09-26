@@ -86,7 +86,7 @@ const AssignTechnicianModal = ({
     }
 
     const payload = {
-     id: outageId,
+      outageId,
       technicianId: selectedTechnicianId,
     };
 
