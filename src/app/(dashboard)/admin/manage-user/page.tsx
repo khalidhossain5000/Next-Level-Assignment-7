@@ -4,7 +4,7 @@ import DashboardHeader from "@/components/layout/dashboard/common/DashboardHeade
 const AdminManageUser = () => {
     return (
            <section className="space-y-6 p-4 md:p-6">
-            <DashboardHeader title="My Outages" description="Track and manage the power outages you have reported."/>
+            <DashboardHeader title="Manage Users" description="View, search, and manage all registered user accounts."/>
            <div className="py-6">
              <ManageUsers />
            </div>

@@ -82,3 +82,7 @@ export function approveTechnicanProfile(payload:ITechnicanPayload){
 export function getAllUsers(){
     return apiClient("/admin/users")
 }
+
+
+
+export function
