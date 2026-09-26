@@ -117,29 +117,9 @@ const PaymentRecords = () => {
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
-      {/* Header */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h2 className="font-manrope text-2xl font-bold tracking-tight text-card-foreground">
-            Payment Records
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            All priority restoration payments and transaction history.
-          </p>
-        </div>
+    
 
-        <Badge
-          variant="outline"
-          className="w-fit rounded-full px-3 py-1 text-xs font-medium"
-        >
-          {meta?.total ?? records.length}{" "}
-          {(meta?.total ?? records.length) === 1 ? "Payment" : "Payments"}
-        </Badge>
-      </div>
-
-      {/* =====================================================
-          XL AND ABOVE → TABLE VIEW
-      ====================================================== */}
+   
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
@@ -247,9 +227,7 @@ const PaymentRecords = () => {
         </div>
       </div>
 
-      {/* =====================================================
-          BELOW XL → CARD VIEW
-      ====================================================== */}
+ 
       <div className="space-y-3 xl:hidden">
         {records.map((payment) => (
           <Card
