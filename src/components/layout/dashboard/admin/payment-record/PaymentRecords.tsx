@@ -298,9 +298,7 @@ const PaymentRecords = () => {
         ))}
       </div>
 
-      {/* =====================================================
-          PAGINATION
-      ====================================================== */}
+   
       {meta && meta.totalPages > 1 && (
         <div className="flex items-center justify-between gap-3 border-t border-border pt-4">
           <p className="text-xs text-muted-foreground">
