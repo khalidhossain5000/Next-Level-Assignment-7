@@ -4,6 +4,7 @@ import { useGetPaymentRecords } from "@/hooks";
 
 const PaymentRecords = () => {
     const {data,isPending}=useGetPaymentRecords()
+    console.log(data,"data paymetnercords")
     return (
         <div>
             
