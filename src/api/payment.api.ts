@@ -22,6 +22,6 @@ export function getPaymentDetails(id:string){
 
 //get all payment record for admin
 
-export function getAllPaymentRecords(){
-    return apiClient("/admin/payment-record")
+export function getAllPaymentRecords(page: number = 1, limit: number = 10) {
+  return apiClient(`/admin/payment-record?page=${page}&limit=${limit}`);
 }

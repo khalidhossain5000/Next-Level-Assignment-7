@@ -23,9 +23,9 @@ export function useGetPaymentDetails(){
 
 
 
-export function useGetPaymentRecords(){
-    return useQuery({
-        queryKey:["payment-record"],
-        queryFn:getAllPaymentRecords
-    })
+export function useGetPaymentRecords(page: number = 1, limit: number = 10) {
+  return useQuery({
+    queryKey: ["payment-record", page, limit],
+    queryFn: () => getAllPaymentRecords(page, limit),
+  });
 }
