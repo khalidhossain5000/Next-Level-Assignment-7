@@ -57,7 +57,7 @@ const AssignTechnicianModal = ({
 }: AssignTechnicianModalProps) => {
   const { data: technician, isPending: technicianPending } =
     useGetAllTechnician();
-
+console.log(technician,'tech data')
   const {
     mutate: assignTechnician,
     isPending: assigning,
