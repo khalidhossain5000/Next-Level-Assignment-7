@@ -1,5 +1,5 @@
+import ManageTechnician from '@/components/layout/dashboard/admin/manage-technician/ManageTechnician';
 import DashboardHeader from '@/components/layout/dashboard/common/DashboardHeader/DashboardHeader';
-import React from 'react';
 
 const ManageTechnicianPage = () => {
     return (
@@ -10,7 +10,7 @@ const ManageTechnicianPage = () => {
             />
 
             <div className="mt-6">
-            
+            <ManageTechnician/>
             </div>
         </section>
     );
