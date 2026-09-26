@@ -178,9 +178,9 @@ const AssignTechnicianModal = ({
 
             {/* Technician Select */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-card-foreground">
+              <h5 className="text-sm font-medium text-card-foreground">
                 Available Technician
-              </label>
+              </h5>
 
               {technicianPending ? (
                 <div className="flex h-10 items-center justify-center rounded-lg border border-border bg-muted/20">
@@ -198,7 +198,7 @@ const AssignTechnicianModal = ({
                 <Select
                   value={selectedTechnicianId}
                   onValueChange={(value) =>
-                    setSelectedTechnicianId(value)
+                    setSelectedTechnicianId(value as string)
                   }
                 >
                   <SelectTrigger className="h-10 w-full rounded-lg border-border bg-background">
