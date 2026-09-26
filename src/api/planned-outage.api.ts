@@ -8,4 +8,6 @@ export function addPlannedOutage(payload:IPlannedOutagePayload){
     })
 }
 
-
+export function getPlannedOutage(page: number = 1, limit: number = 10) {
+  return apiClient(`/planned-outage?page=${page}&limit=${limit}`);
+}

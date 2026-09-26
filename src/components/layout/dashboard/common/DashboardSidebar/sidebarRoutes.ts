@@ -16,6 +16,8 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { TbSunElectricity } from "react-icons/tb";
 import { GrUserWorker } from "react-icons/gr";
 import { FaMoneyCheckAlt } from "react-icons/fa";
+import { FcElectricity } from "react-icons/fc";
+import { GrSchedule } from "react-icons/gr";
 
 export type SidebarRoute = {
   label: string;
@@ -87,14 +89,14 @@ export const sidebarRoutes: SidebarRoute[] = [
   },
   {
     label: "Manage Planned Outages",
-    href: "/admin/planned-outages",
-    icon: TbSunElectricity ,
+    href: "/admin/manage-planned-outages",
+    icon: FcElectricity ,
     roles: ["ADMIN"],
   },
     {
     label: "Manage Load Shedding",
     href: "/admin/manage-load-shedding",
-    icon: TbSunElectricity ,
+    icon: GrSchedule  ,
     roles: ["ADMIN"],
   }, {
     label: "Payment Records",
