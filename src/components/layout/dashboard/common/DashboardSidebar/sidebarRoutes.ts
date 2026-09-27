@@ -18,6 +18,11 @@ import { GrUserWorker } from "react-icons/gr";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { FcElectricity } from "react-icons/fc";
 import { GrSchedule } from "react-icons/gr";
+import { TbWindElectricity } from "react-icons/tb";
+
+
+
+
 
 export type SidebarRoute = {
   label: string;
@@ -134,13 +139,13 @@ export const sidebarRoutes: SidebarRoute[] = [
     {
     label: "Assigned Outages",
     href: "/technician/assigned-outages",
-    icon: FaRegMoneyBillAlt,
+    icon: TbWindElectricity ,
     roles: ["TECHNICIAN"],
   },
    {
     label: "Update Tech Profile",
-    href: "/technician/assigned-outages",
-    icon: FaRegMoneyBillAlt,
+    href: "/technician/update-tech-profile",
+    icon: GrUserWorker,
     roles: ["TECHNICIAN"],
   },
 ];
