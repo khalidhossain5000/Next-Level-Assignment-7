@@ -19,43 +19,32 @@ export const registerUserValidationSchema = z.object({
 
 
 
-export const updateTechProfileSchema = z.object({
-    expertise: z
-        .string()
-        .trim()
-        .min(1, "Please add at least one area of expertise")
-        .regex(
-            /^[^,]+(?:,[^,]+){0,4}$/,
-            "You can add a maximum of 5 expertise areas separated by commas",
-        ),
+export const updateTechnicianProfileSchema = z.object({
+  expertise: z
+    .array(z.string().min(2, "Each expertise must be at least 2 chars"))
+    .min(1, "At least one expertise is required")
+    .max(5, "You can add maximum 5 expertise tags"),
 
-    experienceYears: z
-        .coerce
-        .number()
-        .int("Experience must be a whole number")
-        .min(0, "Experience cannot be negative")
-        .max(50, "Experience cannot exceed 50 years"),
+  experienceYears: z
+    .number("Experience years must be a number")
+    .min(0, "Experience years cannot be negative")
+    .max(50, "Experience years seems too high"),
 
-    bio: z
-        .string()
-        .trim()
-        .min(20, "Bio must be at least 20 characters")
-        .max(500, "Bio cannot exceed 500 characters"),
+  bio: z
+    .string("Not a string")
+    .min(10, "Bio should minimum have 10 char")
+    .max(300, "Max 300 chars"),
 
-    resume: z
-        .file()
-        .max(5 * 1024 * 1024, "Resume file must be 5 MB or smaller")
-        .mime(
-            [
-                "application/pdf",
-                "image/png",
-                "image/jpeg",
-            ],
-            "Only PDF, PNG, JPG, and JPEG files are allowed",
-        )
-        .nullable(),
+  resume: z
+    .instanceof(File, {
+      message: "Resume is required",
+    })
+    .refine(
+      (file) => file.type === "application/pdf",
+      "Only PDF files are allowed",
+    )
+    .refine(
+      (file) => file.size <= 5 * 1024 * 1024,
+      "Resume size must be less than 5MB",
+    ),
 });
-
-export type UpdateTechProfileFormValues = z.infer<
-    typeof updateTechProfileSchema
->;

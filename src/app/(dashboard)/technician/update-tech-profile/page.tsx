@@ -1,5 +1,6 @@
+import UpdateTechnicianProfileForm from '@/components/form/update-tech-profile-form';
 import DashboardHeader from '@/components/layout/dashboard/common/DashboardHeader/DashboardHeader';
-import UpdateTechProfile from '@/components/layout/dashboard/technician/update-technician-profile/UpdateTechProfile';
+
 
 const page = () => {
     return (
@@ -10,7 +11,7 @@ const page = () => {
             />
 
             <div className="mt-6">
-                <UpdateTechProfile/>
+                <UpdateTechnicianProfileForm/>
             </div>
         </section>
     );

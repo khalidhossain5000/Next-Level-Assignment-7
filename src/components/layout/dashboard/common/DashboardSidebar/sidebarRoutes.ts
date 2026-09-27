@@ -143,7 +143,7 @@ export const sidebarRoutes: SidebarRoute[] = [
     roles: ["TECHNICIAN"],
   },
    {
-    label: "Update Tech Profile",
+    label: "Update Technician Profile",
     href: "/technician/update-tech-profile",
     icon: GrUserWorker,
     roles: ["TECHNICIAN"],
