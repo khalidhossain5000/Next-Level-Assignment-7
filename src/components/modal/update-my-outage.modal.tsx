@@ -113,7 +113,7 @@ const UpdateOutageModal = ({ outage }: UpdateOutageModalProps) => {
             type="button"
             variant="ghost"
             size="icon"
-            className="size-9 cursor-pointer rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary"
+            className="cursor-pointer size-9 cursor-pointer rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary"
             title="Edit outage"
             aria-label="Edit outage"
           >
