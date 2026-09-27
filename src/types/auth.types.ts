@@ -28,6 +28,13 @@ export interface IUpdateUserStatus {
     status:"BAN" | "ACTIVE"
 }
 
+export interface IUpdateTechProfile {
+    expertise: string[];
+    experienceYears: number;
+    bio: string;
+    resume: File;
+}
+
 
 export interface IRegisterPayload {
     name:string;
