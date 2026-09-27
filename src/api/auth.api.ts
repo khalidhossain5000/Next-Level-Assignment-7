@@ -1,5 +1,5 @@
 import apiClient from "@/lib/apiClient";
-import type { ILoginPayload, IRegisterPayload, ITechnicanPayload, IUpdateUserStatus, IVerifyEmailPayload } from "@/types";
+import type { ILoginPayload, IRegisterPayload, ITechnicanPayload, IUpdateTechProfilePayload, IUpdateUserStatus, IVerifyEmailPayload } from "@/types";
 
 export function userLogin(payload:ILoginPayload){
     
