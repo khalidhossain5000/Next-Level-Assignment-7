@@ -107,7 +107,7 @@ export function updateTechProfile(payload: IUpdateTechProfilePayload) {
     formData.append("data", JSON.stringify(payload.data));
     formData.append("resume", payload.resume);
 
-    return apiClient(`/technician/profile`, {
+    return apiClient(`/technician`, {
         method: "PATCH",
         body: formData,
     });
