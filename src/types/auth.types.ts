@@ -27,11 +27,12 @@ export interface IUpdateUserStatus {
     userId:string;
     status:"BAN" | "ACTIVE"
 }
-
-export interface IUpdateTechProfile {
-    expertise: string[];
-    experienceYears: number;
-    bio: string;
+export interface IUpdateTechProfilePayload {
+    data: {
+        expertise: string[];
+        experienceYears: number;
+        bio: string;
+    };
     resume: File;
 }
 

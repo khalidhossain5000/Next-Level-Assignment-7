@@ -101,6 +101,14 @@ export function updateUserStatus(payload:IUpdateUserStatus){
 
 //technician profile update
 
-export function updateTechProfile(payload:any){
+export function updateTechProfile(payload: IUpdateTechProfilePayload) {
+    const formData = new FormData();
 
+    formData.append("data", JSON.stringify(payload.data));
+    formData.append("resume", payload.resume);
+
+    return apiClient(`/technician/profile`, {
+        method: "PATCH",
+        body: formData,
+    });
 }
