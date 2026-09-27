@@ -7,6 +7,7 @@ const CustomerDashboardPageHome = () => {
             <DashboardHeader
                 title="Dashboard Overview"
                 description="Track your spending patterns and account activity at a glance."
+                showDateTime
             />
             <div className="py-6">
                 <CustomerAnalyticsReport />
