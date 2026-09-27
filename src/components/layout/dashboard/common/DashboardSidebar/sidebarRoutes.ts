@@ -137,4 +137,10 @@ export const sidebarRoutes: SidebarRoute[] = [
     icon: FaRegMoneyBillAlt,
     roles: ["TECHNICIAN"],
   },
+   {
+    label: "Update Tech Profile",
+    href: "/technician/assigned-outages",
+    icon: FaRegMoneyBillAlt,
+    roles: ["TECHNICIAN"],
+  },
 ];
