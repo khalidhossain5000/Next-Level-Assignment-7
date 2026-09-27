@@ -8,7 +8,7 @@ const page = () => {
                 description="Update your professional information, expertise, experience, and other profile details."
             />
 
-            <div className="">
+            <div className="mt-6">
 
             </div>
         </section>
