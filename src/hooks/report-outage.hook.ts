@@ -50,11 +50,8 @@ export function useGetTechnicanAssignedOutages(){
 }
 
 
-
-
 export function useUpdateOutage() {
     const queryClient = useQueryClient();
-
     return useMutation({
         mutationFn: updateMyOutage,
         onSuccess: () => {
