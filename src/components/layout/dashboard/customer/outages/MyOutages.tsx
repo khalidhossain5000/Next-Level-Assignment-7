@@ -1,6 +1,6 @@
 "use client";
 
-import { FiEdit2, FiMapPin, FiTrash2, FiZap } from "react-icons/fi";
+import { FiEdit2, FiTrash2, FiZap } from "react-icons/fi";
 
 import { useGetMyOutages } from "@/hooks";
 
@@ -96,49 +96,51 @@ const MyOutages = () => {
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
-  
-
-  
+      {/* Desktop Table */}
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
-            <Table>
+            <Table className="border-separate border-spacing-0">
               <TableHeader>
-                <TableRow className="bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="h-12 whitespace-nowrap pl-6">
+                <TableRow className="hover:bg-transparent">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 pl-6 font-semibold text-foreground">
                     Cause
                   </TableHead>
 
-                  <TableHead className="h-12 whitespace-nowrap">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground">
                     Area
                   </TableHead>
 
-                  <TableHead className="h-12 whitespace-nowrap">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground">
                     Priority
                   </TableHead>
 
-                  <TableHead className="h-12 whitespace-nowrap">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground">
                     Status
                   </TableHead>
 
-                  <TableHead className="h-12 whitespace-nowrap">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground">
                     Reported At
                   </TableHead>
 
-                  <TableHead className="h-12 whitespace-nowrap pr-6 text-right">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 pr-6 text-right font-semibold text-foreground">
                     Actions
                   </TableHead>
                 </TableRow>
               </TableHeader>
 
               <TableBody>
-                {outages.map((outage: IMyOutage) => (
+                {outages.map((outage: IMyOutage, index: number) => (
                   <TableRow
                     key={outage.id}
-                    className="group transition-colors hover:bg-muted/30"
+                    className="group border-0 transition-colors hover:bg-muted/30"
                   >
                     {/* Cause */}
-                    <TableCell className="pl-6">
+                    <TableCell
+                      className={`pl-6 ${
+                        index !== outages.length - 1 ? "border-b border-border" : ""
+                      }`}
+                    >
                       <div className="max-w-52">
                         <p className="truncate font-semibold text-card-foreground">
                           {outage.cause}
@@ -151,26 +153,26 @@ const MyOutages = () => {
                     </TableCell>
 
                     {/* Area */}
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                          <FiMapPin className="size-4" />
-                        </div>
+                    <TableCell
+                      className={
+                        index !== outages.length - 1 ? "border-b border-border" : ""
+                      }
+                    >
+                      <p className="max-w-44 truncate font-medium text-card-foreground">
+                        {outage.area?.name ?? "N/A"}
+                      </p>
 
-                        <div className="min-w-0">
-                          <p className="max-w-44 truncate font-medium text-card-foreground">
-                            {outage.area?.name ?? "N/A"}
-                          </p>
-
-                          <p className="text-xs text-muted-foreground">
-                            {outage.area?.code ?? "N/A"}
-                          </p>
-                        </div>
-                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {outage.area?.code ?? "N/A"}
+                      </p>
                     </TableCell>
 
                     {/* Priority */}
-                    <TableCell>
+                    <TableCell
+                      className={
+                        index !== outages.length - 1 ? "border-b border-border" : ""
+                      }
+                    >
                       <Badge
                         variant="outline"
                         className={getPriorityClassName(outage.priority)}
@@ -180,7 +182,11 @@ const MyOutages = () => {
                     </TableCell>
 
                     {/* Status */}
-                    <TableCell>
+                    <TableCell
+                      className={
+                        index !== outages.length - 1 ? "border-b border-border" : ""
+                      }
+                    >
                       <Badge
                         variant="outline"
                         className={getStatusClassName(outage.status)}
@@ -190,12 +196,20 @@ const MyOutages = () => {
                     </TableCell>
 
                     {/* Reported At */}
-                    <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
+                    <TableCell
+                      className={`whitespace-nowrap text-sm text-muted-foreground ${
+                        index !== outages.length - 1 ? "border-b border-border" : ""
+                      }`}
+                    >
                       {formatDate(outage.reported_At)}
                     </TableCell>
 
                     {/* Actions */}
-                    <TableCell className="pr-6">
+                    <TableCell
+                      className={`pr-6 ${
+                        index !== outages.length - 1 ? "border-b border-border" : ""
+                      }`}
+                    >
                       <div className="flex items-center justify-end gap-1.5">
                         {outage.priority === "NORMAL" && (
                           <PriorityInfoModal outageId={outage.id} />
@@ -232,14 +246,14 @@ const MyOutages = () => {
         </div>
       </div>
 
-   
+      {/* Mobile / Tablet Cards */}
       <div className="space-y-3 xl:hidden">
         {outages.map((outage: IMyOutage) => (
           <Card
             key={outage.id}
             className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
           >
-   
+            {/* Tablet layout (sm and up, below xl) */}
             <CardContent className="hidden px-4 py-3 sm:block sm:px-5 sm:py-3.5">
               <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                 {/* Cause + Area */}
@@ -263,21 +277,15 @@ const MyOutages = () => {
                     </Badge>
                   </div>
 
-                  <div className="mt-1 flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
-                    <FiMapPin className="size-3.5 shrink-0" />
-
-                    <span className="truncate">
-                      {outage.area?.name ?? "N/A"}
-                    </span>
-
-                    <span className="hidden shrink-0 text-muted-foreground/50 md:inline">
-                      •
-                    </span>
-
-                    <span className="hidden shrink-0 md:inline">
-                      {outage.area?.code ?? "N/A"}
-                    </span>
-                  </div>
+                  <p className="mt-1 truncate text-xs text-muted-foreground">
+                    {outage.area?.name ?? "N/A"}
+                    {outage.area?.code && (
+                      <span className="hidden md:inline">
+                        {" "}
+                        &middot; {outage.area.code}
+                      </span>
+                    )}
+                  </p>
                 </div>
 
                 {/* Priority */}
@@ -332,9 +340,8 @@ const MyOutages = () => {
               </div>
             </CardContent>
 
-         
+            {/* Mobile layout (below sm) */}
             <CardContent className="px-4 py-3 sm:hidden">
-              {/* Top Info: title + status in same row, wraps if needed */}
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
@@ -347,13 +354,9 @@ const MyOutages = () => {
                     </span>
                   </div>
 
-                  <div className="mt-1.5 flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
-                    <FiMapPin className="size-3.5 shrink-0" />
-
-                    <span className="truncate">
-                      {outage.area?.name ?? "N/A"}
-                    </span>
-                  </div>
+                  <p className="mt-1 truncate text-xs text-muted-foreground">
+                    {outage.area?.name ?? "N/A"}
+                  </p>
                 </div>
 
                 <Badge
@@ -366,7 +369,6 @@ const MyOutages = () => {
                 </Badge>
               </div>
 
-              {/* Bottom Info + Actions */}
               <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-2.5">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge
