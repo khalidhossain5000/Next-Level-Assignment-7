@@ -154,7 +154,7 @@ const CustomerAnalyticsReport = () => {
           return (
             <Card
               key={stat.key}
-              className="relative overflow-hidden border-border py-0"
+              className="relative overflow-hidden border-border py-0 rounded-lg"
             >
               {/* Gradient glow */}
               <div className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-2xl" />
