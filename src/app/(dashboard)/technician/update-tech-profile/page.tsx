@@ -1,5 +1,4 @@
 import DashboardHeader from '@/components/layout/dashboard/common/DashboardHeader/DashboardHeader';
-import React from 'react';
 
 const page = () => {
     return (
@@ -8,6 +7,10 @@ const page = () => {
                 title="Update Technician Profile"
                 description="Update your professional information, expertise, experience, and other profile details."
             />
+
+            <div className="">
+
+            </div>
         </section>
     );
 };
