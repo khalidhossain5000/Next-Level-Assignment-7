@@ -307,16 +307,7 @@ const MyOutages = () => {
                     <PriorityInfoModal outageId={outage.id} />
                   )}
 
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="size-8 cursor-pointer rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                    title="Edit outage"
-                    aria-label="Edit outage"
-                  >
-                    <FiEdit2 className="size-4" />
-                  </Button>
+                 <UpdateOutageModal outage={outage} />
 
                   <Button
                     type="button"
