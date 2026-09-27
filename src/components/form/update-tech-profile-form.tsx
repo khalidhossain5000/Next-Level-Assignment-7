@@ -95,21 +95,10 @@ const UpdateTechnicianProfileForm = () => {
         {/* Decorative gradient glow */}
         <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
 
-        {/* Header */}
-        <div className="relative border-b border-border px-6 py-6 sm:px-8">
-          <h2 className="font-manrope text-xl font-bold tracking-tight text-card-foreground">
-            Update Technician Profile
-          </h2>
-
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">
-            Update your expertise, experience, bio and resume.
-          </p>
-        </div>
-
         {/* Form Body */}
-        <div className="relative p-6 sm:p-8">
+        <div className="relative p-4 sm:p-6 md:p-8">
           <FieldGroup>
-            <div className="grid gap-6 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
               {/* Expertise (tag input) */}
               <form.Field name="expertise">
                 {(field) => {
@@ -133,7 +122,7 @@ const UpdateTechnicianProfileForm = () => {
                   };
 
                   return (
-                    <Field data-invalid={isInvalid} className="sm:col-span-2">
+                    <Field data-invalid={isInvalid}>
                       <Label
                         htmlFor={field.name}
                         className="mb-2 block text-sm font-semibold text-card-foreground"
@@ -168,7 +157,7 @@ const UpdateTechnicianProfileForm = () => {
                           }}
                           disabled={tags.length >= MAX_EXPERTISE}
                           aria-invalid={isInvalid}
-                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          className="h-11 w-full rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
                           autoComplete="off"
                         />
                       </div>
@@ -238,7 +227,7 @@ const UpdateTechnicianProfileForm = () => {
                             field.handleChange(Number(e.target.value))
                           }
                           aria-invalid={isInvalid}
-                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          className="h-11 w-full rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
                           autoComplete="off"
                         />
                       </div>
@@ -277,7 +266,7 @@ const UpdateTechnicianProfileForm = () => {
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
                           aria-invalid={isInvalid}
-                          className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                          className="h-11 w-full rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
                           autoComplete="off"
                         />
                       </div>
@@ -321,15 +310,15 @@ const UpdateTechnicianProfileForm = () => {
                           setResumeName(file.name);
                         }}
                         aria-invalid={isInvalid}
-                        className="h-11 cursor-pointer rounded-xl border-border bg-background text-sm shadow-none transition-all file:mr-3 file:h-7 file:rounded-lg file:border-0 file:bg-primary file:px-3 file:text-xs file:font-semibold file:text-primary-foreground hover:file:bg-primary/90 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                        className="h-11 w-full cursor-pointer rounded-xl border-border bg-background text-sm shadow-none transition-all file:mr-3 file:h-7 file:rounded-lg file:border-0 file:bg-primary file:px-3 file:text-xs file:font-semibold file:text-primary-foreground hover:file:bg-primary/90 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
                       />
 
                       {/* File preview */}
                       {resumeName && (
-                        <div className="mt-3 flex items-center justify-between rounded-xl border border-border bg-muted/30 px-4 py-2.5">
-                          <div className="flex items-center gap-2">
-                            <FiFile className="size-4 text-primary" />
-                            <span className="text-sm text-card-foreground">
+                        <div className="mt-3 flex items-center justify-between gap-2 rounded-xl border border-border bg-muted/30 px-4 py-2.5">
+                          <div className="flex min-w-0 items-center gap-2">
+                            <FiFile className="size-4 shrink-0 text-primary" />
+                            <span className="truncate text-sm text-card-foreground">
                               {resumeName}
                             </span>
                           </div>
@@ -339,7 +328,7 @@ const UpdateTechnicianProfileForm = () => {
                             variant="destructive"
                             size="icon"
                             aria-label="Remove resume"
-                            className="size-8 cursor-pointer rounded-lg shadow-md"
+                            className="size-8 shrink-0 cursor-pointer rounded-lg shadow-md"
                             onClick={() => {
                               setResumeName(null);
                               field.handleChange(null);
@@ -366,7 +355,7 @@ const UpdateTechnicianProfileForm = () => {
         </div>
 
         {/* Footer */}
-        <div className="relative border-t border-border bg-muted/30 px-6 py-5 sm:px-8">
+        <div className="relative border-t border-border bg-muted/30 px-4 py-5 sm:px-6 md:px-8">
           <p className="mb-3 text-xs text-muted-foreground">
             Make sure your profile information is accurate before submitting.
           </p>
