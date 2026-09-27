@@ -99,3 +99,8 @@ export function updateUserStatus(payload:IUpdateUserStatus){
 
 
 
+//technician profile update
+
+export function updateTechProfile(payload:any){
+
+}
