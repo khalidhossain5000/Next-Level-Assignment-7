@@ -14,3 +14,6 @@ export const registerUserValidationSchema = z.object({
     password: z.string("Password should be a string")
 
 })
+
+
+
