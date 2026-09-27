@@ -1,5 +1,5 @@
 import apiClient from "@/lib/apiClient";
-import type { ILoginPayload, IRegisterPayload, ITechnicanPayload, IVerifyEmailPayload } from "@/types";
+import type { ILoginPayload, IRegisterPayload, ITechnicanPayload, IUpdateUserStatus, IVerifyEmailPayload } from "@/types";
 
 export function userLogin(payload:ILoginPayload){
     
@@ -84,10 +84,7 @@ export function getAllUsers(){
 }
 
 
-export interface IUpdateUserStatus {
-    userId:string;
-    status:"BAN" | "ACTIVE"
-}
+
 export function updateUserStatus(payload:IUpdateUserStatus){
     return apiClient(`/admin/users/${payload.userId}`,{
         method:"PATCH",
@@ -96,3 +93,9 @@ export function updateUserStatus(payload:IUpdateUserStatus){
         }
     })
 }
+
+
+
+
+
+

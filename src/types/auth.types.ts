@@ -23,6 +23,11 @@ export interface IUser {
   payments?: { id: string; status: string }[];
 }
 
+export interface IUpdateUserStatus {
+    userId:string;
+    status:"BAN" | "ACTIVE"
+}
+
 
 export interface IRegisterPayload {
     name:string;
