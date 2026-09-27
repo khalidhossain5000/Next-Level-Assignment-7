@@ -1,4 +1,4 @@
-import { assignTechnician, getAllOutages, getCurrentTechnicainOutage, getMyOutages, reportOutage, updateOutageStatus } from "@/api";
+import { assignTechnician, getAllOutages, getCurrentTechnicainOutage, getMyOutages, reportOutage, updateMyOutage, updateOutageStatus } from "@/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export function useReportOutage(){
@@ -46,5 +46,14 @@ export function useGetTechnicanAssignedOutages(){
     return useQuery({
         queryKey:["assigned-outages"],
         queryFn:getCurrentTechnicainOutage
+    })
+}
+
+
+
+
+export function useUpdateOutage() {
+    return useMutation({
+        mutationFn: updateMyOutage
     })
 }

@@ -66,3 +66,20 @@ export function assignTechnician(payload:IAssignTechnician){
 export function getCurrentTechnicainOutage(){
     return apiClient("/outage/my-assigned-outages")
 }
+
+
+
+//update outage
+
+
+export interface IUpdateOutagePayload {
+    outageId: string;
+    data: IReportOutagePayload;
+}
+
+export function updateMyOutage(payload: IUpdateOutagePayload) {
+    return apiClient(`/outage/${payload.outageId}`, {
+        method: "PATCH",
+        body: payload.data,
+    });
+}

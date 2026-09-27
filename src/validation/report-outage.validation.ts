@@ -15,3 +15,20 @@ export const reportOutageSchema = z.object({
     .string("Area is required")
     .min(1, "Please select an affected area"),
 });
+
+
+export const updateOutageSchema = z.object({
+  cause: z
+    .string("Not a string")
+    .min(5, "Cause should minimum have 5 char")
+    .max(100, "Max 100 chars"),
+
+  description: z
+    .string("Not a string")
+    .min(10, "Description should minimum have 10 char")
+    .max(300, "Max 300 chars"),
+
+  areaId: z
+    .string("Not a string")
+    .min(1, "Please select an affected area"),
+});
