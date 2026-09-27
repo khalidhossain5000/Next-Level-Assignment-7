@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 "use client";
 
 import { FiTag, FiClock, FiFileText, FiX, FiFile } from "react-icons/fi";
