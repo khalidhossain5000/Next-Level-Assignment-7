@@ -122,7 +122,7 @@ const UpdateOutageModal = ({ outage }: UpdateOutageModalProps) => {
         }
       />
 
-      <DialogContent className="max-w-2xl gap-0 overflow-hidden rounded-2xl p-0">
+      <DialogContent className="max-w-4xl gap-0 overflow-hidden rounded-2xl p-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
