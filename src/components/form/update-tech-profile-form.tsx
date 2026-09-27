@@ -56,7 +56,7 @@ const UpdateTechnicianProfileForm = () => {
         {
           onSuccess: (res) => {
             form.reset();
-
+            console.log(res,'success res')
             setExpertiseInput("");
             setResumeName(null);
 
