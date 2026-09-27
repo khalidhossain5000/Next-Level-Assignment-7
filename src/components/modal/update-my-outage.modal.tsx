@@ -2,8 +2,8 @@
 
 import { useGetMyOutages } from "@/hooks";
 
-const UpdateMyOutageForm = () => {
- const { data: myOutages, isPending } = useGetMyOutages();
+const UpdateMyOutageModal = () => {
+     const { data: myOutages, isPending } = useGetMyOutages();
  console.log(myOutages,'myoutages')
     return (
         <div>
@@ -12,4 +12,4 @@ const UpdateMyOutageForm = () => {
     );
 };
 
-export default UpdateMyOutageForm;
+export default UpdateMyOutageModal;
