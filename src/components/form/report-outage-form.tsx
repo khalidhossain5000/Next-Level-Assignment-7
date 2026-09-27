@@ -43,7 +43,7 @@ const ReportOutageForm = () => {
     },
 
     onSubmit: async ({ value }) => {
-      console.log(value, "report outage value");
+
 
       const outageData = {
         cause: value.cause,
