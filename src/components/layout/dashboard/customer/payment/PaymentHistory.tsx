@@ -15,7 +15,6 @@ import {
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Spinner } from "@/components/ui/spinner";
 import PaymentHistorySkeleton from "@/components/loader/skleton-loading/dashboard/payment-history.skeleton";
 
 interface IPayment {
