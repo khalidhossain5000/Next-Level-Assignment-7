@@ -5,7 +5,7 @@ import DashboardHeader from '@/components/layout/dashboard/common/DashboardHeade
 const ReportOutage = () => {
     return (
         <section className="space-y-6 p-4 md:p-6">
-            <DashboardHeader title="Add Planned Outage" />
+            <DashboardHeader title="Report An Unexpected Outage" />
 
             <div className="mt-6">
                 <ReportOutageForm />
