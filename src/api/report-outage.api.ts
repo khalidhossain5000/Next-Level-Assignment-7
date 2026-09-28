@@ -83,3 +83,14 @@ export function updateMyOutage(payload: IUpdateOutagePayload) {
         body: payload.data,
     });
 }
+
+
+
+
+//delete my outage
+
+export function deleteMyOutage(outageId:string){
+    return apiClient(`/outage/${outageId}`,{
+        method:"DELETE"
+    })
+}
