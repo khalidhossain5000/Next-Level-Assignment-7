@@ -1,6 +1,5 @@
-import React from 'react';
-
-const update-tech-profile.modal = () => {
+"use client"
+const UpdateTechProfileModal = () => {
     return (
         <div>
             
@@ -8,4 +7,4 @@ const update-tech-profile.modal = () => {
     );
 };
 
-export default update-tech-profile.modal;
+export default UpdateTechProfileModal;
