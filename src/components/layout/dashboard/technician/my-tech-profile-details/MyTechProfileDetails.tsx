@@ -21,6 +21,7 @@ import { useGetMe } from "@/hooks";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import TechnicianProfileSkleton from "@/components/loader/skleton-loading/dashboard/tech-profile.skeleton";
+import UpdateTechProfileModal from "@/components/modal/update-tech-profile.modal";
 
 
 const StatCard = ({
@@ -116,10 +117,7 @@ const EmptyState = ({
         {description}
       </p>
 
-      <Button type="button" className="mt-6 h-10 gap-2 rounded-lg px-5">
-        <Pencil className="size-4" />
-        Update profile
-      </Button>
+     <UpdateTechProfileModal />
     </div>
   </div>
 );
@@ -261,13 +259,7 @@ const MyTechProfileDetails = () => {
               </Button>
             )}
 
-            <Button
-              type="button"
-              className="h-10 w-full gap-2 rounded-lg px-4 shadow-sm sm:w-auto"
-            >
-              <Pencil className="size-4" />
-              Update profile
-            </Button>
+          <UpdateTechProfileModal />
           </div>
         </div>
       </div>
