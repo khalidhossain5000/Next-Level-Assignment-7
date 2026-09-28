@@ -8,7 +8,6 @@ import {
   FiDollarSign,
 } from "react-icons/fi";
 import { Cell, Pie, PieChart } from "recharts";
-import { TbCurrencyTaka } from "react-icons/tb";
 
 import { useGetCustomerAnalytics } from "@/hooks";
 
@@ -158,7 +157,7 @@ const CustomerAnalyticsReport = () => {
               className="relative overflow-hidden border-border py-0 rounded-lg"
             >
               {/* Gradient glow */}
-              <div className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-2xl" />
+              <div className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-linear-to-br from-primary/25 via-primary/10 to-transparent blur-2xl" />
 
               <CardHeader className="relative gap-1 p-5">
                 <div className="flex items-center justify-between">
