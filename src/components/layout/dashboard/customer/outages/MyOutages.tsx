@@ -211,14 +211,14 @@ if (isPending) {
         </div>
       </div>
 
-      {/* Mobile / Tablet Cards */}
+      {/* Mobile */}
       <div className="space-y-3 xl:hidden">
         {outages.map((outage: IMyOutage) => (
           <Card
             key={outage.id}
             className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
           >
-            {/* Tablet layout (sm and up, below xl) */}
+   
             <CardContent className="hidden px-4 py-3 sm:block sm:px-5 sm:py-3.5">
               <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                 {/* Cause + Area */}
@@ -285,7 +285,7 @@ if (isPending) {
               </div>
             </CardContent>
 
-            {/* Mobile layout (below sm) */}
+         
             <CardContent className="px-4 py-3 sm:hidden">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
