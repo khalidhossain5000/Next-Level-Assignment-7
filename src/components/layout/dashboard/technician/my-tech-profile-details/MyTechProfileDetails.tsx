@@ -305,7 +305,7 @@ const MyTechProfileDetails = () => {
             <div className="flex flex-wrap gap-2">
               {expertise.map((item: string) => (
                 <span
-                  key={`${item}-${i}`}
+                  key={`${item}-lk`}
                   className="rounded-md border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium capitalize text-primary dark:border-primary/25 dark:bg-primary/10 dark:text-primary"
                 >
                   {item}
