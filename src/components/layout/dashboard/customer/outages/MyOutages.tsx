@@ -219,16 +219,7 @@ const MyOutages = () => {
 
                       <UpdateOutageModal outage={outage} />
 
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="size-9 cursor-pointer rounded-lg text-muted-foreground hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30"
-                          title="Delete outage"
-                          aria-label="Delete outage"
-                        >
-                          <FiTrash2 className="size-4" />
-                        </Button>
+                        <DeleteMyOutageConfirmModal outageId={outage.id} />
                       </div>
                     </TableCell>
                   </TableRow>
@@ -375,16 +366,7 @@ const MyOutages = () => {
                     <FiEdit2 className="size-3.5" />
                   </Button>
 
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="size-8 rounded-lg text-muted-foreground hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30"
-                    title="Delete outage"
-                    aria-label="Delete outage"
-                  >
-                    <FiTrash2 className="size-3.5" />
-                  </Button>
+               <DeleteMyOutageConfirmModal outageId={outage.id} />
                 </div>
               </div>
             </CardContent>
