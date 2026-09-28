@@ -97,7 +97,7 @@ export function useUpdateTechnicianProfile(){
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["get-me"],
+        queryKey: ["user"],
       });
     },
   });
