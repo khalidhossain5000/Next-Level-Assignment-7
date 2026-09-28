@@ -110,6 +110,10 @@ export function useUpdateUserProfile(){
 
     return useMutation({
         mutationFn:updateUserProfile,
-        
+         onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
+    },
     })
 }
