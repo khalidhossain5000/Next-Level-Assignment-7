@@ -16,6 +16,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Spinner } from "@/components/ui/spinner";
+import PaymentHistorySkeleton from "@/components/loader/skleton-loading/dashboard/payment-history.skeleton";
 
 interface IPayment {
   id: string;
@@ -71,13 +72,7 @@ const PaymentHistory = () => {
     }
   };
 
-  if (isPending) {
-    return (
-      <div className="flex min-h-72 items-center justify-center">
-        <Spinner className="size-6" />
-      </div>
-    );
-  }
+  if (isPending) return <PaymentHistorySkeleton/>
 
   if (payments.length === 0) {
     return (
