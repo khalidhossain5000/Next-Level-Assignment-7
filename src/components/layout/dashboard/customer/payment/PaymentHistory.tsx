@@ -1,6 +1,6 @@
 "use client";
 
-import { FiCreditCard, FiZap } from "react-icons/fi";
+import { FiCreditCard } from "react-icons/fi";
 
 import { useGetPayments } from "@/hooks";
 
@@ -46,6 +46,10 @@ const PaymentHistory = () => {
 
   const formatAmount = (amount: string) => {
     return `৳${Number(amount).toLocaleString("en-BD")}`;
+  };
+
+  const formatProvider = (provider: string) => {
+    return provider.replaceAll("_", " ");
   };
 
   const getStatusClassName = (status: string) => {
@@ -101,93 +105,104 @@ const PaymentHistory = () => {
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
-            <Table>
+            <Table className="border-separate border-spacing-0">
               <TableHeader>
-                <TableRow className="bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="h-12 whitespace-nowrap pl-6">
+                <TableRow className="font-inter hover:bg-transparent">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 pl-6 font-semibold text-foreground">
                     Transaction
                   </TableHead>
 
-                  <TableHead className="h-12 whitespace-nowrap">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground">
                     Related Outage
                   </TableHead>
 
-                  <TableHead className="h-12 whitespace-nowrap">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground">
                     Provider
                   </TableHead>
 
-                  <TableHead className="h-12 whitespace-nowrap">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground">
                     Amount
                   </TableHead>
 
-                  <TableHead className="h-12 whitespace-nowrap">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground">
                     Status
                   </TableHead>
 
-                  <TableHead className="h-12 whitespace-nowrap pr-6">
+                  <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 pr-6 text-right font-semibold text-foreground">
                     Date
                   </TableHead>
                 </TableRow>
               </TableHeader>
 
               <TableBody>
-                {payments.map((payment) => (
-                  <TableRow
-                    key={payment.id}
-                    className="group transition-colors hover:bg-muted/30"
-                  >
-                    {/* Transaction */}
-                    <TableCell className="pl-6">
-                      <div className="max-w-52">
-                        <p className="truncate font-semibold text-card-foreground">
-                          {payment.transactionId}
-                        </p>
+                {payments.map((payment, index) => {
+                  const cellBorder =
+                    index !== payments.length - 1
+                      ? "border-b border-border"
+                      : "";
 
-                        <p className="mt-0.5 text-xs text-muted-foreground">
-                          #{payment.id.slice(0, 8)}
-                        </p>
-                      </div>
-                    </TableCell>
+                  return (
+                    <TableRow
+                      key={payment.id}
+                      className="group border-0 transition-colors hover:bg-muted/30"
+                    >
+                      {/* Transaction */}
+                      <TableCell className={`pl-6 ${cellBorder}`}>
+                        <div className="max-w-52">
+                          <p className="truncate font-semibold text-card-foreground">
+                            {payment.transactionId}
+                          </p>
 
-                    {/* Related Outage */}
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                          <FiZap className="size-4" />
+                          <p className="mt-0.5 text-xs text-muted-foreground">
+                            #{payment.id.slice(0, 8)}
+                          </p>
                         </div>
+                      </TableCell>
 
+                      {/* Related Outage */}
+                      <TableCell className={cellBorder}>
                         <p className="max-w-44 truncate font-medium text-card-foreground">
                           {payment.outage?.cause ?? "N/A"}
                         </p>
-                      </div>
-                    </TableCell>
 
-                    {/* Provider */}
-                    <TableCell className="text-sm text-muted-foreground">
-                      {payment.provider.replace("_", " ")}
-                    </TableCell>
+                        <p className="text-xs text-muted-foreground">
+                          {payment.outage?.priority ?? "N/A"} priority
+                        </p>
+                      </TableCell>
 
-                    {/* Amount */}
-                    <TableCell className="font-semibold text-card-foreground">
-                      {formatAmount(payment.amount)}
-                    </TableCell>
-
-                    {/* Status */}
-                    <TableCell>
-                      <Badge
-                        variant="outline"
-                        className={getStatusClassName(payment.status)}
+                      {/* Provider */}
+                      <TableCell
+                        className={`whitespace-nowrap text-sm text-muted-foreground ${cellBorder}`}
                       >
-                        {payment.status}
-                      </Badge>
-                    </TableCell>
+                        {formatProvider(payment.provider)}
+                      </TableCell>
 
-                    {/* Date */}
-                    <TableCell className="whitespace-nowrap pr-6 text-sm text-muted-foreground">
-                      {formatDate(payment.paidAt ?? payment.createdAt)}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      {/* Amount */}
+                      <TableCell
+                        className={`whitespace-nowrap font-semibold text-card-foreground ${cellBorder}`}
+                      >
+                        {formatAmount(payment.amount)}
+                      </TableCell>
+
+                      {/* Status */}
+                      <TableCell className={cellBorder}>
+                        <Badge
+                          variant="outline"
+                          className={getStatusClassName(payment.status)}
+                        >
+                          {payment.status}
+                        </Badge>
+                      </TableCell>
+
+                      {/* Date */}
+                      <TableCell
+                        className={`whitespace-nowrap pr-6 text-right text-sm text-muted-foreground ${cellBorder}`}
+                      >
+                        {formatDate(payment.paidAt ?? payment.createdAt)}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </div>
@@ -201,22 +216,76 @@ const PaymentHistory = () => {
             key={payment.id}
             className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
           >
-            <CardContent className="px-4 py-3.5">
+            {/* Tablet layout (sm and up, below xl) */}
+            <CardContent className="hidden px-4 py-3 sm:block sm:px-5 sm:py-3.5">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                {/* Transaction + Outage */}
+                <div className="min-w-0 flex-1 pr-2">
+                  <div className="flex min-w-0 flex-wrap items-center gap-2">
+                    <p className="truncate text-sm font-semibold text-card-foreground sm:text-base">
+                      {payment.transactionId}
+                    </p>
+
+                    <span className="hidden shrink-0 text-xs text-muted-foreground md:inline">
+                      #{payment.id.slice(0, 8)}
+                    </span>
+
+                    <Badge
+                      variant="outline"
+                      className={`shrink-0 text-[10px] font-semibold ${getStatusClassName(
+                        payment.status
+                      )}`}
+                    >
+                      {payment.status}
+                    </Badge>
+                  </div>
+
+                  <p className="mt-1 truncate text-xs text-muted-foreground">
+                    {payment.outage?.cause ?? "N/A"}
+                    <span className="hidden md:inline">
+                      {" "}
+                      &middot; {formatProvider(payment.provider)}
+                    </span>
+                  </p>
+                </div>
+
+                {/* Date */}
+                <div className="hidden shrink-0 lg:block">
+                  <p className="text-[11px] text-muted-foreground">Paid</p>
+
+                  <p className="text-xs font-medium text-card-foreground">
+                    {formatDate(payment.paidAt ?? payment.createdAt)}
+                  </p>
+                </div>
+
+                {/* Amount */}
+                <div className="shrink-0 text-right">
+                  <p className="text-[11px] text-muted-foreground">Amount</p>
+
+                  <p className="text-base font-semibold text-card-foreground">
+                    {formatAmount(payment.amount)}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+
+            {/* Mobile layout (below sm) */}
+            <CardContent className="px-4 py-3 sm:hidden">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
                     <p className="truncate text-sm font-semibold text-card-foreground">
                       {payment.transactionId}
                     </p>
-                  </div>
 
-                  <div className="mt-1.5 flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
-                    <FiZap className="size-3.5 shrink-0" />
-
-                    <span className="truncate">
-                      {payment.outage?.cause ?? "N/A"}
+                    <span className="shrink-0 text-[10px] text-muted-foreground">
+                      #{payment.id.slice(0, 8)}
                     </span>
                   </div>
+
+                  <p className="mt-1 truncate text-xs text-muted-foreground">
+                    {payment.outage?.cause ?? "N/A"}
+                  </p>
                 </div>
 
                 <Badge
