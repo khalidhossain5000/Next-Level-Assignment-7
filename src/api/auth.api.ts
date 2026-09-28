@@ -112,3 +112,17 @@ export function updateTechProfile(payload: IUpdateTechProfilePayload) {
         body: formData,
     });
 }
+
+
+
+
+//update current user profile
+export interface IUpdateUserProfile {
+    profileImage:File;
+    data:{
+        name:string
+    }
+}
+export function updateUserProfile(payload:IUpdateUserProfile){
+    return apiClient("/auth/")
+}
