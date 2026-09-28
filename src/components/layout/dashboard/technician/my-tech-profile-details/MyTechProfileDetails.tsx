@@ -124,7 +124,7 @@ const EmptyState = ({
 
 const MyTechProfileDetails = () => {
   const { data, isPending } = useGetMe();
-
+console.log(data,"this is data")
   const technicianProfile = data?.data?.technicianProfile;
 
   if (isPending) {

@@ -1,5 +1,5 @@
 import { approveTechnicanProfile, getAllTechnician, getAllUsers, getMe, googleLogin, registerUser, resendOtp, updateTechProfile, updateUserProfile, updateUserStatus, userLogin, userLogout, verifyUserEmail } from "@/api";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useLogin(){
     return useMutation({
@@ -90,9 +90,17 @@ export function useUpdateUserStatus(){
 
 
 export function useUpdateTechnicianProfile(){
-    return useMutation({
-        mutationFn:updateTechProfile
-    })
+     const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updateTechProfile,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["get-me"],
+      });
+    },
+  });
 }
 
 

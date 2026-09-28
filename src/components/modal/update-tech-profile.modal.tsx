@@ -30,7 +30,7 @@ const UpdateTechProfileModal = () => {
         render={
           <Button
             type="button"
-            className="h-10 gap-2 rounded-lg px-4 font-medium shadow-sm"
+            className="h-10 gap-2 rounded-lg px-4 font-medium shadow-sm cursor-pointer"
           >
             <Pencil className="size-4" />
             Update profile
