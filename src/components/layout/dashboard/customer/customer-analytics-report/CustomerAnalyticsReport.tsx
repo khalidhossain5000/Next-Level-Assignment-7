@@ -8,6 +8,7 @@ import {
   FiDollarSign,
 } from "react-icons/fi";
 import { Cell, Pie, PieChart } from "recharts";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 import { useGetCustomerAnalytics } from "@/hooks";
 
@@ -139,7 +140,7 @@ const CustomerAnalyticsReport = () => {
       key: "totalSpent",
       title: "Total Spent",
       description: "Total amount spent so far",
-      value: `৳${(analytics?.totalSpent ?? 0).toLocaleString()}`,
+      value: `৳ ${(analytics?.totalSpent ?? 0).toLocaleString()}`,
       icon: FiDollarSign,
     },
   ];
@@ -185,7 +186,7 @@ const CustomerAnalyticsReport = () => {
 
       {/* Outage Status Chart */}
       <Card className="relative overflow-hidden border-border">
-        <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
+        <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-linear-to-br from-primary/20 via-primary/5 to-transparent blur-3xl" />
 
         <CardHeader className="relative">
           <CardTitle className="font-manrope text-lg font-bold tracking-tight text-card-foreground">

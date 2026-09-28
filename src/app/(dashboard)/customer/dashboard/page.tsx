@@ -9,7 +9,7 @@ const CustomerDashboardPageHome = () => {
                 description="Track your spending patterns and account activity at a glance."
                 showDateTime
             />
-            <div className="py-6">
+            <div className="py-4">
                 <CustomerAnalyticsReport />
             </div>
         </section>
