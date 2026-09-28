@@ -36,7 +36,7 @@ const DeleteMyOutageConfirmModal = ({
     deleteOutage(outageId, {
       onSuccess: (res) => {
         setOpen(false);
-
+        console.log(res,'res dlete')
         toast.success(res.message || "Outage Deleted Successfully");
       },
 
@@ -70,7 +70,7 @@ const DeleteMyOutageConfirmModal = ({
 
       <DialogContent className="max-w-sm gap-0 overflow-hidden rounded-2xl p-0">
         {/* Header */}
-        <div className="flex flex-col items-center gap-3 bg-gradient-to-b from-destructive/10 to-transparent px-6 pb-5 pt-7">
+        <div className="flex flex-col items-center gap-3 bg-linear-to-b from-destructive/10 to-transparent px-6 pb-5 pt-7">
           <div className="flex size-12 items-center justify-center rounded-full bg-destructive/10 text-destructive">
             <FiAlertTriangle className="size-6" />
           </div>

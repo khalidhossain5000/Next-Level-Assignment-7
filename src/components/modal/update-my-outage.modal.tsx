@@ -73,7 +73,7 @@ const UpdateOutageModal = ({ outage }: UpdateOutageModalProps) => {
         {
           onSuccess: (res) => {
             setOpen(false);
-
+            
             toast.success(res.message || "Outage Updated Successfully");
           },
 
