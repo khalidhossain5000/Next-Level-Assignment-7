@@ -93,7 +93,7 @@ const UpdateTechnicianProfileForm = () => {
       {/* Main Card */}
       <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         {/* Decorative gradient glow */}
-        <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
+        <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-linear-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
 
         {/* Form Body */}
         <div className="relative p-4 sm:p-6 md:p-8">
