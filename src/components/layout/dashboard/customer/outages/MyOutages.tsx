@@ -1,6 +1,6 @@
 "use client";
 
-import { FiEdit2, FiTrash2, FiZap } from "react-icons/fi";
+import { FiZap } from "react-icons/fi";
 
 import { useGetMyOutages } from "@/hooks";
 
@@ -15,7 +15,6 @@ import {
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
 import type { IMyOutage } from "@/types";
@@ -132,98 +131,83 @@ const MyOutages = () => {
               </TableHeader>
 
               <TableBody>
-                {outages.map((outage: IMyOutage, index: number) => (
-                  <TableRow
-                    key={outage.id}
-                    className="group border-0 transition-colors hover:bg-muted/30"
-                  >
-                    {/* Cause */}
-                    <TableCell
-                      className={`pl-6 ${
-                        index !== outages.length - 1 ? "border-b border-border" : ""
-                      }`}
+                {outages.map((outage: IMyOutage, index: number) => {
+                  const cellBorder =
+                    index !== outages.length - 1
+                      ? "border-b border-border"
+                      : "";
+
+                  return (
+                    <TableRow
+                      key={outage.id}
+                      className="group border-0 transition-colors hover:bg-muted/30"
                     >
-                      <div className="max-w-52">
-                        <p className="truncate font-semibold text-card-foreground">
-                          {outage.cause}
+                      {/* Cause */}
+                      <TableCell className={`pl-6 ${cellBorder}`}>
+                        <div className="max-w-52">
+                          <p className="truncate font-semibold text-card-foreground">
+                            {outage.cause}
+                          </p>
+
+                          <p className="mt-0.5 text-xs text-muted-foreground">
+                            #{outage.id.slice(0, 8)}
+                          </p>
+                        </div>
+                      </TableCell>
+
+                      {/* Area */}
+                      <TableCell className={cellBorder}>
+                        <p className="max-w-44 truncate font-medium text-card-foreground">
+                          {outage.area?.name ?? "N/A"}
                         </p>
 
-                        <p className="mt-0.5 text-xs text-muted-foreground">
-                          #{outage.id.slice(0, 8)}
+                        <p className="text-xs text-muted-foreground">
+                          {outage.area?.code ?? "N/A"}
                         </p>
-                      </div>
-                    </TableCell>
+                      </TableCell>
 
-                    {/* Area */}
-                    <TableCell
-                      className={
-                        index !== outages.length - 1 ? "border-b border-border" : ""
-                      }
-                    >
-                      <p className="max-w-44 truncate font-medium text-card-foreground">
-                        {outage.area?.name ?? "N/A"}
-                      </p>
+                      {/* Priority */}
+                      <TableCell className={cellBorder}>
+                        <Badge
+                          variant="outline"
+                          className={getPriorityClassName(outage.priority)}
+                        >
+                          {outage.priority}
+                        </Badge>
+                      </TableCell>
 
-                      <p className="text-xs text-muted-foreground">
-                        {outage.area?.code ?? "N/A"}
-                      </p>
-                    </TableCell>
+                      {/* Status */}
+                      <TableCell className={cellBorder}>
+                        <Badge
+                          variant="outline"
+                          className={getStatusClassName(outage.status)}
+                        >
+                          {outage.status.replace("_", " ")}
+                        </Badge>
+                      </TableCell>
 
-                    {/* Priority */}
-                    <TableCell
-                      className={
-                        index !== outages.length - 1 ? "border-b border-border" : ""
-                      }
-                    >
-                      <Badge
-                        variant="outline"
-                        className={getPriorityClassName(outage.priority)}
+                      {/* Reported At */}
+                      <TableCell
+                        className={`whitespace-nowrap text-sm text-muted-foreground ${cellBorder}`}
                       >
-                        {outage.priority}
-                      </Badge>
-                    </TableCell>
+                        {formatDate(outage.reported_At)}
+                      </TableCell>
 
-                    {/* Status */}
-                    <TableCell
-                      className={
-                        index !== outages.length - 1 ? "border-b border-border" : ""
-                      }
-                    >
-                      <Badge
-                        variant="outline"
-                        className={getStatusClassName(outage.status)}
-                      >
-                        {outage.status.replace("_", " ")}
-                      </Badge>
-                    </TableCell>
+                      {/* Actions */}
+                      <TableCell className={`pr-6 ${cellBorder}`}>
+                        <div className="flex items-center justify-end gap-1.5">
+                          {outage.priority === "NORMAL" && (
+                            <PriorityInfoModal outageId={outage.id} />
+                          )}
 
-                    {/* Reported At */}
-                    <TableCell
-                      className={`whitespace-nowrap text-sm text-muted-foreground ${
-                        index !== outages.length - 1 ? "border-b border-border" : ""
-                      }`}
-                    >
-                      {formatDate(outage.reported_At)}
-                    </TableCell>
+                          <UpdateOutageModal outage={outage} />
 
-                    {/* Actions */}
-                    <TableCell
-                      className={`pr-6 ${
-                        index !== outages.length - 1 ? "border-b border-border" : ""
-                      }`}
-                    >
-                      <div className="flex items-center justify-end gap-1.5">
-                        {outage.priority === "NORMAL" && (
-                          <PriorityInfoModal outageId={outage.id} />
-                        )}
-
-                      <UpdateOutageModal outage={outage} />
-
-                        <DeleteMyOutageConfirmModal outageId={outage.id} />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                          <DeleteMyOutageConfirmModal outageId={outage.id} />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </div>
@@ -284,9 +268,7 @@ const MyOutages = () => {
 
                 {/* Reported */}
                 <div className="hidden shrink-0 lg:block">
-                  <p className="text-[11px] text-muted-foreground">
-                    Reported
-                  </p>
+                  <p className="text-[11px] text-muted-foreground">Reported</p>
 
                   <p className="text-xs font-medium text-card-foreground">
                     {formatDate(outage.reported_At)}
@@ -299,8 +281,9 @@ const MyOutages = () => {
                     <PriorityInfoModal outageId={outage.id} />
                   )}
 
-                 <UpdateOutageModal outage={outage} />
-<DeleteMyOutageConfirmModal outageId={outage.id} />
+                  <UpdateOutageModal outage={outage} />
+
+                  <DeleteMyOutageConfirmModal outageId={outage.id} />
                 </div>
               </div>
             </CardContent>
@@ -355,18 +338,9 @@ const MyOutages = () => {
                     <PriorityInfoModal outageId={outage.id} />
                   )}
 
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="size-8 rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                    title="Edit outage"
-                    aria-label="Edit outage"
-                  >
-                    <FiEdit2 className="size-3.5" />
-                  </Button>
+                  <UpdateOutageModal outage={outage} />
 
-               <DeleteMyOutageConfirmModal outageId={outage.id} />
+                  <DeleteMyOutageConfirmModal outageId={outage.id} />
                 </div>
               </div>
             </CardContent>
