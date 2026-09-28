@@ -1,7 +1,14 @@
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 "use client";
 
-import { FiTag, FiClock, FiFileText, FiX, FiFile } from "react-icons/fi";
+import {
+  FiTag,
+  FiClock,
+  FiFileText,
+  FiX,
+  FiFile,
+  FiExternalLink,
+} from "react-icons/fi";
 import { useRef, useState } from "react";
 
 import { useGetMe, useUpdateTechnicianProfile } from "@/hooks";
@@ -22,19 +29,41 @@ import { toast } from "sonner";
 
 const MAX_EXPERTISE = 5;
 
-const UpdateTechnicianProfileForm = () => {
+type TechnicianProfile = {
+  expertise?: string[];
+  experience?: number;
+  bio?: string | null;
+  resume?: string | null;
+};
+
+const getFileNameFromUrl = (url: string) => {
+  try {
+    const last = url.split("?")[0].split("/").pop() ?? "";
+    return decodeURIComponent(last) || "Current resume";
+  } catch {
+    return "Current resume";
+  }
+};
+
+const TechnicianProfileForm = ({
+  techData,
+}: {
+  techData: TechnicianProfile;
+}) => {
   const { mutate: updateProfile, isPending } = useUpdateTechnicianProfile();
-const {data:technicianData,isPending:techDataPending}=useGetMe()
+
   const [expertiseInput, setExpertiseInput] = useState("");
   const [resumeName, setResumeName] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const currentResume = techData.resume ?? null;
+
   const form = useForm({
     defaultValues: {
-      expertise: [] as string[],
-      experience: 0,
-      bio: "",
+      expertise: (techData.expertise ?? []) as string[],
+      experience: techData.experience ?? 0,
+      bio: techData.bio ?? "",
       resume: null as File | null,
     },
     validators: {
@@ -55,8 +84,13 @@ const {data:technicianData,isPending:techDataPending}=useGetMe()
         },
         {
           onSuccess: (res) => {
-            form.reset();
-  
+            form.reset({
+              expertise: value.expertise,
+              experience: value.experience,
+              bio: value.bio,
+              resume: null,
+            });
+
             setExpertiseInput("");
             setResumeName(null);
 
@@ -313,7 +347,34 @@ const {data:technicianData,isPending:techDataPending}=useGetMe()
                         className="h-11 w-full cursor-pointer rounded-xl border-border bg-background text-sm shadow-none transition-all file:mr-3 file:h-7 file:rounded-lg file:border-0 file:bg-primary file:px-3 file:text-xs file:font-semibold file:text-primary-foreground hover:file:bg-primary/90 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
                       />
 
-                      {/* File preview */}
+                      {/* Current resume (from saved profile) */}
+                      {!resumeName && currentResume && (
+                        <div className="mt-3 flex items-center justify-between gap-2 rounded-xl border border-border bg-muted/30 px-4 py-2.5">
+                          <div className="flex min-w-0 items-center gap-2">
+                            <FiFile className="size-4 shrink-0 text-primary" />
+                            <div className="min-w-0">
+                              <span className="block truncate text-sm text-card-foreground">
+                                {getFileNameFromUrl(currentResume)}
+                              </span>
+                              <span className="block text-xs text-muted-foreground">
+                                Current resume · upload a new file to replace it
+                              </span>
+                            </div>
+                          </div>
+
+                          <a
+                            href={currentResume}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/10"
+                          >
+                            View
+                            <FiExternalLink className="size-3.5" />
+                          </a>
+                        </div>
+                      )}
+
+                      {/* New file preview */}
                       {resumeName && (
                         <div className="mt-3 flex items-center justify-between gap-2 rounded-xl border border-border bg-muted/30 px-4 py-2.5">
                           <div className="flex min-w-0 items-center gap-2">
@@ -371,6 +432,20 @@ const {data:technicianData,isPending:techDataPending}=useGetMe()
         </div>
       </div>
     </form>
+  );
+};
+
+const UpdateTechnicianProfileForm = () => {
+  const { data, isPending } = useGetMe();
+
+  if (isPending) {
+    return (
+      <div className="mx-auto h-96 w-full max-w-3xl animate-pulse rounded-2xl bg-muted" />
+    );
+  }
+
+  return (
+    <TechnicianProfileForm techData={data?.data?.technicianProfile ?? {}} />
   );
 };
 
