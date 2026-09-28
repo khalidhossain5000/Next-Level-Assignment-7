@@ -124,5 +124,8 @@ export interface IUpdateUserProfile {
     }
 }
 export function updateUserProfile(payload:IUpdateUserProfile){
-    return apiClient("/auth/")
+    const formData= new FormData()
+    formData.append("profileImage",payload.profileImage)
+    formData.append("data",JSON.stringify(payload.data))
+    return apiClient("/auth/update-profile")
 }
