@@ -1,0 +1,22 @@
+"use client";
+
+const TechnicianProfileSkleton = () => {
+  return (
+    <div className="space-y-4">
+      <div className="h-40 animate-pulse rounded-2xl bg-muted" />
+
+      <div className="grid gap-4 sm:grid-cols-3">
+        <div className="h-32 animate-pulse rounded-2xl bg-muted" />
+        <div className="h-32 animate-pulse rounded-2xl bg-muted" />
+        <div className="h-32 animate-pulse rounded-2xl bg-muted" />
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="h-48 animate-pulse rounded-2xl bg-muted" />
+        <div className="h-48 animate-pulse rounded-2xl bg-muted" />
+      </div>
+    </div>
+  );
+};
+
+export default TechnicianProfileSkleton;
