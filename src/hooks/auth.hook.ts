@@ -106,7 +106,10 @@ export function useUpdateTechnicianProfile(){
 
 
 export function useUpdateUserProfile(){
+      const queryClient = useQueryClient();
+
     return useMutation({
-        mutationFn:updateUserProfile
+        mutationFn:updateUserProfile,
+        
     })
 }

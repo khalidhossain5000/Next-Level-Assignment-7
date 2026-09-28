@@ -127,5 +127,8 @@ export function updateUserProfile(payload:IUpdateUserProfile){
     const formData= new FormData()
     formData.append("profileImage",payload.profileImage)
     formData.append("data",JSON.stringify(payload.data))
-    return apiClient("/auth/update-profile")
+    return apiClient("/auth/update-profile",{
+        method:"PATCH",
+        body:formData
+    })
 }
