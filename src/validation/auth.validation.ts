@@ -48,3 +48,37 @@ export const updateTechnicianProfileSchema = z.object({
       "Resume size must be less than 5MB",
     ),
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const userProfileSchema = z.object({
+    name: z
+        .string("Name is not a string")
+        .min(2, "Name should minimum have 2 chars")
+        .max(100, "Name should not be more than 100 chars"),
+
+    profileImage: z
+        .instanceof(File, {
+            message: "Invalid image file",
+        })
+        .refine(
+            (file) => file.type.startsWith("image/"),
+            "Only image files are allowed",
+        )
+        .refine(
+            (file) => file.size <= 5 * 1024 * 1024,
+            "Image size must be less than 5MB",
+        )
+        .nullable()
+        .optional(),
+});
