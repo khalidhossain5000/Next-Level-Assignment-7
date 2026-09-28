@@ -21,6 +21,7 @@ import { Spinner } from "@/components/ui/spinner";
 import type { IMyOutage } from "@/types";
 import PriorityInfoModal from "@/components/modal/priority-info.modal";
 import UpdateOutageModal from "@/components/modal/update-my-outage.modal";
+import DeleteMyOutageConfirmModal from "@/components/modal/delete-my-outage.modal";
 
 const MyOutages = () => {
   const { data: myOutages, isPending } = useGetMyOutages();
@@ -308,17 +309,7 @@ const MyOutages = () => {
                   )}
 
                  <UpdateOutageModal outage={outage} />
-
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="size-8 cursor-pointer rounded-lg text-muted-foreground hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30"
-                    title="Delete outage"
-                    aria-label="Delete outage"
-                  >
-                    <FiTrash2 className="size-4" />
-                  </Button>
+<DeleteMyOutageConfirmModal outageId={outage.id} />
                 </div>
               </div>
             </CardContent>
