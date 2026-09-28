@@ -73,7 +73,7 @@ const DashboardSidebar = () => {
                 {/* Bottom Actions */}
                 <div className="mt-6 flex flex-col gap-1 border-t border-slate-100 dark:border-slate-600 pt-4">
                     <Link
-                        href="/settings"
+                        href="/dashboard/settings"
                         className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                     >
                         <FiSettings
