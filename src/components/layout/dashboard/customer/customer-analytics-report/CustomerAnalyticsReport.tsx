@@ -28,7 +28,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import { Skeleton } from "@/components/ui/skeleton";
+
 
 interface OutageStatusCount {
   status: string;
@@ -88,6 +88,10 @@ const CustomerAnalyticsReport = () => {
     data: CustomerAnalyticsResponse | undefined;
     isPending: boolean;
   };
+
+  if (isPending) {
+    return <CustomerDashboardHomeSkletonLoading />;
+  }
 
   const analytics = data?.data;
 
@@ -154,7 +158,7 @@ const CustomerAnalyticsReport = () => {
           return (
             <Card
               key={stat.key}
-              className="relative overflow-hidden border-border py-0 rounded-lg"
+              className="relative overflow-hidden rounded-lg border-border py-0"
             >
               {/* Gradient glow */}
               <div className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-linear-to-br from-primary/25 via-primary/10 to-transparent blur-2xl" />
@@ -170,13 +174,9 @@ const CustomerAnalyticsReport = () => {
                   </div>
                 </div>
 
-                {isPending ? (
-                  <Skeleton className="h-8 w-20" />
-                ) : (
-                  <CardTitle className="font-manrope text-2xl font-bold tracking-tight text-card-foreground">
-                    {stat.value}
-                  </CardTitle>
-                )}
+                <CardTitle className="font-manrope text-2xl font-bold tracking-tight text-card-foreground">
+                  {stat.value}
+                </CardTitle>
               </CardHeader>
             </Card>
           );
@@ -197,54 +197,50 @@ const CustomerAnalyticsReport = () => {
         </CardHeader>
 
         <CardContent className="relative">
-          {isPending ? (
-            <div className="flex items-center justify-center py-10">
-              <Skeleton className="size-52 rounded-full" />
-            </div>
-          ) : chartData.length === 0 ? (
+          {chartData.length === 0 ? (
             <p className="py-10 text-center text-sm text-muted-foreground">
               No outage data available yet.
             </p>
           ) : (
-            <ChartContainer
-              config={chartConfig}
-              className="mx-auto aspect-square max-h-72"
-            >
-              <PieChart>
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent hideLabel />}
-                />
+            <>
+              <ChartContainer
+                config={chartConfig}
+                className="mx-auto aspect-square max-h-72"
+              >
+                <PieChart>
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                  />
 
-                <Pie
-                  data={chartData}
-                  dataKey="count"
-                  nameKey="status"
-                  innerRadius={60}
-                  strokeWidth={4}
-                >
-                  {chartData.map((entry) => (
-                    <Cell
-                      key={entry.status}
-                      fill={entry.fill}
-                      stroke="var(--card)"
-                    />
-                  ))}
-                </Pie>
+                  <Pie
+                    data={chartData}
+                    dataKey="count"
+                    nameKey="status"
+                    innerRadius={60}
+                    strokeWidth={4}
+                  >
+                    {chartData.map((entry) => (
+                      <Cell
+                        key={entry.status}
+                        fill={entry.fill}
+                        stroke="var(--card)"
+                      />
+                    ))}
+                  </Pie>
 
-                <ChartLegend
-                  content={<ChartLegendContent nameKey="status" />}
-                  className="flex-wrap gap-2"
-                />
-              </PieChart>
-            </ChartContainer>
-          )}
+                  <ChartLegend
+                    content={<ChartLegendContent nameKey="status" />}
+                    className="flex-wrap gap-2"
+                  />
+                </PieChart>
+              </ChartContainer>
 
-          {!isPending && chartData.length > 0 && (
-            <p className="mt-2 text-center text-sm text-muted-foreground">
-              Total {totalOutages} outage{totalOutages !== 1 ? "s" : ""}{" "}
-              reported
-            </p>
+              <p className="mt-2 text-center text-sm text-muted-foreground">
+                Total {totalOutages} outage{totalOutages !== 1 ? "s" : ""}{" "}
+                reported
+              </p>
+            </>
           )}
         </CardContent>
       </Card>
