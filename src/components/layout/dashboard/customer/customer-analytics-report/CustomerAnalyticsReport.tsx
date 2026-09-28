@@ -27,6 +27,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import CustomerDashboardHomeSkletonLoading from "@/components/loader/skleton-loading/dashboard/customer-dashboard.skleton";
 
 
 
