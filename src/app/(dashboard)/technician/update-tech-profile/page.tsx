@@ -1,4 +1,3 @@
-import UpdateTechnicianProfileForm from '@/components/form/update-tech-profile-form';
 import DashboardHeader from '@/components/layout/dashboard/common/DashboardHeader/DashboardHeader';
 import MyTechProfileDetails from '@/components/layout/dashboard/technician/my-tech-profile-details/MyTechProfileDetails';
 
