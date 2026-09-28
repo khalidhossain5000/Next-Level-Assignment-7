@@ -21,6 +21,7 @@ import type { IMyOutage } from "@/types";
 import PriorityInfoModal from "@/components/modal/priority-info.modal";
 import UpdateOutageModal from "@/components/modal/update-my-outage.modal";
 import DeleteMyOutageConfirmModal from "@/components/modal/delete-my-outage.modal";
+import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 
 const MyOutages = () => {
   const { data: myOutages, isPending } = useGetMyOutages();
@@ -67,13 +68,9 @@ const MyOutages = () => {
     return "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-300";
   };
 
-  if (isPending) {
-    return (
-      <div className="flex min-h-72 items-center justify-center">
-        <Spinner className="size-6" />
-      </div>
-    );
-  }
+if (isPending) {
+  return <MyOutagesSkleton />;
+}
 
   if (outages.length === 0) {
     return (
