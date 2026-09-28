@@ -238,7 +238,7 @@ const MyOutages = () => {
                     <Badge
                       variant="outline"
                       className={`shrink-0 text-[10px] font-semibold ${getStatusClassName(
-                        outage.status,
+                        outage.status
                       )}`}
                     >
                       {outage.status.replace("_", " ")}
@@ -260,7 +260,7 @@ const MyOutages = () => {
                 <Badge
                   variant="outline"
                   className={`hidden shrink-0 md:inline-flex ${getPriorityClassName(
-                    outage.priority,
+                    outage.priority
                   )}`}
                 >
                   {outage.priority}
@@ -310,7 +310,7 @@ const MyOutages = () => {
                 <Badge
                   variant="outline"
                   className={`shrink-0 whitespace-nowrap text-[10px] font-semibold ${getStatusClassName(
-                    outage.status,
+                    outage.status
                   )}`}
                 >
                   {outage.status.replace("_", " ")}
@@ -322,7 +322,7 @@ const MyOutages = () => {
                   <Badge
                     variant="outline"
                     className={`text-[10px] ${getPriorityClassName(
-                      outage.priority,
+                      outage.priority
                     )}`}
                   >
                     {outage.priority}
