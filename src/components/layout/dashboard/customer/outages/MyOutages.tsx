@@ -100,7 +100,7 @@ if (isPending) {
           <div className="overflow-x-auto">
             <Table className="border-separate border-spacing-0">
               <TableHeader>
-                <TableRow className="hover:bg-transparent">
+                <TableRow className="hover:bg-transparent font-inter">
                   <TableHead className="h-12 whitespace-nowrap border-b border-border bg-muted/40 pl-6 font-semibold text-foreground">
                     Cause
                   </TableHead>
