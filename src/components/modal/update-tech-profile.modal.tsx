@@ -38,9 +38,9 @@ const UpdateTechProfileModal = () => {
         }
       />
 
-      <DialogContent className="max-w-4xl gap-0 overflow-hidden rounded-2xl p-0">
+      <DialogContent className="max-w-6xl gap-0 overflow-hidden rounded-2xl p-0">
         <DialogHeader className="relative border-b border-border px-6 py-5 sm:px-8 sm:py-6">
-          <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
+          <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-linear-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
 
           <div className="relative">
             <DialogTitle className="font-manrope text-xl font-bold tracking-tight text-foreground">
