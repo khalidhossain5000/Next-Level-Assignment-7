@@ -4,7 +4,7 @@
 import { FiTag, FiClock, FiFileText, FiX, FiFile } from "react-icons/fi";
 import { useRef, useState } from "react";
 
-import { useUpdateTechnicianProfile } from "@/hooks";
+import { useGetMe, useUpdateTechnicianProfile } from "@/hooks";
 
 import { useForm } from "@tanstack/react-form";
 
@@ -24,7 +24,7 @@ const MAX_EXPERTISE = 5;
 
 const UpdateTechnicianProfileForm = () => {
   const { mutate: updateProfile, isPending } = useUpdateTechnicianProfile();
-
+const {data:technicianData,isPending:techDataPending}=useGetMe()
   const [expertiseInput, setExpertiseInput] = useState("");
   const [resumeName, setResumeName] = useState<string | null>(null);
 
@@ -33,7 +33,7 @@ const UpdateTechnicianProfileForm = () => {
   const form = useForm({
     defaultValues: {
       expertise: [] as string[],
-      experienceYears: 0,
+      experience: 0,
       bio: "",
       resume: null as File | null,
     },
@@ -44,7 +44,7 @@ const UpdateTechnicianProfileForm = () => {
     onSubmit: async ({ value }) => {
       const profileData = {
         expertise: value.expertise,
-        experienceYears: value.experienceYears,
+        experience: value.experience,
         bio: value.bio,
       };
 
@@ -197,7 +197,7 @@ const UpdateTechnicianProfileForm = () => {
               </form.Field>
 
               {/* Experience Years */}
-              <form.Field name="experienceYears">
+              <form.Field name="experience">
                 {(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
@@ -328,7 +328,7 @@ const UpdateTechnicianProfileForm = () => {
                             variant="destructive"
                             size="icon"
                             aria-label="Remove resume"
-                            className="size-8 shrink-0 cursor-pointer rounded-lg shadow-md"
+                            className="size-8 shrink-0 cursor-pointer rounded-lg shadow-md "
                             onClick={() => {
                               setResumeName(null);
                               field.handleChange(null);

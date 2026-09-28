@@ -30,7 +30,7 @@ export interface IUpdateUserStatus {
 export interface IUpdateTechProfilePayload {
     data: {
         expertise: string[];
-        experienceYears: number;
+        experience: number;
         bio: string;
     };
     resume: File;

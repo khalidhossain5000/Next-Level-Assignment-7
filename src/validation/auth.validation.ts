@@ -25,7 +25,7 @@ export const updateTechnicianProfileSchema = z.object({
     .min(1, "At least one expertise is required")
     .max(5, "You can add maximum 5 expertise tags"),
 
-  experienceYears: z
+  experience: z
     .number("Experience years must be a number")
     .min(0, "Experience years cannot be negative")
     .max(50, "Experience years seems too high"),
