@@ -1,43 +1,52 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const SettingsSkleton = () => {
+const SettingsSkeleton = () => {
   return (
-    <div className="w-full">
-      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-        {/* Profile Header Skeleton */}
-        <div className="border-b border-border bg-muted/20 px-5 py-6 sm:px-7">
-          <div className="flex flex-col items-center gap-5 sm:flex-row">
-            {/* Avatar */}
-            <div className="size-24 animate-pulse rounded-full bg-muted sm:size-28" />
+    <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+      {/* Profile header */}
+      <div className="flex flex-col items-center gap-5 p-6 sm:flex-row sm:p-8">
+        <Skeleton className="size-28 shrink-0 rounded-full" />
 
-            {/* User Info */}
-            <div className="flex w-full flex-col items-center gap-2 sm:items-start">
-              <div className="h-6 w-40 animate-pulse rounded-lg bg-muted" />
+        <div className="flex flex-col items-center gap-3 sm:items-start">
+          <Skeleton className="h-6 w-44" />
+          <Skeleton className="h-4 w-56" />
 
-              <div className="h-4 w-56 animate-pulse rounded-md bg-muted" />
-            </div>
+          <div className="flex gap-2">
+            <Skeleton className="h-5 w-16 rounded-full" />
+            <Skeleton className="h-5 w-16 rounded-full" />
+            <Skeleton className="h-5 w-28 rounded-full" />
           </div>
         </div>
+      </div>
 
-        {/* Form Skeleton */}
-        <div className="p-5 sm:p-7">
-          <div className="max-w-xl">
-            <div className="mb-2 h-4 w-20 animate-pulse rounded-md bg-muted" />
+      <Separator />
 
-            <div className="h-11 w-full animate-pulse rounded-xl bg-muted" />
-
-            <div className="mt-2 h-3 w-72 animate-pulse rounded-md bg-muted" />
+      {/* Read-only info */}
+      <div className="grid gap-6 p-6 sm:grid-cols-3 sm:p-8">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="space-y-2">
+            <Skeleton className="h-3 w-20" />
+            <Skeleton className="h-4 w-36" />
           </div>
-        </div>
+        ))}
+      </div>
 
-        {/* Footer Skeleton */}
-        <div className="flex flex-col gap-3 border-t border-border bg-muted/20 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-7">
-          <div className="h-3 w-40 animate-pulse rounded-md bg-muted" />
+      <Separator />
 
-          <div className="h-10 w-full animate-pulse rounded-xl bg-muted sm:w-36" />
-        </div>
+      {/* Name field */}
+      <div className="space-y-2 p-6 sm:p-8">
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="h-11 w-full rounded-xl" />
+      </div>
+
+      {/* Footer */}
+      <div className="flex justify-end border-t border-border bg-muted/30 px-6 py-4 sm:px-8">
+        <Skeleton className="h-11 w-40 rounded-xl" />
       </div>
     </div>
   );
 };
 
-export default SettingsSkleton;
+export default SettingsSkeleton;
