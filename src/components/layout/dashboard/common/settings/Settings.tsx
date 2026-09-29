@@ -70,7 +70,7 @@ const Settings = () => {
 };
 
 function SettingsContent({ user }: { user?: SettingsUser }) {
-  // Everything not already shown on the LEFT card
+ 
   const accountDetails = [
     { label: "User ID", value: user?.id, icon: Fingerprint },
     {
@@ -158,7 +158,7 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-2">
-                <Badge className="gap-1">
+                <Badge className="gap-1 rounded-sm">
                   <ShieldCheck className="size-3" />
                   {user?.role || "—"}
                 </Badge>
