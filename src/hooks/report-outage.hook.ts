@@ -2,8 +2,12 @@ import { assignTechnician, deleteMyOutage, getAllOutages, getCurrentTechnicainOu
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useReportOutage(){
+     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn:reportOutage
+        mutationFn:reportOutage,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["my-outages"] });
+        },
     })
 }
 
