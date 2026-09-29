@@ -7,7 +7,6 @@ import {
   Clock,
   Edit2Icon,
   Fingerprint,
-  Info,
   KeyRound,
   Mail,
   ShieldCheck,
@@ -366,7 +365,7 @@ const Settings = () => {
                 </div>
               </CardContent>
 
-              <CardFooter className="justify-end border-t border-border/60 pt-6">
+              <CardFooter className="flex flex-col items-stretch gap-3 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
                 <form.Subscribe
                   selector={(state) => ({
                     name: state.values.name,
@@ -380,18 +379,11 @@ const Settings = () => {
                     const hasChanges = nameChanged || imageSelected;
 
                     return (
-                      <CardFooter className="flex flex-col-reverse items-stretch gap-3 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
-                        <p
-                          className={`flex items-center gap-2 text-xs sm:text-sm ${
-                            hasChanges
-                              ? "text-primary"
-                              : "text-muted-foreground"
-                          }`}
-                        >
-                          <Info className="size-4 shrink-0" />
+                      <>
+                        <p className="text-xs text-muted-foreground sm:text-sm">
                           {hasChanges
-                            ? "You have unsaved changes."
-                            : "Make a change to your name or photo to update your profile."}
+                            ? "Your changes are ready to be saved."
+                            : "Edit your name or photo to enable updating."}
                         </p>
 
                         <Button
@@ -402,7 +394,7 @@ const Settings = () => {
                           <Edit2Icon className="size-4" />
                           Update profile
                         </Button>
-                      </CardFooter>
+                      </>
                     );
                   }}
                 </form.Subscribe>
