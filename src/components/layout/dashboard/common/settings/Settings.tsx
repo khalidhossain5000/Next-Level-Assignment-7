@@ -360,22 +360,28 @@ const Settings = () => {
               </CardContent>
 
               <CardFooter className="justify-end border-t border-border/60 pt-6">
-                <form.Subscribe
-                  selector={(state) => ({
-                    name: state.values.name,
-                    profileImage: state.values.profileImage,
-                  })}
-                >
-                  {({ name, profileImage }) => (
-                    <Button
-                      type="submit"
-                      //   disabled
-                      className="rounded-lg w-full sm:w-auto cursor-pointer"
-                    >
-                      <Edit2Icon size={20} /> Update profile
-                    </Button>
-                  )}
-                </form.Subscribe>
+               <form.Subscribe
+  selector={(state) => ({
+    name: state.values.name,
+    profileImage: state.values.profileImage,
+  })}
+>
+  {({ name, profileImage }) => {
+    const nameChanged = (name ?? "").trim() !== (user?.name ?? "");
+    const imageSelected = !!profileImage;
+    const hasChanges = nameChanged || imageSelected;
+
+    return (
+      <Button
+        type="submit"
+        disabled={!hasChanges || profileUpdating}
+        className="w-full sm:w-auto cursor-pointer disabled:cursor-not-allowed"
+      >
+        Update profile
+      </Button>
+    );
+  }}
+</form.Subscribe>
               </CardFooter>
             </div>
           </Card>
