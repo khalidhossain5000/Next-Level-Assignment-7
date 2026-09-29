@@ -52,40 +52,22 @@ const formatDate = (value?: string) =>
       })
     : "—";
 
-const getAuthMethod = (provider?: string) => {
-  if (!provider) return "—";
-  const p = provider.toLowerCase();
-  if (p === "google") return "Google";
-  if (["email", "password", "credential", "credentials"].includes(p))
-    return "Email & Password";
-  return provider;
-};
-
 const Settings = () => {
   const { data, isPending } = useGetMe();
 
   if (isPending) return <SettingsSkeleton />;
 
-  return <SettingsContent user={data?.data} />;
-};
+  const user: SettingsUser | undefined = data?.data;
 
-function SettingsContent({ user }: { user?: SettingsUser }) {
- 
   const accountDetails = [
     { label: "User ID", value: user?.id, icon: Fingerprint },
     {
       label: "Auth method",
-      value: getAuthMethod(user?.authProvider),
+      value: user?.authProvider === "credential" ? "Email & Password" : "Google",
       icon: KeyRound,
     },
     ...(user?.googleId
-      ? [
-          {
-            label: "Google ID",
-            value: user.googleId,
-            icon: KeyRound,
-          },
-        ]
+      ? [{ label: "Google ID", value: user.googleId, icon: KeyRound }]
       : []),
     {
       label: "Member since",
@@ -101,7 +83,6 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
 
   return (
     <div className="relative">
-    
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -112,7 +93,7 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
       </div>
 
       <div className="grid items-start gap-6 lg:grid-cols-3">
-   
+        {/* left side profile */}
         <Card className="relative h-fit self-start overflow-hidden border-border/60 bg-card/70 shadow-sm backdrop-blur-xl lg:col-span-1">
           <div
             aria-hidden
@@ -177,7 +158,7 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
           </CardContent>
         </Card>
 
-        {/* right side info  */}
+        {/* right side info */}
         <Card className="relative overflow-hidden border-border/60 bg-card/70 shadow-sm backdrop-blur-xl lg:col-span-2">
           <div
             aria-hidden
@@ -193,7 +174,6 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
             </CardHeader>
 
             <CardContent className="space-y-6">
-  
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-xs font-medium">
@@ -234,7 +214,6 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
               </div>
 
               <Separator />
-
 
               <div className="space-y-3">
                 <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -280,6 +259,6 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
       </div>
     </div>
   );
-}
+};
 
 export default Settings;
