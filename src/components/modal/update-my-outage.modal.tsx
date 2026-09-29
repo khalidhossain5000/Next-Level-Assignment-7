@@ -113,7 +113,7 @@ const UpdateOutageModal = ({ outage }: UpdateOutageModalProps) => {
             type="button"
             variant="ghost"
             size="icon"
-            className="cursor-pointer size-9 cursor-pointer rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary"
+            className=" size-9 cursor-pointer rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary"
             title="Edit outage"
             aria-label="Edit outage"
           >
@@ -122,7 +122,7 @@ const UpdateOutageModal = ({ outage }: UpdateOutageModalProps) => {
         }
       />
 
-      <DialogContent className="max-w-4xl gap-0 overflow-hidden rounded-2xl p-0">
+      <DialogContent className="max-w-6xl! gap-0 overflow-hidden rounded-2xl p-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -132,7 +132,7 @@ const UpdateOutageModal = ({ outage }: UpdateOutageModalProps) => {
         >
           {/* Header */}
           <DialogHeader className="relative border-b border-border px-6 py-6 sm:px-8">
-            <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
+            <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-linear-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
 
             <DialogTitle className="font-manrope text-xl font-bold tracking-tight text-card-foreground">
               Update Outage Report
@@ -294,7 +294,7 @@ const UpdateOutageModal = ({ outage }: UpdateOutageModalProps) => {
                 <Button
                   type="button"
                   variant="outline"
-                  className="flex-1 rounded-lg sm:flex-none"
+                  className="h-11 flex-1 cursor-pointer rounded-xl  text-sm font-semibold text-primary shadow-sm transition-all hover:bg-primary-foreground hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none sm:px-8 py-3"
                 >
                   Cancel
                 </Button>
@@ -304,7 +304,7 @@ const UpdateOutageModal = ({ outage }: UpdateOutageModalProps) => {
             <Button
               type="submit"
               disabled={updateOutagePending || areaPending}
-              className="h-11 flex-1 cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none sm:px-8"
+              className="h-11 flex-1 cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none sm:px-8 py-3"
             >
               {updateOutagePending && <Spinner />}
               {updateOutagePending ? "Updating..." : "Update Outage"}
