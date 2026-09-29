@@ -34,6 +34,7 @@ import type { SettingsUser } from "@/types";
 import { useState } from "react";
 import { useForm } from "@tanstack/react-form";
 import { updateUserProfileSchema } from "@/validation";
+import { toast } from "sonner";
 
 const Settings = () => {
   const { data, isPending } = useGetMe();
@@ -55,13 +56,32 @@ const Settings = () => {
     onSubmit: async ({ value }) => {
       console.log(value, "update profile value");
       const profileData = {
-        name:value.name as string
-      }
-      console.log(profileData,"profileData")
-      updateProfile({
-        data:profileData,
-        profileImage:value.profileImage as File
-      })
+        name: value.name as string,
+      };
+      console.log(profileData, "profileData");
+      updateProfile(
+        {
+          data: profileData,
+          profileImage: value.profileImage as File,
+        },
+        {
+          onSuccess: (res) => {
+            console.log(res, "Profile udpted res Successfully");
+
+            toast.success(res.message || "Profile is Updated Successfully");
+          },
+          onError: (err) => {
+            const message =
+              (err as any)?.data?.message ||
+              err.message ||
+              "Failed when updating profile";
+            console.log(err, "this is update profile error error");
+            toast.error(
+              message || "Something went wrong when updating profile"
+            );
+          },
+        }
+      );
     },
   });
 
