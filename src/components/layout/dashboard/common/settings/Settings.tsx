@@ -63,7 +63,7 @@ const Settings = () => {
     { label: "User ID", value: user?.id, icon: Fingerprint },
     {
       label: "Auth method",
-      value: user?.authProvider === "credential" ? "Email & Password" : "Google",
+      value: user?.authProvider === "CREDENTIAL" ? "Email & Password" : "Google",
       icon: KeyRound,
     },
     ...(user?.googleId
