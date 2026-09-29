@@ -31,6 +31,7 @@ import SettingsSkeleton from "@/components/loader/skleton-loading/dashboard/sett
 import { formatDate } from "@/lib/formateDate";
 import type { SettingsUser } from "@/types";
 import { useState } from "react";
+import { useForm } from "@tanstack/react-form";
 
 
 const Settings = () => {
@@ -64,6 +65,12 @@ const [imagePreview, setImagePreview] = useState<string | null>(null);
     },
   ];
 //update profile is start here
+const form=useForm({
+    defaultValues:{
+        name:user?.name
+    },
+    
+})
   return (
     <div className="relative">
         {/* gradient glow */}
