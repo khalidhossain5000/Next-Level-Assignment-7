@@ -73,5 +73,5 @@ export const updateUserProfileSchema = z.object({
             "Image size must be less than 2MB",
         )
         .nullable()
-        .optional(),
+        
 });
