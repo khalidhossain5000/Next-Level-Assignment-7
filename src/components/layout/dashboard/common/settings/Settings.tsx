@@ -379,13 +379,29 @@ const Settings = () => {
                     const hasChanges = nameChanged || imageSelected;
 
                     return (
-                      <Button
-                        type="submit"
-                        disabled={!hasChanges || profileUpdating}
-                        className="w-full sm:w-auto cursor-pointer disabled:cursor-not-allowed"
-                      >
-                        Update profile
-                      </Button>
+                      <CardFooter className="flex flex-col-reverse items-stretch gap-3 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                        <p
+                          className={`flex items-center gap-2 text-xs sm:text-sm ${
+                            hasChanges
+                              ? "text-primary"
+                              : "text-muted-foreground"
+                          }`}
+                        >
+                          <Info className="size-4 shrink-0" />
+                          {hasChanges
+                            ? "You have unsaved changes."
+                            : "Make a change to your name or photo to update your profile."}
+                        </p>
+
+                        <Button
+                          type="submit"
+                          disabled={!hasChanges || profileUpdating}
+                          className="w-full cursor-pointer disabled:cursor-not-allowed sm:w-auto"
+                        >
+                          <Edit2Icon className="size-4" />
+                          Update profile
+                        </Button>
+                      </CardFooter>
                     );
                   }}
                 </form.Subscribe>
