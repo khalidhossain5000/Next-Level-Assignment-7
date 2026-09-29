@@ -116,13 +116,13 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
         <Card className="relative h-fit self-start overflow-hidden border-border/60 bg-card/70 shadow-sm backdrop-blur-xl lg:col-span-1">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-primary/25 via-primary/10 to-transparent"
+            className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b from-primary/25 via-primary/10 to-transparent"
           />
 
           <CardContent className="relative space-y-5 pt-8 pb-6">
             <div className="flex flex-col items-center gap-4 text-center">
               <div className="relative">
-                <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-primary/40 to-primary/0 blur-md" />
+                <div className="absolute -inset-1 rounded-full bg-linear-to-tr from-primary/40 to-primary/0 blur-md" />
                 <Avatar className="relative size-28 border-4 border-background shadow-lg ring-1 ring-border">
                   <AvatarImage
                     src={user?.profileImage}
