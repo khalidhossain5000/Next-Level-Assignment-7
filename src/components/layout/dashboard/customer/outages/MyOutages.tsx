@@ -280,7 +280,10 @@ if (isPending) {
                     <PriorityInfoModal outageId={outage.id} />
                   )}
 
-                  <UpdateOutageModal outage={outage} />
+                {
+  outage.status==="REPORTED" &&  <UpdateOutageModal outage={outage} />
+}
+   
 
                   <DeleteMyOutageConfirmModal outageId={outage.id} />
                 </div>
