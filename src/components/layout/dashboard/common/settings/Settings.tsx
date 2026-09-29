@@ -29,8 +29,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import SettingsSkeleton from "@/components/loader/skleton-loading/dashboard/settings.skleton";
 import { formatDate } from "@/lib/formateDate";
-
-
+import type { SettingsUser } from "@/types";
 
 
 const Settings = () => {
