@@ -32,7 +32,7 @@ import { Separator } from "@/components/ui/separator";
 import SettingsSkeleton from "@/components/loader/skleton-loading/dashboard/settings.skleton";
 import { formatDate } from "@/lib/formateDate";
 import type { SettingsUser } from "@/types";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "@tanstack/react-form";
 import { updateUserProfileSchema } from "@/validation";
 import { toast } from "sonner";
@@ -42,7 +42,7 @@ const Settings = () => {
   const { mutate: updateProfile, isPending: profileUpdating } =
     useUpdateUserProfile();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-
+const fileInputRef = useRef<HTMLInputElement>(null);
   const user: SettingsUser | undefined = data?.data;
   //update profile is start here
 
@@ -68,7 +68,12 @@ const Settings = () => {
         {
           onSuccess: (res) => {
             console.log(res, "Profile udpted res Successfully");
+  form.setFieldValue("profileImage", null);
 
+  if (imagePreview) URL.revokeObjectURL(imagePreview);
+  setImagePreview(null);
+
+  if (fileInputRef.current) fileInputRef.current.value = "";
             toast.success(res.message || "Profile is Updated Successfully");
           },
           onError: (err) => {
@@ -173,6 +178,7 @@ const Settings = () => {
                           </Label>
                           <input
                             id={field.name}
+                            ref={fileInputRef}
                             name={field.name}
                             type="file"
                             accept="image/*"
