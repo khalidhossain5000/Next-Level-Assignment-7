@@ -30,19 +30,6 @@ import { Separator } from "@/components/ui/separator";
 import SettingsSkeleton from "@/components/loader/skleton-loading/dashboard/settings.skleton";
 import { formatDate } from "@/lib/formateDate";
 
-type SettingsUser = {
-  id?: string;
-  name?: string;
-  email?: string;
-  profileImage?: string;
-  googleId?: string | null;
-  role?: string;
-  status?: string;
-  authProvider?: string;
-  emailVerified?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-};
 
 
 

@@ -59,3 +59,18 @@ export interface ITechnicanPayload{
     technicianId:string;
     status:TechnicianProfileStatus
 }
+
+
+export type SettingsUser = {
+  id?: string;
+  name?: string;
+  email?: string;
+  profileImage?: string;
+  googleId?: string | null;
+  role?: string;
+  status?: string;
+  authProvider?: string;
+  emailVerified?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
