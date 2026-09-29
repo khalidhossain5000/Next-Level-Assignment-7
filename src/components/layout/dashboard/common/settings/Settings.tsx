@@ -40,9 +40,28 @@ const Settings = () => {
   const {mutate:updateProfile,isPending:profileUpdating}=useUpdateUserProfile()
 const [imagePreview, setImagePreview] = useState<string | null>(null);
 
+  const user: SettingsUser | undefined = data?.data;
+  
+const form=useForm({
+    defaultValues:{
+        name:user?.name
+    },
+     validators: {
+          onSubmit: updateUserProfileSchema,
+    },
+    onSubmit:{
+        
+    }
+})
+
+
+
+
+
+
   if (isPending) return <SettingsSkeleton />;
 
-  const user: SettingsUser | undefined = data?.data;
+
 
   const accountDetails = [
     { label: "User ID", value: user?.id, icon: Fingerprint },
@@ -66,14 +85,7 @@ const [imagePreview, setImagePreview] = useState<string | null>(null);
     },
   ];
 //update profile is start here
-const form=useForm({
-    defaultValues:{
-        name:user?.name
-    },
-     validators: {
-          onSubmit: updateUserProfileSchema,
-    },
-})
+
   return (
     <div className="relative">
         {/* gradient glow */}
