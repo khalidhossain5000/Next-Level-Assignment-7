@@ -63,6 +63,7 @@ const Settings = () => {
 
   return (
     <div className="relative">
+        {/* gradient glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -163,6 +164,7 @@ const Settings = () => {
                     <User className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
                     <Input
                       id="name"
+                      name="name"
                       defaultValue={user?.name}
                       placeholder="Your name"
                       className="h-11 rounded-lg border-border/70 bg-background/60 pl-9 shadow-sm transition-all focus-visible:border-primary/60 focus-visible:bg-background focus-visible:ring-2 focus-visible:ring-primary/20"
