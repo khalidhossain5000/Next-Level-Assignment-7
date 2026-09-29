@@ -59,7 +59,7 @@ const Settings = () => {
       const profileData = {
         name: value.name as string,
       };
-      console.log(profileData, "profileData");
+      
       updateProfile(
         {
           data: profileData,
@@ -137,15 +137,15 @@ console.log(data,"this is my profile data",user?.profileImage)
           form.handleSubmit();
         }}
       >
-        <div className="grid items-start gap-6 lg:grid-cols-3">
+        <div className="grid items-start gap-6 md:grid-cols-3">
           {/* left side profile */}
-          <Card className="relative h-fit self-start overflow-hidden border-border/60 bg-card/70 shadow-sm backdrop-blur-xl lg:col-span-1">
+          <Card className="relative h-fit self-start overflow-hidden border-border/60 bg-card/70 shadow-sm backdrop-blur-xl md:col-span-1 rounded-lg">
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b from-primary/25 via-primary/10 to-transparent"
+              className="pointer-events-none absolute inset-x-0 top-0 h-30 bg-linear-to-b from-primary/25 via-primary/10 to-transparent"
             />
 
-            <CardContent className="relative space-y-5 pt-8 pb-6">
+            <CardContent className="relative space-y-5 pt-4 lg:pt-8 pb:3 lg:pb-6">
               <div className="flex flex-col items-center gap-4 text-center">
                 {/* profile image field */}
                 <form.Field name="profileImage">
@@ -157,7 +157,7 @@ console.log(data,"this is my profile data",user?.profileImage)
                       <div className="flex flex-col items-center gap-2">
                         <div className="relative">
                           <div className="absolute -inset-1 rounded-full bg-linear-to-tr from-primary/40 to-primary/0 blur-md" />
-                          <Avatar className="relative size-28 border-4 border-background shadow-lg ring-1 ring-border">
+                          <Avatar className="relative size-30 border-4 border-background shadow-lg ring-1 ring-border">
                             <AvatarImage
                               src={imagePreview ?? user?.profileImage}
                               alt={user?.name}
@@ -228,7 +228,7 @@ console.log(data,"this is my profile data",user?.profileImage)
                 </div>
 
                 {/* acount update created will be here */}
-                <dl className="grid gap-3 sm:grid-cols-2">
+                <dl className="grid gap-3 lg:grid-cols-2">
                   {accountDetails2.map(({ label, value, icon: Icon }) => (
                     <div
                       key={label}
@@ -256,7 +256,7 @@ console.log(data,"this is my profile data",user?.profileImage)
           </Card>
 
           {/* right side info */}
-          <Card className="relative overflow-hidden border-border/60 bg-card/70 shadow-sm backdrop-blur-xl lg:col-span-2">
+          <Card className="relative overflow-hidden border-border/60 bg-card/70 shadow-sm backdrop-blur-xl md:col-span-2 rounded-lg">
             <div
               aria-hidden
               className="pointer-events-none absolute -right-24 -top-24 size-64 rounded-full bg-primary/15 blur-3xl"
