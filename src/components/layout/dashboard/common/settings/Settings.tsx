@@ -55,10 +55,13 @@ const Settings = () => {
     onSubmit: async ({ value }) => {
       console.log(value, "update profile value");
       const payload={
-        data:value.name,
+        data:{
+            name:value.name
+        },
         profileImage:value.profileImage
       }
       console.log(payload,"payload")
+      updateProfile
     },
   });
 

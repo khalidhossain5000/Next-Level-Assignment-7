@@ -18,7 +18,7 @@ const SettingsSkeleton = () => {
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-1">
           <CardContent className="flex flex-col items-center gap-4 pt-6">
-            <Skeleton className="size-28 rounded-full" />
+            <Skeleton className="size-30 rounded-full" />
             <Skeleton className="h-5 w-40" />
             <Skeleton className="h-4 w-48" />
             <div className="flex gap-2">
