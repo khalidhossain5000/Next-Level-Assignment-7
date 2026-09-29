@@ -12,7 +12,7 @@ import {
   User,
 } from "lucide-react";
 
-import { useGetMe } from "@/hooks";
+import { useGetMe, useUpdateUserProfile } from "@/hooks";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -34,6 +34,7 @@ import type { SettingsUser } from "@/types";
 
 const Settings = () => {
   const { data, isPending } = useGetMe();
+  const {mutate:updateProfile,isPending:profileUpdating}=useUpdateUserProfile()
 
   if (isPending) return <SettingsSkeleton />;
 
@@ -60,7 +61,7 @@ const Settings = () => {
       icon: Clock,
     },
   ];
-
+//update profile is 
   return (
     <div className="relative">
         {/* gradient glow */}
