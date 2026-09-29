@@ -5,6 +5,7 @@ import {
   Calendar,
   Camera,
   Clock,
+  Edit2Icon,
   Fingerprint,
   KeyRound,
   Mail,
@@ -359,13 +360,22 @@ const Settings = () => {
               </CardContent>
 
               <CardFooter className="justify-end border-t border-border/60 pt-6">
-                <Button
-                  type="submit"
-                  //   disabled
-                  className="w-full sm:w-auto cursor-pointer"
+                <form.Subscribe
+                  selector={(state) => ({
+                    name: state.values.name,
+                    profileImage: state.values.profileImage,
+                  })}
                 >
-                  Update profile
-                </Button>
+                  {({ name, profileImage }) => (
+                    <Button
+                      type="submit"
+                      //   disabled
+                      className="rounded-lg w-full sm:w-auto cursor-pointer"
+                    >
+                      <Edit2Icon size={20} /> Update profile
+                    </Button>
+                  )}
+                </form.Subscribe>
               </CardFooter>
             </div>
           </Card>
