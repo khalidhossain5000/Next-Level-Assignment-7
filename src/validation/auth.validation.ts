@@ -54,18 +54,11 @@ export const updateTechnicianProfileSchema = z.object({
 
 
 
-
-
-
-
-
-
-
-export const userProfileSchema = z.object({
+export const updateUserProfileSchema = z.object({
     name: z
         .string("Name is not a string")
         .min(2, "Name should minimum have 2 chars")
-        .max(100, "Name should not be more than 100 chars"),
+        .max(100, "Name should not be more than 100 chars").optional(),
 
     profileImage: z
         .instanceof(File, {
@@ -76,8 +69,8 @@ export const userProfileSchema = z.object({
             "Only image files are allowed",
         )
         .refine(
-            (file) => file.size <= 5 * 1024 * 1024,
-            "Image size must be less than 5MB",
+            (file) => file.size <= 2 * 1024 * 1024,
+            "Image size must be less than 2MB",
         )
         .nullable()
         .optional(),
