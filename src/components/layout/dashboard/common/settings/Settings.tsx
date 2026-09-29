@@ -45,7 +45,7 @@ const Settings = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const user: SettingsUser | undefined = data?.data;
   //update profile is start here
-
+console.log(data,"this is my profile data")
   const form = useForm({
     defaultValues: {
       name: user?.name as string | undefined,
