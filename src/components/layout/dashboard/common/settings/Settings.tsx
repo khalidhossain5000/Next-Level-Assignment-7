@@ -7,6 +7,7 @@ import {
   Clock,
   Edit2Icon,
   Fingerprint,
+  Info,
   KeyRound,
   Mail,
   ShieldCheck,
