@@ -42,7 +42,7 @@ const Settings = () => {
   const { mutate: updateProfile, isPending: profileUpdating } =
     useUpdateUserProfile();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const user: SettingsUser | undefined = data?.data;
   //update profile is start here
 
@@ -68,12 +68,12 @@ const fileInputRef = useRef<HTMLInputElement>(null);
         {
           onSuccess: (res) => {
             console.log(res, "Profile udpted res Successfully");
-  form.setFieldValue("profileImage", null);
+            form.setFieldValue("profileImage", null);
 
-  if (imagePreview) URL.revokeObjectURL(imagePreview);
-  setImagePreview(null);
+            if (imagePreview) URL.revokeObjectURL(imagePreview);
+            setImagePreview(null);
 
-  if (fileInputRef.current) fileInputRef.current.value = "";
+            if (fileInputRef.current) fileInputRef.current.value = "";
             toast.success(res.message || "Profile is Updated Successfully");
           },
           onError: (err) => {
@@ -366,28 +366,29 @@ const fileInputRef = useRef<HTMLInputElement>(null);
               </CardContent>
 
               <CardFooter className="justify-end border-t border-border/60 pt-6">
-               <form.Subscribe
-  selector={(state) => ({
-    name: state.values.name,
-    profileImage: state.values.profileImage,
-  })}
->
-  {({ name, profileImage }) => {
-    const nameChanged = (name ?? "").trim() !== (user?.name ?? "");
-    const imageSelected = !!profileImage;
-    const hasChanges = nameChanged || imageSelected;
+                <form.Subscribe
+                  selector={(state) => ({
+                    name: state.values.name,
+                    profileImage: state.values.profileImage,
+                  })}
+                >
+                  {({ name, profileImage }) => {
+                    const nameChanged =
+                      (name ?? "").trim() !== (user?.name ?? "");
+                    const imageSelected = !!profileImage;
+                    const hasChanges = nameChanged || imageSelected;
 
-    return (
-      <Button
-        type="submit"
-        disabled={!hasChanges || profileUpdating}
-        className="w-full sm:w-auto cursor-pointer disabled:cursor-not-allowed"
-      >
-        Update profile
-      </Button>
-    );
-  }}
-</form.Subscribe>
+                    return (
+                      <Button
+                        type="submit"
+                        disabled={!hasChanges || profileUpdating}
+                        className="w-full sm:w-auto cursor-pointer disabled:cursor-not-allowed"
+                      >
+                        Update profile
+                      </Button>
+                    );
+                  }}
+                </form.Subscribe>
               </CardFooter>
             </div>
           </Card>
