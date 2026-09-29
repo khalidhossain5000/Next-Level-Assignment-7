@@ -28,6 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import SettingsSkeleton from "@/components/loader/skleton-loading/dashboard/settings.skleton";
+import { formatDate } from "@/lib/formateDate";
 
 type SettingsUser = {
   id?: string;
@@ -43,14 +44,7 @@ type SettingsUser = {
   updatedAt?: string;
 };
 
-const formatDate = (value?: string) =>
-  value
-    ? new Date(value).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      })
-    : "—";
+
 
 const Settings = () => {
   const { data, isPending } = useGetMe();
