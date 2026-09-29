@@ -68,7 +68,7 @@ const DeleteMyOutageConfirmModal = ({
         }
       />
 
-      <DialogContent className="max-w-sm gap-0 overflow-hidden rounded-2xl p-0">
+      <DialogContent className="mx-2 md:mx-0 max-w-sm gap-0 overflow-hidden rounded-2xl p-0">
         {/* Header */}
         <div className="flex flex-col items-center gap-3 bg-linear-to-b from-destructive/10 to-transparent px-6 pb-5 pt-7">
           <div className="flex size-12 items-center justify-center rounded-full bg-destructive/10 text-destructive">
@@ -95,7 +95,7 @@ const DeleteMyOutageConfirmModal = ({
                 type="button"
                 variant="outline"
                 disabled={isPending}
-                className="flex-1 cursor-pointer rounded-lg"
+                className="flex-1 cursor-pointer rounded-lg py-2"
               >
                 Cancel
               </Button>
@@ -107,7 +107,7 @@ const DeleteMyOutageConfirmModal = ({
             variant="destructive"
             onClick={handleDelete}
             disabled={isPending}
-            className="flex-1 cursor-pointer gap-1.5 rounded-lg font-semibold"
+            className="flex-1 cursor-pointer gap-1.5 rounded-lg font-semibold py-2"
           >
             {isPending ? <Spinner /> : <FiTrash2 className="size-3.5" />}
             {isPending ? "Deleting..." : "Yes, Delete"}
