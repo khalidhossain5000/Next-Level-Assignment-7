@@ -24,6 +24,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -41,15 +42,17 @@ const Settings = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const user: SettingsUser | undefined = data?.data;
+  //update profile is start here
 
   const form = useForm({
     defaultValues: {
-      name: user?.name || "Hello test",
+       name: user?.name as string | undefined,
+       profileImage: null as File | null | undefined,
     },
     validators: {
       onSubmit: updateUserProfileSchema,
     },
-    onSubmit: async (value) => {
+    onSubmit: async ({ value }) => {
       console.log(value, "update profile value");
     },
   });
@@ -82,7 +85,6 @@ const Settings = () => {
     },
   ];
 
-
   return (
     <section className="relative">
       {/* gradient glow */}
@@ -111,33 +113,66 @@ const Settings = () => {
 
             <CardContent className="relative space-y-5 pt-8 pb-6">
               <div className="flex flex-col items-center gap-4 text-center">
-                <div className="relative">
-                  <div className="absolute -inset-1 rounded-full bg-linear-to-tr from-primary/40 to-primary/0 blur-md" />
-                  <Avatar className="relative size-28 border-4 border-background shadow-lg ring-1 ring-border">
-                    <AvatarImage
-                      src={user?.profileImage}
-                      alt={user?.name}
-                      className="object-cover"
-                    />
-                    <AvatarFallback className="text-2xl font-semibold uppercase">
-                      {user?.name?.slice(0, 2) || "U"}
-                    </AvatarFallback>
-                  </Avatar>
-                  <Label
-                    htmlFor="profile-image"
-                    className="absolute bottom-0 right-0 flex size-9 cursor-pointer items-center justify-center rounded-full border-2 border-background bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
-                  >
-                    <Camera className="size-4" />
-                    <span className="sr-only">Upload new profile image</span>
-                  </Label>
-                  <input
-                    id="profile-image"
-                    type="file"
-                    accept="image/*"
-                    className="sr-only"
-                  />
-                </div>
-  {/* user orle and active status */}
+                {/* profile image field */}
+                <form.Field name="profileImage">
+                  {(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid;
+
+                    return (
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="relative">
+                          <div className="absolute -inset-1 rounded-full bg-linear-to-tr from-primary/40 to-primary/0 blur-md" />
+                          <Avatar className="relative size-28 border-4 border-background shadow-lg ring-1 ring-border">
+                            <AvatarImage
+                              src={imagePreview ?? user?.profileImage}
+                              alt={user?.name}
+                              className="object-cover"
+                            />
+                            <AvatarFallback className="text-2xl font-semibold uppercase">
+                              {user?.name?.slice(0, 2) || "U"}
+                            </AvatarFallback>
+                          </Avatar>
+                          <Label
+                            htmlFor={field.name}
+                            className="absolute bottom-0 right-0 flex size-9 cursor-pointer items-center justify-center rounded-full border-2 border-background bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
+                          >
+                            <Camera className="size-4" />
+                            <span className="sr-only">
+                              Upload new profile image
+                            </span>
+                          </Label>
+                          <input
+                            id={field.name}
+                            name={field.name}
+                            type="file"
+                            accept="image/*"
+                            className="sr-only"
+                            onBlur={field.handleBlur}
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+
+                              if (!file) return;
+
+                              if (imagePreview) {
+                                URL.revokeObjectURL(imagePreview);
+                              }
+
+                              field.handleChange(file);
+                              setImagePreview(URL.createObjectURL(file));
+                            }}
+                          />
+                        </div>
+
+                        {isInvalid && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </div>
+                    );
+                  }}
+                </form.Field>
+
+                {/* user orle and active status */}
                 <div className="flex flex-wrap items-center justify-center gap-2">
                   <Badge className="gap-1 rounded-sm">
                     <ShieldCheck className="size-3" />
@@ -179,8 +214,6 @@ const Settings = () => {
                     </div>
                   ))}
                 </dl>
-
-              
               </div>
             </CardContent>
           </Card>
@@ -202,21 +235,44 @@ const Settings = () => {
 
               <CardContent className="space-y-6">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-xs font-medium">
-                      Full name
-                    </Label>
-                    <div className="group relative">
-                      <User className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
-                      <Input
-                        id="name"
-                        name="name"
-                        defaultValue={user?.name}
-                        placeholder="Your name"
-                        className="h-11 rounded-lg border-border/70 bg-background/60 pl-9 shadow-sm transition-all focus-visible:border-primary/60 focus-visible:bg-background focus-visible:ring-2 focus-visible:ring-primary/20"
-                      />
-                    </div>
-                  </div>
+                  {/* name field */}
+                  <form.Field name="name">
+                    {(field) => {
+                      const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid;
+
+                      return (
+                        <div className="space-y-2">
+                          <Label
+                            htmlFor={field.name}
+                            className="text-xs font-medium"
+                          >
+                            Full name
+                          </Label>
+                          <div className="group relative">
+                            <User className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
+                            <Input
+                              id={field.name}
+                              name={field.name}
+                              value={field.state.value}
+                              onBlur={field.handleBlur}
+                              onChange={(e) =>
+                                field.handleChange(e.target.value)
+                              }
+                              aria-invalid={isInvalid}
+                              placeholder="Your name"
+                              autoComplete="name"
+                              className="h-11 rounded-lg border-border/70 bg-background/60 pl-9 shadow-sm transition-all focus-visible:border-primary/60 focus-visible:bg-background focus-visible:ring-2 focus-visible:ring-primary/20"
+                            />
+                          </div>
+
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </div>
+                      );
+                    }}
+                  </form.Field>
 
                   <div className="space-y-2">
                     <Label
@@ -275,9 +331,9 @@ const Settings = () => {
 
               <CardFooter className="justify-end border-t border-border/60 pt-6">
                 <Button
-                  type="button"
-                  disabled
-                  className="w-full cursor-not-allowed sm:w-auto"
+                  type="submit"
+                //   disabled
+                  className="w-full sm:w-auto cursor-pointer"
                 >
                   Update profile
                 </Button>
