@@ -54,14 +54,14 @@ const Settings = () => {
     },
     onSubmit: async ({ value }) => {
       console.log(value, "update profile value");
-      const payload={
-        data:{
-            name:value.name
-        },
-        profileImage:value.profileImage
+      const profileData = {
+        name:value.name as string
       }
-      console.log(payload,"payload")
-      updateProfile
+      console.log(profileData,"profileData")
+      updateProfile({
+        data:profileData,
+        profileImage:value.profileImage as File
+      })
     },
   });
 
@@ -261,6 +261,7 @@ const Settings = () => {
                             <User className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
                             <Input
                               id={field.name}
+                              required
                               name={field.name}
                               value={field.state.value ?? ""}
                               onBlur={field.handleBlur}

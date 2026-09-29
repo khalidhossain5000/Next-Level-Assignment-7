@@ -58,7 +58,7 @@ export const updateUserProfileSchema = z.object({
     name: z
         .string("Name is not a string")
         .min(2, "Name should minimum have 2 chars")
-        .max(100, "Name should not be more than 100 chars").optional(),
+        .max(100, "Name should not be more than 100 chars"),
 
     profileImage: z
         .instanceof(File, {
