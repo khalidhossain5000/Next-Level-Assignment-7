@@ -45,7 +45,7 @@ const Settings = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const user: SettingsUser | undefined = data?.data;
   //update profile is start here
-console.log(data,"this is my profile data")
+
   const form = useForm({
     defaultValues: {
       name: user?.name as string | undefined,
@@ -92,7 +92,7 @@ console.log(data,"this is my profile data")
   });
 
   if (isPending) return <SettingsSkeleton />;
-
+console.log(data,"this is my profile data",user?.profileImage)
   const accountDetails1 = [
     { label: "User ID", value: user?.id, icon: Fingerprint },
     {
@@ -162,7 +162,9 @@ console.log(data,"this is my profile data")
                               src={imagePreview ?? user?.profileImage}
                               alt={user?.name}
                               className="object-cover"
+                              
                             />
+                            
                             <AvatarFallback className="text-2xl font-semibold uppercase">
                               {user?.name?.slice(0, 2) || "U"}
                             </AvatarFallback>
