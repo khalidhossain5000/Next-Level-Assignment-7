@@ -30,11 +30,13 @@ import { Separator } from "@/components/ui/separator";
 import SettingsSkeleton from "@/components/loader/skleton-loading/dashboard/settings.skleton";
 import { formatDate } from "@/lib/formateDate";
 import type { SettingsUser } from "@/types";
+import { useState } from "react";
 
 
 const Settings = () => {
   const { data, isPending } = useGetMe();
   const {mutate:updateProfile,isPending:profileUpdating}=useUpdateUserProfile()
+const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   if (isPending) return <SettingsSkeleton />;
 
@@ -61,7 +63,7 @@ const Settings = () => {
       icon: Clock,
     },
   ];
-//update profile is 
+//update profile is start here
   return (
     <div className="relative">
         {/* gradient glow */}
