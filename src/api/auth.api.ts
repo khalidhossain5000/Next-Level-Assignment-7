@@ -9,7 +9,7 @@ export function userLogin(payload:ILoginPayload){
     })
 }
 
-export function googleLogin(payload: { idToken: string }){
+export function googleLogin(payload: { idToken: string ,role?:"ADMIN" | "CUSTOMER" | "TECHNICIAN"}){
     return apiClient("/auth/google-login",{
         method:"POST",
         body:payload

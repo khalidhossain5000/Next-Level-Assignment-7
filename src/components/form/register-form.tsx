@@ -177,7 +177,7 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
 
       <FieldSeparator>Or continue with</FieldSeparator>
 
-      <GoogleLoginComponet />
+      <GoogleLoginComponet role={role}/>
     </div>
   );
 };
