@@ -46,14 +46,19 @@ const Settings = () => {
 
   const form = useForm({
     defaultValues: {
-       name: user?.name as string | undefined,
-       profileImage: null as File | null | undefined,
+      name: user?.name as string | undefined,
+      profileImage: null as File | null | undefined,
     },
     validators: {
       onSubmit: updateUserProfileSchema,
     },
     onSubmit: async ({ value }) => {
       console.log(value, "update profile value");
+      const payload={
+        data:value.name,
+        profileImage:value.profileImage
+      }
+      console.log(payload,"payload")
     },
   });
 
@@ -254,7 +259,7 @@ const Settings = () => {
                             <Input
                               id={field.name}
                               name={field.name}
-                              value={field.state.value}
+                              value={field.state.value ?? ""}
                               onBlur={field.handleBlur}
                               onChange={(e) =>
                                 field.handleChange(e.target.value)
@@ -332,7 +337,7 @@ const Settings = () => {
               <CardFooter className="justify-end border-t border-border/60 pt-6">
                 <Button
                   type="submit"
-                //   disabled
+                  //   disabled
                   className="w-full sm:w-auto cursor-pointer"
                 >
                   Update profile
