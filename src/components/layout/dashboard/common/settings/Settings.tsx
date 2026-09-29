@@ -101,7 +101,7 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
 
   return (
     <div className="relative">
-      {/* ---------- Gradient glow background ---------- */}
+    
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -112,7 +112,7 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
       </div>
 
       <div className="grid items-start gap-6 lg:grid-cols-3">
-        {/* ---------- LEFT: profile summary (fits content height) ---------- */}
+   
         <Card className="relative h-fit self-start overflow-hidden border-border/60 bg-card/70 shadow-sm backdrop-blur-xl lg:col-span-1">
           <div
             aria-hidden
@@ -177,7 +177,7 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
           </CardContent>
         </Card>
 
-        {/* ---------- RIGHT: form + account details ---------- */}
+        {/* right side info  */}
         <Card className="relative overflow-hidden border-border/60 bg-card/70 shadow-sm backdrop-blur-xl lg:col-span-2">
           <div
             aria-hidden
@@ -193,7 +193,7 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
             </CardHeader>
 
             <CardContent className="space-y-6">
-              {/* --- improved inputs --- */}
+  
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-xs font-medium">
@@ -235,7 +235,7 @@ function SettingsContent({ user }: { user?: SettingsUser }) {
 
               <Separator />
 
-              {/* --- account details --- */}
+
               <div className="space-y-3">
                 <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                   Account details
