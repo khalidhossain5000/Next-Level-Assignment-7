@@ -32,6 +32,7 @@ import { formatDate } from "@/lib/formateDate";
 import type { SettingsUser } from "@/types";
 import { useState } from "react";
 import { useForm } from "@tanstack/react-form";
+import { updateUserProfileSchema } from "@/validation";
 
 
 const Settings = () => {
@@ -69,7 +70,9 @@ const form=useForm({
     defaultValues:{
         name:user?.name
     },
-    
+     validators: {
+          onSubmit: updateUserProfileSchema,
+    },
 })
   return (
     <div className="relative">
