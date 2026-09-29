@@ -67,7 +67,7 @@ const Settings = () => {
         },
         {
           onSuccess: (res) => {
-            console.log(res, "Profile udpted res Successfully");
+            
             form.setFieldValue("profileImage", null);
 
             if (imagePreview) URL.revokeObjectURL(imagePreview);
