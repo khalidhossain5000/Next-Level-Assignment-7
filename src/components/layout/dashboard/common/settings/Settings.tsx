@@ -56,7 +56,7 @@ const Settings = () => {
 
   if (isPending) return <SettingsSkeleton />;
 
-  const accountDetails = [
+  const accountDetails1 = [
     { label: "User ID", value: user?.id, icon: Fingerprint },
     {
       label: "Auth method",
@@ -135,15 +135,11 @@ const Settings = () => {
                   />
                 </div>
 
-                <div className="w-full space-y-1">
-                  <h2 className="truncate text-lg font-semibold">
-                    {user?.name || "—"}
-                  </h2>
-                  <p className="truncate text-sm text-muted-foreground">
-                    {user?.email || "—"}
-                  </p>
-                </div>
+             {/* acount update created will be here */}
 
+
+
+{/* user orle and active status */}
                 <div className="flex flex-wrap items-center justify-center gap-2">
                   <Badge className="gap-1 rounded-sm">
                     <ShieldCheck className="size-3" />
@@ -227,7 +223,7 @@ const Settings = () => {
                     Account details
                   </p>
                   <dl className="grid gap-3 sm:grid-cols-2">
-                    {accountDetails.map(({ label, value, icon: Icon }) => (
+                    {accountDetails1.map(({ label, value, icon: Icon }) => (
                       <div
                         key={label}
                         className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-3 transition hover:bg-muted/50"
