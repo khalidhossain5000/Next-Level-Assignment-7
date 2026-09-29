@@ -67,6 +67,9 @@ const Settings = () => {
     ...(user?.googleId
       ? [{ label: "Google ID", value: user.googleId, icon: KeyRound }]
       : []),
+  ];
+
+  const accountDetails2 = [
     {
       label: "Member since",
       value: formatDate(user?.createdAt),
@@ -78,7 +81,7 @@ const Settings = () => {
       icon: Clock,
     },
   ];
-  //update profile is start here
+
 
   return (
     <section className="relative">
@@ -134,12 +137,7 @@ const Settings = () => {
                     className="sr-only"
                   />
                 </div>
-
-             {/* acount update created will be here */}
-
-
-
-{/* user orle and active status */}
+  {/* user orle and active status */}
                 <div className="flex flex-wrap items-center justify-center gap-2">
                   <Badge className="gap-1 rounded-sm">
                     <ShieldCheck className="size-3" />
@@ -156,6 +154,33 @@ const Settings = () => {
                     </Badge>
                   )}
                 </div>
+
+                {/* acount update created will be here */}
+                <dl className="grid gap-3 sm:grid-cols-2">
+                  {accountDetails2.map(({ label, value, icon: Icon }) => (
+                    <div
+                      key={label}
+                      className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-3 transition hover:bg-muted/50"
+                    >
+                      <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-background text-muted-foreground ring-1 ring-border">
+                        <Icon className="size-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <dt className="text-xs text-muted-foreground">
+                          {label}
+                        </dt>
+                        <dd
+                          className="truncate text-sm font-medium"
+                          title={value ? String(value) : undefined}
+                        >
+                          {value || "—"}
+                        </dd>
+                      </div>
+                    </div>
+                  ))}
+                </dl>
+
+              
               </div>
             </CardContent>
           </Card>
