@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { FiCamera, FiCheckCircle, FiXCircle } from "react-icons/fi";
 
 import { useGetMe, useUpdateUserProfile } from "@/hooks";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,13 +13,11 @@ import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 import SettingsSkeleton from "@/components/loader/skleton-loading/dashboard/settings.skeleton";
 
-
 const Settings = () => {
   const { data, isPending } = useGetMe();
 
   const { mutate, isPending: isUpdating } = useUpdateUserProfile();
 
- 
   const user = data?.data;
 
   if (isPending || !user) return <SettingsSkeleton />;
@@ -44,21 +42,16 @@ const Settings = () => {
       {/* Profile header */}
       <div className="flex flex-col items-center gap-5 p-6 sm:flex-row sm:p-8">
         <div className="relative shrink-0">
-          <div className="relative size-28 overflow-hidden rounded-full border border-border bg-muted">
-            {user.profileImage ? (
-              <Image
-                src={user.profileImage}
-                alt={user.name}
-                fill
-                sizes="112px"
-                className="object-cover"
-              />
-            ) : (
-              <span className="flex size-full items-center justify-center text-3xl font-semibold text-muted-foreground">
-                {user.name?.charAt(0).toUpperCase()}
-              </span>
-            )}
-          </div>
+          <Avatar className="size-28 border border-border">
+            <AvatarImage
+              src={user.profileImage}
+              alt={user.name}
+              className="object-cover"
+            />
+            <AvatarFallback className="text-3xl font-semibold text-muted-foreground">
+              {user.name?.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
 
           <button
             type="button"
