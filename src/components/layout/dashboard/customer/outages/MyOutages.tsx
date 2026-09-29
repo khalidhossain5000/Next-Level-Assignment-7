@@ -68,9 +68,9 @@ const MyOutages = () => {
     return "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-300";
   };
 
-if (isPending) {
-  return <MyOutagesSkleton />;
-}
+  if (isPending) {
+    return <MyOutagesSkleton />;
+  }
 
   if (outages.length === 0) {
     return (
@@ -198,10 +198,9 @@ if (isPending) {
                           )}
 
                           <UpdateOutageModal outage={outage} />
-{
-  outage.status==="REPORTED" && <DeleteMyOutageConfirmModal outageId={outage.id} />
-}
-                          
+                          {outage.status === "REPORTED" && (
+                            <DeleteMyOutageConfirmModal outageId={outage.id} />
+                          )}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -220,7 +219,6 @@ if (isPending) {
             key={outage.id}
             className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
           >
-   
             <CardContent className="hidden px-4 py-3 sm:block sm:px-5 sm:py-3.5">
               <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                 {/* Cause + Area */}
@@ -282,14 +280,13 @@ if (isPending) {
 
                   <UpdateOutageModal outage={outage} />
 
-                 {
-  outage.status==="REPORTED" && <DeleteMyOutageConfirmModal outageId={outage.id} />
-}
+                  {outage.status === "REPORTED" && (
+                    <DeleteMyOutageConfirmModal outageId={outage.id} />
+                  )}
                 </div>
               </div>
             </CardContent>
 
-         
             <CardContent className="px-4 py-3 sm:hidden">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
