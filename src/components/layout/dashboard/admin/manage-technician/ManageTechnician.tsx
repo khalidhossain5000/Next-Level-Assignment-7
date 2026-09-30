@@ -1,10 +1,12 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+/** biome-ignore-all lint/style/noNonNullAssertion: <explanation> */
 "use client";
 
 import { toast } from "sonner";
 import { FiAward, FiCheckCircle, FiClock, FiX } from "react-icons/fi";
 
 import { useApproveTechnician, useGetAllTechnician } from "@/hooks";
-import { TechnicianProfileStatus } from "@/types"; 
+import { TechnicianProfileStatus } from "@/types";
 
 import {
   Table,
@@ -17,7 +19,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
+import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 
 interface TechnicianProfile {
   availability?: "AVAILABLE" | "BUSY";
@@ -66,6 +68,9 @@ const getVerificationLabel = (status?: TechnicianProfileStatus) => {
   }
 };
 
+const headClass =
+  "h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground";
+
 const ManageTechnician = () => {
   const { data: technician, isPending: technicianPending } =
     useGetAllTechnician();
@@ -111,12 +116,58 @@ const ManageTechnician = () => {
     });
   };
 
-  if (technicianPending) {
+  // Approve / Reject বাটন (table আর card দুই জায়গায় একই)
+  const renderAction = (item: Technician, compact = false) => {
+    const verificationStatus =
+      item.technicianProfile?.technicianvProfileVerificationStatus;
+
+    if (verificationStatus === TechnicianProfileStatus.APPROVED) {
+      return (
+        <span className="flex items-center gap-1 text-xs text-muted-foreground">
+          <FiCheckCircle className="size-3.5 text-green-600" />
+          Approved
+        </span>
+      );
+    }
+
+    const isThisRowPending =
+      approving && (variables as any)?.technicianId === item.id;
+    const height = compact ? "h-8" : "h-9";
+
     return (
-      <div className="flex min-h-72 items-center justify-center">
-        <Spinner className="size-6" />
-      </div>
+      <>
+        <Button
+          type="button"
+          size="sm"
+          disabled={isThisRowPending}
+          onClick={() =>
+            handleUpdateStatus(item.id, TechnicianProfileStatus.APPROVED)
+          }
+          className={`${height} gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90`}
+        >
+          <FiCheckCircle className="size-3.5" />
+          Approve
+        </Button>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          disabled={isThisRowPending}
+          onClick={() =>
+            handleUpdateStatus(item.id, TechnicianProfileStatus.REJECTED)
+          }
+          className={`${height} gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30`}
+        >
+          <FiX className="size-3.5" />
+          Reject
+        </Button>
+      </>
     );
+  };
+
+  if (technicianPending) {
+    return <MyOutagesSkleton />;
   }
 
   if (technicians.length === 0) {
@@ -126,9 +177,11 @@ const ManageTechnician = () => {
           <div className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
             <FiAward className="size-5" />
           </div>
+
           <h3 className="font-manrope text-base font-semibold text-card-foreground">
             No Technicians Found
           </h3>
+
           <p className="mt-1 text-sm text-muted-foreground">
             No technician accounts have been registered yet.
           </p>
@@ -139,92 +192,57 @@ const ManageTechnician = () => {
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
-      {/* Header */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h2 className="font-manrope text-2xl font-bold tracking-tight text-card-foreground">
-            Technicians
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Review technician profiles and approve verification requests.
-          </p>
-        </div>
-
-        <Badge
-          variant="outline"
-          className="w-fit rounded-full px-3 py-1 text-xs font-medium"
-        >
-          {technicians.length}{" "}
-          {technicians.length === 1 ? "Technician" : "Technicians"}
-        </Badge>
-      </div>
-
-     
+      {/* Desktop Table */}
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
-            <Table>
+            <Table className="border-separate border-spacing-0">
               <TableHeader>
-                <TableRow className="bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="h-12 whitespace-nowrap pl-6">
+                <TableRow className="hover:bg-transparent font-inter">
+                  <TableHead className={`${headClass} pl-6`}>
                     Technician
                   </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap">
-                    Expertise
-                  </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap">
-                    Experience
-                  </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap">
-                    Availability
-                  </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap">
-                    Assigned Outages
-                  </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap">
-                    Verification
-                  </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap pr-6 text-right">
+                  <TableHead className={headClass}>Expertise</TableHead>
+                  <TableHead className={headClass}>Experience</TableHead>
+                  <TableHead className={headClass}>Availability</TableHead>
+                  <TableHead className={headClass}>Assigned Outages</TableHead>
+                  <TableHead className={headClass}>Verification</TableHead>
+                  <TableHead className={`${headClass} pr-6 text-right`}>
                     Actions
                   </TableHead>
                 </TableRow>
               </TableHeader>
 
               <TableBody>
-                {technicians.map((item) => {
+                {technicians.map((item, index) => {
                   const verificationStatus =
                     item.technicianProfile
                       ?.technicianvProfileVerificationStatus;
-                  const isApproved =
-                    verificationStatus === TechnicianProfileStatus.APPROVED;
-                  const isThisRowPending =
-                    approving &&
-                    (variables as any)?.technicianId === item.id;
+                  const cellBorder =
+                    index !== technicians.length - 1
+                      ? "border-b border-border"
+                      : "";
 
                   return (
                     <TableRow
                       key={item.id}
-                      className="group transition-colors hover:bg-muted/30"
+                      className="group border-0 transition-colors hover:bg-muted/30"
                     >
                       {/* Technician */}
-                      <TableCell className="pl-6">
-                        <div className="flex items-center gap-2.5">
-                          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                            {item.name.charAt(0).toUpperCase()}
-                          </div>
-                          <div className="min-w-0 max-w-44">
-                            <p className="truncate font-semibold text-card-foreground">
-                              {item.name}
-                            </p>
-                            <p className="truncate text-xs text-muted-foreground">
-                              {item.email}
-                            </p>
-                          </div>
+                      <TableCell className={`pl-6 ${cellBorder}`}>
+                        <div className="min-w-0 max-w-44">
+                          <p className="truncate font-semibold text-card-foreground">
+                            {item.name}
+                          </p>
+
+                          <p className="truncate text-xs text-muted-foreground">
+                            {item.email}
+                          </p>
                         </div>
                       </TableCell>
 
                       {/* Expertise */}
-                      <TableCell>
+                      <TableCell className={cellBorder}>
                         <div className="flex max-w-56 flex-wrap gap-1">
                           {(item.technicianProfile?.expertise ?? [])
                             .slice(0, 2)
@@ -250,12 +268,14 @@ const ManageTechnician = () => {
                       </TableCell>
 
                       {/* Experience */}
-                      <TableCell className="whitespace-nowrap text-sm text-card-foreground">
+                      <TableCell
+                        className={`whitespace-nowrap text-sm text-card-foreground ${cellBorder}`}
+                      >
                         {item.technicianProfile?.experience ?? 0} yr
                       </TableCell>
 
                       {/* Availability */}
-                      <TableCell>
+                      <TableCell className={cellBorder}>
                         <Badge
                           variant="outline"
                           className={getAvailabilityClassName(
@@ -267,12 +287,14 @@ const ManageTechnician = () => {
                       </TableCell>
 
                       {/* Assigned Outages */}
-                      <TableCell className="whitespace-nowrap text-sm text-card-foreground">
+                      <TableCell
+                        className={`whitespace-nowrap text-sm text-card-foreground ${cellBorder}`}
+                      >
                         {item.assignedOutages?.length ?? 0}
                       </TableCell>
 
                       {/* Verification */}
-                      <TableCell>
+                      <TableCell className={cellBorder}>
                         <Badge
                           variant="outline"
                           className={getVerificationClassName(
@@ -284,49 +306,9 @@ const ManageTechnician = () => {
                       </TableCell>
 
                       {/* Actions */}
-                      <TableCell className="pr-6">
+                      <TableCell className={`pr-6 ${cellBorder}`}>
                         <div className="flex items-center justify-end gap-1.5">
-                          {isApproved ? (
-                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <FiCheckCircle className="size-3.5 text-green-600" />
-                              Approved
-                            </span>
-                          ) : (
-                            <>
-                              <Button
-                                type="button"
-                                size="sm"
-                                disabled={isThisRowPending}
-                                onClick={() =>
-                                  handleUpdateStatus(
-                                    item.id,
-                                    TechnicianProfileStatus.APPROVED,
-                                  )
-                                }
-                                className="h-9 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
-                              >
-                                <FiCheckCircle className="size-3.5" />
-                                Approve
-                              </Button>
-
-                              <Button
-                                type="button"
-                                variant="outline"
-                                size="sm"
-                                disabled={isThisRowPending}
-                                onClick={() =>
-                                  handleUpdateStatus(
-                                    item.id,
-                                    TechnicianProfileStatus.REJECTED,
-                                  )
-                                }
-                                className="h-9 gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30"
-                              >
-                                <FiX className="size-3.5" />
-                                Reject
-                              </Button>
-                            </>
-                          )}
+                          {renderAction(item)}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -338,43 +320,85 @@ const ManageTechnician = () => {
         </div>
       </div>
 
-      {/* =====================================================
-          BELOW XL → CARD VIEW
-      ====================================================== */}
+      {/* Mobile */}
       <div className="space-y-3 xl:hidden">
         {technicians.map((item) => {
           const verificationStatus =
             item.technicianProfile?.technicianvProfileVerificationStatus;
-          const isApproved =
-            verificationStatus === TechnicianProfileStatus.APPROVED;
-          const isThisRowPending =
-            approving && (variables as any)?.technicianId === item.id;
 
           return (
             <Card
               key={item.id}
               className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
             >
-              <CardContent className="space-y-3 px-4 py-3.5 sm:px-5">
-                {/* Top: Name + Verification */}
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex min-w-0 items-center gap-2.5">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
-                      {item.name.charAt(0).toUpperCase()}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold text-card-foreground">
+              {/* sm and up */}
+              <CardContent className="hidden px-4 py-3 sm:block sm:px-5 sm:py-3.5">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                  {/* Technician */}
+                  <div className="min-w-0 flex-1 pr-2">
+                    <div className="flex min-w-0 flex-wrap items-center gap-2">
+                      <p className="truncate text-sm font-semibold text-card-foreground sm:text-base">
                         {item.name}
                       </p>
-                      <p className="truncate text-xs text-muted-foreground">
-                        {item.email}
-                      </p>
+
+                      <Badge
+                        variant="outline"
+                        className={`shrink-0 text-[10px] font-semibold ${getVerificationClassName(
+                          verificationStatus,
+                        )}`}
+                      >
+                        {getVerificationLabel(verificationStatus)}
+                      </Badge>
                     </div>
+
+                    <p className="mt-1 truncate text-xs text-muted-foreground">
+                      {item.email}
+                    </p>
+                  </div>
+
+                  {/* Availability */}
+                  <Badge
+                    variant="outline"
+                    className={`hidden shrink-0 md:inline-flex ${getAvailabilityClassName(
+                      item.technicianProfile?.availability,
+                    )}`}
+                  >
+                    {item.technicianProfile?.availability ?? "N/A"}
+                  </Badge>
+
+                  {/* Experience + Assigned */}
+                  <div className="hidden shrink-0 items-center gap-4 text-xs text-muted-foreground md:flex">
+                    <div className="flex items-center gap-1">
+                      <FiClock className="size-3.5" />
+                      <span>{item.technicianProfile?.experience ?? 0} yr</span>
+                    </div>
+
+                    <span>{item.assignedOutages?.length ?? 0} assigned</span>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex shrink-0 items-center gap-1">
+                    {renderAction(item)}
+                  </div>
+                </div>
+              </CardContent>
+
+              {/* below sm */}
+              <CardContent className="px-4 py-3 sm:hidden">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-semibold text-card-foreground">
+                      {item.name}
+                    </p>
+
+                    <p className="truncate text-xs text-muted-foreground">
+                      {item.email}
+                    </p>
                   </div>
 
                   <Badge
                     variant="outline"
-                    className={`shrink-0 text-[10px] ${getVerificationClassName(
+                    className={`shrink-0 whitespace-nowrap text-[10px] font-semibold ${getVerificationClassName(
                       verificationStatus,
                     )}`}
                   >
@@ -382,9 +406,8 @@ const ManageTechnician = () => {
                   </Badge>
                 </div>
 
-                {/* Expertise */}
                 {(item.technicianProfile?.expertise?.length ?? 0) > 0 && (
-                  <div className="flex flex-wrap gap-1.5 border-t border-border pt-2.5">
+                  <div className="mt-3 flex flex-wrap gap-1.5">
                     {item.technicianProfile!.expertise!.map((skill) => (
                       <Badge
                         key={skill}
@@ -397,72 +420,30 @@ const ManageTechnician = () => {
                   </div>
                 )}
 
-                {/* Meta row */}
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-border pt-2.5 text-xs">
-                  <Badge
-                    variant="outline"
-                    className={`text-[10px] ${getAvailabilityClassName(
-                      item.technicianProfile?.availability,
-                    )}`}
-                  >
-                    {item.technicianProfile?.availability ?? "N/A"}
-                  </Badge>
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-2.5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge
+                      variant="outline"
+                      className={`text-[10px] ${getAvailabilityClassName(
+                        item.technicianProfile?.availability,
+                      )}`}
+                    >
+                      {item.technicianProfile?.availability ?? "N/A"}
+                    </Badge>
 
-                  <div className="flex items-center gap-1 text-muted-foreground">
-                    <FiClock className="size-3.5" />
-                    <span>
-                      {item.technicianProfile?.experience ?? 0} yr experience
+                    <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
+                      <FiClock className="size-3" />
+                      {item.technicianProfile?.experience ?? 0} yr
+                    </span>
+
+                    <span className="text-[11px] text-muted-foreground">
+                      {item.assignedOutages?.length ?? 0} assigned
                     </span>
                   </div>
 
-                  <span className="ml-auto text-muted-foreground">
-                    {item.assignedOutages?.length ?? 0} assigned
-                  </span>
-                </div>
-
-                {/* Action */}
-                <div className="flex items-center justify-end gap-1.5 border-t border-border pt-2.5">
-                  {isApproved ? (
-                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <FiCheckCircle className="size-3.5 text-green-600" />
-                      Approved
-                    </span>
-                  ) : (
-                    <>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        disabled={isThisRowPending}
-                        onClick={() =>
-                          handleUpdateStatus(
-                            item.id,
-                            TechnicianProfileStatus.REJECTED,
-                          )
-                        }
-                        className="h-8 gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30"
-                      >
-                        <FiX className="size-3.5" />
-                        Reject
-                      </Button>
-
-                      <Button
-                        type="button"
-                        size="sm"
-                        disabled={isThisRowPending}
-                        onClick={() =>
-                          handleUpdateStatus(
-                            item.id,
-                            TechnicianProfileStatus.APPROVED,
-                          )
-                        }
-                        className="h-8 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
-                      >
-                        <FiCheckCircle className="size-3.5" />
-                        Approve
-                      </Button>
-                    </>
-                  )}
+                  <div className="flex shrink-0 items-center gap-1">
+                    {renderAction(item, true)}
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -472,5 +453,4 @@ const ManageTechnician = () => {
     </div>
   );
 };
-
 export default ManageTechnician;
