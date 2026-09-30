@@ -136,6 +136,12 @@ export const sidebarRoutes: SidebarRoute[] = [
     roles: ["CUSTOMER"],
   },
   // technician routes are here
+  {
+    label: "Dashboard",
+    href: "/technician/dashboard",
+    icon: FiGrid,
+    roles: ["TECHNICIAN"],
+  },
     {
     label: "Assigned Outages",
     href: "/technician/assigned-outages",
