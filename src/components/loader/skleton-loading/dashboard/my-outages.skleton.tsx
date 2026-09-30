@@ -12,14 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const ROW_COUNT = 5;
 
-const TABLE_HEADERS = [
-  { label: "Cause", className: "pl-6" },
-  { label: "Area", className: "" },
-  { label: "Priority", className: "" },
-  { label: "Status", className: "" },
-  { label: "Reported At", className: "" },
-  { label: "Actions", className: "pr-6 text-right" },
-] as const;
+const headClass = "h-12 border-b border-border bg-muted/40";
 
 const rows = Array.from({ length: ROW_COUNT }, (_, i) => `row-${i}`);
 
@@ -30,21 +23,31 @@ const MyOutagesSkleton = () => {
       aria-busy="true"
       aria-live="polite"
     >
-
+      {/* Desktop Table */}
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
             <Table className="border-separate border-spacing-0">
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
-                  {TABLE_HEADERS.map((header) => (
-                    <TableHead
-                      key={header.label}
-                      className={`h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground ${header.className}`}
-                    >
-                      {header.label}
-                    </TableHead>
-                  ))}
+                  <TableHead className={`${headClass} pl-6`}>
+                    <Skeleton className="h-4 w-12" />
+                  </TableHead>
+                  <TableHead className={headClass}>
+                    <Skeleton className="h-4 w-10" />
+                  </TableHead>
+                  <TableHead className={headClass}>
+                    <Skeleton className="h-4 w-14" />
+                  </TableHead>
+                  <TableHead className={headClass}>
+                    <Skeleton className="h-4 w-12" />
+                  </TableHead>
+                  <TableHead className={headClass}>
+                    <Skeleton className="h-4 w-20" />
+                  </TableHead>
+                  <TableHead className={`${headClass} pr-6`}>
+                    <Skeleton className="ml-auto h-4 w-14" />
+                  </TableHead>
                 </TableRow>
               </TableHeader>
 
@@ -54,7 +57,10 @@ const MyOutagesSkleton = () => {
                     index !== rows.length - 1 ? "border-b border-border" : "";
 
                   return (
-                    <TableRow key={rowKey} className="border-0 hover:bg-transparent">
+                    <TableRow
+                      key={rowKey}
+                      className="border-0 hover:bg-transparent"
+                    >
                       {/* Cause */}
                       <TableCell className={`pl-6 ${cellBorder}`}>
                         <Skeleton className="h-4 w-40" />
@@ -99,17 +105,16 @@ const MyOutagesSkleton = () => {
         </div>
       </div>
 
-    
+      {/* Mobile */}
       <div className="space-y-3 xl:hidden">
         {rows.map((rowKey) => (
           <Card
             key={rowKey}
             className="rounded-xl border-border bg-card shadow-sm"
           >
-          
+            {/* sm and up */}
             <CardContent className="hidden px-4 py-3 sm:block sm:px-5 sm:py-3.5">
               <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-                {/* Cause + Area */}
                 <div className="min-w-0 flex-1 pr-2">
                   <div className="flex items-center gap-2">
                     <Skeleton className="h-4 w-36" />
@@ -120,16 +125,13 @@ const MyOutagesSkleton = () => {
                   <Skeleton className="mt-2 h-3 w-32" />
                 </div>
 
-                {/* Priority */}
                 <Skeleton className="hidden h-6 w-16 rounded-full md:block" />
 
-                {/* Reported */}
                 <div className="hidden shrink-0 lg:block">
                   <Skeleton className="h-3 w-12" />
                   <Skeleton className="mt-1.5 h-3.5 w-28" />
                 </div>
 
-                {/* Actions */}
                 <div className="flex shrink-0 items-center gap-1">
                   <Skeleton className="h-9 w-28 rounded-lg" />
                   <Skeleton className="size-9 rounded-lg" />
@@ -138,7 +140,7 @@ const MyOutagesSkleton = () => {
               </div>
             </CardContent>
 
-
+            {/* below sm */}
             <CardContent className="px-4 py-3 sm:hidden">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
