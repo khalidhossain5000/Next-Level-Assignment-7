@@ -92,7 +92,7 @@ const Settings = () => {
   });
 
   if (isPending) return <SettingsSkeleton />;
-console.log(data,"this is my profile data",user?.profileImage)
+
   const accountDetails1 = [
     { label: "User ID", value: user?.id, icon: Fingerprint },
     {

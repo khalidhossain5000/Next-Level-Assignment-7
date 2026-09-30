@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import type { IUser, UserStatus } from "@/types";
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const getRoleClassName = (role: string) => {
   switch (role) {
@@ -64,7 +65,7 @@ const ManageUsers = () => {
   } = useUpdateUserStatus();
 
   const allUsers: IUser[] = Array.isArray(users) ? users : (users?.data ?? []);
-
+  console.log(allUsers, 'ausers')
   const handleToggleStatus = (userId: string, currentStatus: UserStatus) => {
     const newStatus: UserStatus =
       currentStatus === "ACTIVE" ? "BAN" : "ACTIVE";
@@ -82,15 +83,15 @@ const ManageUsers = () => {
         onError: (error: any) => {
           toast.error(
             error?.data?.message ||
-              error?.message ||
-              "Failed to update user status.",
+            error?.message ||
+            "Failed to update user status.",
           );
         },
       },
     );
   };
 
-  // Ban / Unban বাটন (table আর card দুই জায়গায় একই)
+
   const renderAction = (user: IUser, compact = false) => {
     if (user.role === "ADMIN") {
       return (
@@ -111,9 +112,8 @@ const ManageUsers = () => {
           size="sm"
           disabled={isThisRowPending}
           onClick={() => handleToggleStatus(user.id, user.status)}
-          className={`gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30 ${
-            compact ? "h-8" : "h-9"
-          }`}
+          className={`gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30 ${compact ? "h-8" : "h-9"
+            }`}
         >
           <FiLock className="size-3.5" />
           Ban
@@ -127,9 +127,8 @@ const ManageUsers = () => {
         size="sm"
         disabled={isThisRowPending}
         onClick={() => handleToggleStatus(user.id, user.status)}
-        className={`gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 ${
-          compact ? "h-8" : "h-9"
-        }`}
+        className={`gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 ${compact ? "h-8" : "h-9"
+          }`}
       >
         <FiUnlock className="size-3.5" />
         Unban
@@ -139,7 +138,7 @@ const ManageUsers = () => {
 
   if (isPending) {
     return (
-     <MyOutagesSkleton/>
+      <MyOutagesSkleton />
     );
   }
 
@@ -200,7 +199,19 @@ const ManageUsers = () => {
                       <TableCell className={`pl-6 ${cellBorder}`}>
                         <div className="flex items-center gap-2.5">
                           <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                            {user.name.charAt(0).toUpperCase()}
+                     
+                            <Avatar className="relative size-9 border border-background shadow-lg ring-1 ring-border">
+                              <AvatarImage
+                                src={user?.profileImage as string}
+                                alt={user?.name}
+                                className="object-cover"
+
+                              />
+
+                              <AvatarFallback className="text-2xl font-semibold uppercase">
+                                {user?.name?.slice(0, 2) || "U"}
+                              </AvatarFallback>
+                            </Avatar>
                           </div>
 
                           <div className="min-w-0 max-w-52">
