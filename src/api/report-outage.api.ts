@@ -29,7 +29,9 @@ export function updateOutageStatus(payload:IUpdateStatus){
     
     return apiClient(`/outage/${payload.id}/status`,{
         method:"PATCH",
-        body: payload.status
+        body: {
+            status:payload.status
+        }
         
     })
 }
