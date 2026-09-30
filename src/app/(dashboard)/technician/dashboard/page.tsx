@@ -1,4 +1,5 @@
 import DashboardHeader from '@/components/layout/dashboard/common/DashboardHeader/DashboardHeader';
+import TechnicianAnalyticsReport from '@/components/layout/dashboard/technician/technician-analytics-report/TechnicianAnalyticsReport';
 
 const page = () => {
     return (
@@ -9,7 +10,7 @@ const page = () => {
                 showDateTime
             />
             <div className="py-4">
-
+                <TechnicianAnalyticsReport />
             </div>
         </section>
     );
