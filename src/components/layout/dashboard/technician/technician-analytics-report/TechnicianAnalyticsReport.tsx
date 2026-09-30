@@ -1,6 +1,9 @@
-import React from 'react';
+"use client"
+
+import { useGetTechnicianAnalytics } from "@/hooks";
 
 const TechnicianAnalyticsReport = () => {
+      const { data, isPending } = useGetTechnicianAnalytics() 
     return (
         <div>
             
