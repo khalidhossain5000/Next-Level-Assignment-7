@@ -24,7 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 import AssignedOutagesSkeleton from "@/components/loader/skleton-loading/dashboard/assigned-outages.skeleton";
 
 interface IAssignedUser {
@@ -62,8 +61,6 @@ const getStatusClassName = (status: string) => {
       return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
     case "RESTORED":
       return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
-    case "CANCELLED":
-      return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
     default:
       return "border-border bg-muted text-muted-foreground";
   }
@@ -118,7 +115,7 @@ const AssignedOutages = () => {
     );
   };
 
-  // Actions column / card-এর status update control
+  
   const renderStatusAction = (outage: IAssignedOutage) => {
     const isFinalized = outage.status === "RESTORED";
     const isThisRowUpdating =
@@ -151,11 +148,11 @@ const AssignedOutages = () => {
           <SelectValue placeholder="Update status" />
         </SelectTrigger>
         <SelectContent>
+          <SelectItem value="IN_PROGRESS" className="text-xs">
+            IN_PROGRESS
+          </SelectItem>
           <SelectItem value="RESTORED" className="text-xs">
             RESTORED
-          </SelectItem>
-          <SelectItem value="CANCELLED" className="text-xs">
-            REJECTED
           </SelectItem>
         </SelectContent>
       </Select>
