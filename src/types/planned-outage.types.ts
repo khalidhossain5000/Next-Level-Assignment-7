@@ -6,3 +6,10 @@ export interface IPlannedOutagePayload {
   endTime: string;
   areaId: string;
 }
+
+
+export interface IUpdatePayload {
+    title?:string;
+    description?:string;
+    reason?:string
+}
