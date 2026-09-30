@@ -132,3 +132,6 @@ export function updateUserProfile(payload:IUpdateUserProfile){
         body:formData
     })
 }
+
+
+
