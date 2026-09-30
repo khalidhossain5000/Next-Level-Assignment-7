@@ -199,24 +199,7 @@ const AssignedOutages = () => {
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
-      {/* Header */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h2 className="font-manrope text-2xl font-bold tracking-tight text-card-foreground">
-            Assigned Outages
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Outages assigned to you — update the status as you make progress.
-          </p>
-        </div>
-
-        <Badge
-          variant="outline"
-          className="w-fit rounded-full px-3 py-1 text-xs font-medium"
-        >
-          {outages.length} {outages.length === 1 ? "Outage" : "Outages"}
-        </Badge>
-      </div>
+ 
 
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">

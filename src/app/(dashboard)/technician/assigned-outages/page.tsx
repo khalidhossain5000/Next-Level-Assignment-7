@@ -4,10 +4,13 @@ import AssignedOutages from '@/components/layout/dashboard/technician/assigned-o
 const AssignedTechnicianPage = () => {
     return (
         <section className="space-y-6 p-4 md:p-6">
-            <DashboardHeader title="My Assogmed Outages" description="Track and manage the power outages you have reported."/>
-           <div className="py-6">
-            <AssignedOutages/>
-           </div>
+            <DashboardHeader
+                title="My Assigned Outages"
+                description="View and manage the power outages assigned to you."
+            />
+            <div className="py-6">
+                <AssignedOutages />
+            </div>
         </section>
     );
 };
