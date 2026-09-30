@@ -20,6 +20,10 @@ export function getPlannedOutage(page: number = 1, limit: number = 10) {
 export function updatePlannedOutage(payload:IUpdatePayload){
     return apiClient(`/planned-outage/${payload.id}`,{
         method:"PATCH",
-        body:payload
+        body:{
+            title:payload.title,
+            reason:payload.reason,
+            description:payload.description
+        }
     })
 }

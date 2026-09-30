@@ -1,10 +1,9 @@
 "use client"
-
-import { useGetPlannedOutage, useUpdatePlannedOutage } from "@/hooks";
+import { useUpdatePlannedOutage } from '@/hooks';
 
 const UpdatePlannedOutageModal = () => {
-    const{data,isPending:plannedOutagePending}=useGetPlannedOutage()
-    const {mutate,isPending}=useUpdatePlannedOutage()
+      const { mutate: updatePlannedOutage, isPending: updatePending } =
+    useUpdatePlannedOutage();
     return (
         <div>
             
