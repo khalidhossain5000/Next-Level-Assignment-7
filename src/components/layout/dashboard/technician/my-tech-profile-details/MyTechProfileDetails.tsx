@@ -36,7 +36,7 @@ const StatCard = ({
   children: React.ReactNode;
 }) => (
   <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm">
-    <div className="pointer-events-none absolute -right-10 -top-10 size-28 rounded-full bg-primary/10 blur-2xl" />
+    <div className="pointer-events-none absolute -right-10 -top-10 size-30 rounded-full bg-primary/10 blur-2xl" />
 
     <div className="relative flex items-start justify-between gap-3">
       <div className="min-w-0 space-y-3">
@@ -124,7 +124,6 @@ const EmptyState = ({
 
 const MyTechProfileDetails = () => {
   const { data, isPending } = useGetMe();
-console.log(data,"this is data")
   const technicianProfile = data?.data?.technicianProfile;
 
   if (isPending) {
@@ -239,7 +238,7 @@ console.log(data,"this is data")
               <Button
                 type="button"
                 variant="outline"
-                className="h-10 w-full gap-2 rounded-lg bg-background/60 backdrop-blur sm:w-auto"
+                className="h-10 w-full gap-2 rounded-lg bg-background/60 backdrop-blur sm:w-auto cursor-pointer"
                 onClick={() =>
                   window.open(resume, "_blank", "noopener,noreferrer")
                 }
@@ -252,7 +251,7 @@ console.log(data,"this is data")
               <Button
                 type="button"
                 variant="outline"
-                className="h-10 w-full gap-2 rounded-lg border-primary/30 bg-primary/5 text-primary hover:bg-primary/10 hover:text-primary sm:w-auto"
+                className="h-10 w-full gap-2 rounded-lg border-primary/30 bg-primary/5 text-primary hover:bg-primary/10 hover:text-primary sm:w-auto cursor-pointer"
               >
                 <Upload className="size-4" />
                 Upload resume
