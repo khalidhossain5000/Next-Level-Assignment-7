@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { FiAward, FiCheckCircle, FiClock, FiX } from "react-icons/fi";
 
 import { useApproveTechnician, useGetAllTechnician } from "@/hooks";
-import { TechnicianProfileStatus } from "@/types"; // 👈 আপনার আসল enum যেখানে আছে সেই path বসান
+import { TechnicianProfileStatus } from "@/types"; 
 
 import {
   Table,
@@ -159,9 +159,7 @@ const ManageTechnician = () => {
         </Badge>
       </div>
 
-      {/* =====================================================
-          XL AND ABOVE → TABLE VIEW
-      ====================================================== */}
+     
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
