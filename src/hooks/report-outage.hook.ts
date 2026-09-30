@@ -32,8 +32,12 @@ export function useGetAllOutages(){
 //for admiin
 
 export function useUpdateStatus(){
+      const queryClient = useQueryClient();
     return useMutation({
-        mutationFn:updateOutageStatus
+        mutationFn:updateOutageStatus,
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["assigned-outages"] });
+        },
     })
 }
 
