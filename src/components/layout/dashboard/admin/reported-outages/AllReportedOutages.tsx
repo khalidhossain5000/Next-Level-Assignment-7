@@ -203,7 +203,7 @@ const AllReportedOutages = () => {
                           {outage.techician.name}
                         </span>
                       ) : (
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-muted-foreground bg-rose-300">
                           Unassigned
                         </span>
                       )}
@@ -232,7 +232,19 @@ const AllReportedOutages = () => {
                           currentStatus={outage.status}
                         />
 
-                        <AssignTechnicianModal outageId={outage.id} />
+
+
+                        {
+                          outage.status === "REPORTED" ? <AssignTechnicianModal outageId={outage.id} /> : <Button
+                            type="button"
+                            size="sm"
+                            disabled
+                            variant="outline"
+                            className="h-8 gap-1.5 rounded-lg border-primary/25  px-3 text-xs font-semibold text-white shadow-none transition-colors cursor-not-allowed hover:border-primary/40 hover:bg-primary/10 dark:text-white disabled:bg-slate-600"
+                          >
+                             Technician Assigned
+                          </Button>
+                        }
 
                         <Button
                           type="button"
@@ -263,9 +275,9 @@ const AllReportedOutages = () => {
             className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
           >
             <CardContent className="px-4 py-3.5 sm:px-5">
-              {/* SM AND ABOVE */}
+          
               <div className="hidden items-center gap-3 sm:flex">
-                {/* Cause + Area */}
+                {/* Cause  Area */}
                 <div className="min-w-0 flex-1">
                   <div className="flex min-w-0 items-center gap-2">
                     <p className="truncate text-sm font-semibold text-card-foreground sm:text-base">
@@ -341,7 +353,18 @@ const AllReportedOutages = () => {
                     currentStatus={outage.status}
                   />
 
-                 <AssignTechnicianModal outageId={outage.id} />
+              {
+                          outage.status === "REPORTED" ? <AssignTechnicianModal outageId={outage.id} /> : <Button
+                            type="button"
+                            size="sm"
+                            disabled
+                            variant="outline"
+                            className="h-8 gap-1.5 rounded-lg border-primary/25  px-3 text-xs font-semibold text-white shadow-none transition-colors cursor-not-allowed hover:border-primary/40 hover:bg-primary/10 dark:text-white disabled:bg-slate-600"
+                          >
+                             Technician Assigned
+                          </Button>
+                        }
+
 
                   <Button
                     type="button"
@@ -357,9 +380,9 @@ const AllReportedOutages = () => {
                 </div>
               </div>
 
-              {/* MOBILE */}
+    
               <div className="relative sm:hidden">
-                {/* Floating Status */}
+           
                 <Badge
                   variant="outline"
                   className={`absolute right-0 top-0 text-[10px] font-semibold ${getStatusClassName(

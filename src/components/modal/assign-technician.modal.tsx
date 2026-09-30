@@ -109,7 +109,7 @@ const AssignTechnicianModal = ({ outageId }: AssignTechnicianModalProps) => {
             type="button"
             size="sm"
             variant="outline"
-            className="h-8 gap-1.5 rounded-lg border-primary/25 bg-primary/5 px-3 text-xs font-semibold text-primary shadow-none transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary dark:text-white"
+            className="h-8 gap-1.5 rounded-lg border-primary/25 bg-primary/5 px-3 text-xs font-semibold text-primary shadow-none transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary dark:text-white cursor-pointer"
           >
             <FiUserPlus className="size-3.5" />
             Assign Technician
