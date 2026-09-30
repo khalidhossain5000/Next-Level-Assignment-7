@@ -101,7 +101,7 @@ const AssignedOutages = () => {
           toast.success(
             newStatus === "RESTORED"
               ? "Outage marked as restored."
-              : "Outage marked as rejected.",
+              : "Outage marked as In_Progress.",
           );
         },
         onError: (error: any) => {
