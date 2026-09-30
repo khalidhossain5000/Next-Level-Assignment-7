@@ -2,13 +2,7 @@
 "use client";
 
 import { toast } from "sonner";
-import {
-  FiCheckCircle,
-  FiClock,
-  FiMapPin,
-  FiUser,
-  FiZap,
-} from "react-icons/fi";
+import { FiCheckCircle, FiZap } from "react-icons/fi";
 
 import { useGetTechnicanAssignedOutages, useUpdateStatus } from "@/hooks";
 
@@ -30,6 +24,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
+import AssignedOutagesSkeleton from "@/components/loader/skleton-loading/dashboard/assigned-outages.skeleton";
 
 interface IAssignedUser {
   id: string;
@@ -87,6 +83,9 @@ const formatDate = (date: string) => {
   });
 };
 
+const headClass =
+  "h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground";
+
 const AssignedOutages = () => {
   const { data, isPending } = useGetTechnicanAssignedOutages();
   const {
@@ -119,28 +118,24 @@ const AssignedOutages = () => {
     );
   };
 
-  const StatusSelect = ({ outage }: { outage: IAssignedOutage }) => {
+  // Actions column / card-এর status update control
+  const renderStatusAction = (outage: IAssignedOutage) => {
     const isFinalized = outage.status === "RESTORED";
     const isThisRowUpdating =
       statusUpdating && (variables as any)?.id === outage.id;
 
     if (isFinalized) {
       return (
-        <Badge
-          variant="outline"
-          className={`flex w-fit items-center gap-1 text-xs font-semibold ${getStatusClassName(
-            outage.status,
-          )}`}
-        >
+        <span className="flex items-center gap-1 text-xs font-medium text-green-700 dark:text-green-300">
           <FiCheckCircle className="size-3.5" />
-          RESTORED
-        </Badge>
+          Completed
+        </span>
       );
     }
 
     if (isThisRowUpdating) {
       return (
-        <div className="flex h-8 w-[140px] items-center gap-1.5 rounded-lg border border-border px-2.5 text-xs text-muted-foreground">
+        <div className="flex h-8 w-35 items-center gap-1.5 rounded-lg border border-border px-2.5 text-xs text-muted-foreground">
           <Spinner className="size-3.5" />
           Updating...
         </div>
@@ -149,15 +144,11 @@ const AssignedOutages = () => {
 
     return (
       <Select
-        value={outage.status}
+        value=""
         onValueChange={(value) => handleStatusChange(outage.id, value as string)}
       >
-        <SelectTrigger
-          className={`h-8 w-[140px] rounded-lg border text-xs font-semibold ${getStatusClassName(
-            outage.status,
-          )}`}
-        >
-          <SelectValue />
+        <SelectTrigger className="h-8 w-35 rounded-lg border border-border text-xs font-semibold">
+          <SelectValue placeholder="Update status" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="RESTORED" className="text-xs">
@@ -173,9 +164,7 @@ const AssignedOutages = () => {
 
   if (isPending) {
     return (
-      <div className="flex min-h-72 items-center justify-center">
-        <Spinner className="size-6" />
-      </div>
+     <AssignedOutagesSkeleton/>
     );
   }
 
@@ -186,9 +175,11 @@ const AssignedOutages = () => {
           <div className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
             <FiZap className="size-5" />
           </div>
+
           <h3 className="font-manrope text-base font-semibold text-card-foreground">
             No Assigned Outages
           </h3>
+
           <p className="mt-1 text-sm text-muted-foreground">
             You don&apos;t have any outages assigned to you yet.
           </p>
@@ -199,163 +190,236 @@ const AssignedOutages = () => {
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
- 
-
+      {/* Desktop Table */}
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
-            <Table>
+            <Table className="border-separate border-spacing-0">
               <TableHeader>
-                <TableRow className="bg-muted/30 hover:bg-muted/30">
-                  <TableHead className="h-12 whitespace-nowrap pl-6">
-                    Cause
-                  </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap">
-                    Customer
-                  </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap">
-                    Area
-                  </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap">
-                    Priority
-                  </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap">
-                    Reported At
-                  </TableHead>
-                  <TableHead className="h-12 whitespace-nowrap pr-6">
-                    Update Status
+                <TableRow className="hover:bg-transparent font-inter">
+                  <TableHead className={`${headClass} pl-6`}>Cause</TableHead>
+                  <TableHead className={headClass}>Customer</TableHead>
+                  <TableHead className={headClass}>Area</TableHead>
+                  <TableHead className={headClass}>Priority</TableHead>
+                  <TableHead className={headClass}>Status</TableHead>
+                  <TableHead className={headClass}>Reported At</TableHead>
+                  <TableHead className={`${headClass} pr-6 text-right`}>
+                    Actions
                   </TableHead>
                 </TableRow>
               </TableHeader>
 
               <TableBody>
-                {outages.map((outage) => (
-                  <TableRow
-                    key={outage.id}
-                    className="transition-colors hover:bg-muted/30"
-                  >
-                    {/* Cause */}
-                    <TableCell className="pl-6">
-                      <div className="max-w-52">
-                        <p className="truncate font-semibold text-card-foreground">
-                          {outage.cause}
+                {outages.map((outage, index) => {
+                  const cellBorder =
+                    index !== outages.length - 1
+                      ? "border-b border-border"
+                      : "";
+
+                  return (
+                    <TableRow
+                      key={outage.id}
+                      className="group border-0 transition-colors hover:bg-muted/30"
+                    >
+                      {/* Cause */}
+                      <TableCell className={`pl-6 ${cellBorder}`}>
+                        <div className="max-w-52">
+                          <p className="truncate font-semibold text-card-foreground">
+                            {outage.cause}
+                          </p>
+
+                          <p className="mt-0.5 text-xs text-muted-foreground">
+                            #{outage.id.slice(0, 8)}
+                          </p>
+                        </div>
+                      </TableCell>
+
+                      {/* Customer */}
+                      <TableCell className={cellBorder}>
+                        <p className="max-w-44 truncate font-medium text-card-foreground">
+                          {outage.user?.name ?? "N/A"}
                         </p>
-                        <p className="mt-0.5 text-xs text-muted-foreground">
-                          #{outage.id.slice(0, 8)}
+
+                        <p className="max-w-44 truncate text-xs text-muted-foreground">
+                          {outage.user?.email ?? "N/A"}
                         </p>
-                      </div>
-                    </TableCell>
+                      </TableCell>
 
-                    {/* Customer */}
-                    <TableCell>
-                      <div className="flex items-center gap-1.5">
-                        <FiUser className="size-3.5 shrink-0 text-muted-foreground" />
-                        <div className="max-w-36">
-                          <p className="truncate text-sm text-card-foreground">
-                            {outage.user?.name ?? "N/A"}
-                          </p>
-                          <p className="truncate text-xs text-muted-foreground">
-                            {outage.user?.email ?? "N/A"}
-                          </p>
-                        </div>
-                      </div>
-                    </TableCell>
+                      {/* Area */}
+                      <TableCell className={cellBorder}>
+                        <p className="max-w-44 truncate font-medium text-card-foreground">
+                          {outage.area?.name ?? "N/A"}
+                        </p>
 
-                    {/* Area */}
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                          <FiMapPin className="size-4" />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="max-w-36 truncate font-medium text-card-foreground">
-                            {outage.area?.name ?? "N/A"}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {outage.area?.code ?? "N/A"}
-                          </p>
-                        </div>
-                      </div>
-                    </TableCell>
+                        <p className="text-xs text-muted-foreground">
+                          {outage.area?.code ?? "N/A"}
+                        </p>
+                      </TableCell>
 
-                    {/* Priority */}
-                    <TableCell>
-                      <Badge
-                        variant="outline"
-                        className={getPriorityClassName(outage.priority)}
+                      {/* Priority */}
+                      <TableCell className={cellBorder}>
+                        <Badge
+                          variant="outline"
+                          className={getPriorityClassName(outage.priority)}
+                        >
+                          {outage.priority}
+                        </Badge>
+                      </TableCell>
+
+                      {/* Status */}
+                      <TableCell className={cellBorder}>
+                        <Badge
+                          variant="outline"
+                          className={getStatusClassName(outage.status)}
+                        >
+                          {outage.status.replace("_", " ")}
+                        </Badge>
+                      </TableCell>
+
+                      {/* Reported At */}
+                      <TableCell
+                        className={`whitespace-nowrap text-sm text-muted-foreground ${cellBorder}`}
                       >
-                        {outage.priority}
-                      </Badge>
-                    </TableCell>
+                        {formatDate(outage.reported_At)}
+                      </TableCell>
 
-                    {/* Reported At */}
-                    <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
-                      {formatDate(outage.reported_At)}
-                    </TableCell>
-
-                    {/* Update Status */}
-                    <TableCell className="pr-6">
-                      <StatusSelect outage={outage} />
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      {/* Actions */}
+                      <TableCell className={`pr-6 ${cellBorder}`}>
+                        <div className="flex items-center justify-end gap-1.5">
+                          {renderStatusAction(outage)}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </div>
         </div>
       </div>
 
+      {/* Mobile */}
       <div className="space-y-3 xl:hidden">
         {outages.map((outage) => (
           <Card
             key={outage.id}
             className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
           >
-            <CardContent className="space-y-3 px-4 py-3.5 sm:px-5">
-              {/* Top: Cause + Update dropdown */}
-              <div className="flex flex-wrap items-start justify-between gap-2">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-1.5">
+            {/* sm and up */}
+            <CardContent className="hidden px-4 py-3 sm:block sm:px-5 sm:py-3.5">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                {/* Cause + Area */}
+                <div className="min-w-0 flex-1 pr-2">
+                  <div className="flex min-w-0 flex-wrap items-center gap-2">
                     <p className="truncate text-sm font-semibold text-card-foreground sm:text-base">
                       {outage.cause}
                     </p>
-                    <span className="shrink-0 text-[10px] text-muted-foreground">
+
+                    <span className="hidden shrink-0 text-xs text-muted-foreground md:inline">
                       #{outage.id.slice(0, 8)}
                     </span>
+
+                    <Badge
+                      variant="outline"
+                      className={`shrink-0 text-[10px] font-semibold ${getStatusClassName(
+                        outage.status,
+                      )}`}
+                    >
+                      {outage.status.replace("_", " ")}
+                    </Badge>
                   </div>
 
-                  <div className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <FiMapPin className="size-3.5 shrink-0" />
-                    <span className="truncate">
-                      {outage.area?.name ?? "N/A"}
-                    </span>
-                  </div>
+                  <p className="mt-1 truncate text-xs text-muted-foreground">
+                    {outage.area?.name ?? "N/A"}
+                    {outage.area?.code && (
+                      <span className="hidden md:inline">
+                        {" "}
+                        &middot; {outage.area.code}
+                      </span>
+                    )}
+                    {outage.user?.name && (
+                      <span className="hidden md:inline">
+                        {" "}
+                        &middot; {outage.user.name}
+                      </span>
+                    )}
+                  </p>
                 </div>
 
-                <StatusSelect outage={outage} />
-              </div>
-
-              {/* Customer + Priority + Reported */}
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-border pt-2.5 text-xs">
-                <div className="flex items-center gap-1 text-muted-foreground">
-                  <FiUser className="size-3.5" />
-                  <span className="text-card-foreground">
-                    {outage.user?.name ?? "N/A"}
-                  </span>
-                </div>
-
+                {/* Priority */}
                 <Badge
                   variant="outline"
-                  className={`text-[10px] ${getPriorityClassName(
+                  className={`hidden shrink-0 md:inline-flex ${getPriorityClassName(
                     outage.priority,
                   )}`}
                 >
                   {outage.priority}
                 </Badge>
 
-                <div className="ml-auto flex items-center gap-1 text-muted-foreground">
-                  <FiClock className="size-3.5" />
-                  {formatDate(outage.reported_At)}
+                {/* Reported */}
+                <div className="hidden shrink-0 lg:block">
+                  <p className="text-[11px] text-muted-foreground">Reported</p>
+
+                  <p className="text-xs font-medium text-card-foreground">
+                    {formatDate(outage.reported_At)}
+                  </p>
+                </div>
+
+                {/* Actions */}
+                <div className="flex shrink-0 items-center gap-1">
+                  {renderStatusAction(outage)}
+                </div>
+              </div>
+            </CardContent>
+
+            {/* below sm */}
+            <CardContent className="px-4 py-3 sm:hidden">
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <p className="truncate text-sm font-semibold text-card-foreground">
+                      {outage.cause}
+                    </p>
+
+                    <span className="shrink-0 text-[10px] text-muted-foreground">
+                      #{outage.id.slice(0, 8)}
+                    </span>
+                  </div>
+
+                  <p className="mt-1 truncate text-xs text-muted-foreground">
+                    {outage.area?.name ?? "N/A"}
+                    {outage.user?.name && <> &middot; {outage.user.name}</>}
+                  </p>
+                </div>
+
+                <Badge
+                  variant="outline"
+                  className={`shrink-0 whitespace-nowrap text-[10px] font-semibold ${getStatusClassName(
+                    outage.status,
+                  )}`}
+                >
+                  {outage.status.replace("_", " ")}
+                </Badge>
+              </div>
+
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-2.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge
+                    variant="outline"
+                    className={`text-[10px] ${getPriorityClassName(
+                      outage.priority,
+                    )}`}
+                  >
+                    {outage.priority}
+                  </Badge>
+
+                  <span className="text-[11px] text-muted-foreground">
+                    {formatDate(outage.reported_At)}
+                  </span>
+                </div>
+
+                <div className="flex shrink-0 items-center gap-1">
+                  {renderStatusAction(outage)}
                 </div>
               </div>
             </CardContent>
