@@ -9,6 +9,7 @@ export interface IPlannedOutagePayload {
 
 
 export interface IUpdatePayload {
+  id:string;
     title?:string;
     description?:string;
     reason?:string
