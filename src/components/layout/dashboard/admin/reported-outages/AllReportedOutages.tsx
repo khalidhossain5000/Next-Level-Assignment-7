@@ -392,7 +392,7 @@ const AllReportedOutages = () => {
                   {outage.status.replace("_", " ")}
                 </Badge>
 
-                {/* Cause + Area */}
+                {/* Cause Area */}
                 <div className="min-w-0 pr-24">
                   <div className="flex items-center gap-1.5">
                     <p className="truncate text-sm font-semibold text-card-foreground">
@@ -437,28 +437,9 @@ const AllReportedOutages = () => {
 
                 {/* Mobile Actions */}
                 <div className="mt-2.5 grid grid-cols-[1fr_1fr_auto] gap-1.5 border-t border-border pt-2.5">
-                  <Button
-                    type="button"
-                    size="sm"
-                    className="h-9 rounded-lg bg-primary px-2 text-[11px] font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
-                    onClick={() => handleUpdateStatus(outage.id)}
-                  >
-                    <FiRefreshCw className="size-3.5" />
-                    Update Status
-                  </Button>
+           
 
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    className="h-9 rounded-lg border-primary/25 bg-primary/5 px-2 text-[11px] font-semibold text-primary shadow-none hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
-                    onClick={() =>
-                      handleAssignTechnician(outage.id)
-                    }
-                  >
-                    <FiUserPlus className="size-3.5" />
-                    Assign Technician
-                  </Button>
+             
 
                   <Button
                     type="button"
