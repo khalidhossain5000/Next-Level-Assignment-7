@@ -15,9 +15,9 @@ const NavBar = () => {
   const routes = [
     { name: "Home", url: "/" },
     { name: "About us", url: "/about-us" },
-    { name: "Dashboard", url: "/admin/dashboard" },
+    { name: "Dashboard", url: `/${data?.data?.role.toLowerCase()}/dashboard` },
   ];
-
+console.log(data,"from navbar")
   const { mutate: logout } = useLogout();
 
   const queryClient = useQueryClient();

@@ -138,7 +138,7 @@ export const sidebarRoutes: SidebarRoute[] = [
   // technician routes are here
   {
     label: "Dashboard",
-    href: "/technician/dashboard",
+    href: "//dashboard",
     icon: FiGrid,
     roles: ["TECHNICIAN"],
   },
