@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  FiMapPin,
-  FiRefreshCw,
-  FiTrash2,
-  FiUserPlus,
-  FiZap,
-} from "react-icons/fi";
+import { FiMapPin, FiZap } from "react-icons/fi";
 
 import { useGetAllOutages } from "@/hooks";
 
@@ -27,69 +21,73 @@ import { Spinner } from "@/components/ui/spinner";
 import type { IAllOutage } from "@/types";
 import UpdateReportedOutageStatus from "@/components/modal/update-outage-status.modal";
 import AssignTechnicianModal from "@/components/modal/assign-technician.modal";
+import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
+
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleString("en-BD", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+};
+
+const getStatusClassName = (status: string) => {
+  switch (status) {
+    case "REPORTED":
+      return "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300";
+    case "ACKNOWLEDGED":
+      return "border-cyan-200 bg-cyan-50 text-cyan-700 dark:border-cyan-900 dark:bg-cyan-950/40 dark:text-cyan-300";
+    case "ASSIGNED":
+      return "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900 dark:bg-violet-950/40 dark:text-violet-300";
+    case "IN_PROGRESS":
+      return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
+    case "RESTORED":
+      return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
+    case "CANCELLED":
+      return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
+    default:
+      return "border-border bg-muted text-muted-foreground";
+  }
+};
+
+const getPriorityClassName = (priority: string) => {
+  if (priority === "HIGH") {
+    return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
+  }
+  return "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-300";
+};
+
+
+const renderActions = (outage: IAllOutage) => (
+  <>
+    <UpdateReportedOutageStatus
+      outageId={outage.id}
+      currentStatus={outage.status}
+    />
+
+    {outage.status === "REPORTED" ? (
+      <AssignTechnicianModal outageId={outage.id} />
+    ) : (
+      <Button
+        type="button"
+        size="sm"
+        disabled
+        variant="outline"
+        className="h-8 cursor-not-allowed gap-1.5 rounded-lg px-3 text-xs font-semibold text-white shadow-none disabled:bg-slate-600"
+      >
+        Technician Assigned
+      </Button>
+    )}
+  </>
+);
 
 const AllReportedOutages = () => {
   const { data, isPending } = useGetAllOutages();
 
   const outages: IAllOutage[] = data?.data ?? [];
 
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleString("en-BD", {
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
-  };
-
-  const getStatusClassName = (status: string) => {
-    switch (status) {
-      case "REPORTED":
-        return "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300";
-
-      case "ACKNOWLEDGED":
-        return "border-cyan-200 bg-cyan-50 text-cyan-700 dark:border-cyan-900 dark:bg-cyan-950/40 dark:text-cyan-300";
-
-      case "ASSIGNED":
-        return "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900 dark:bg-violet-950/40 dark:text-violet-300";
-
-      case "IN_PROGRESS":
-        return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
-
-      case "RESTORED":
-        return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
-
-      case "CANCELLED":
-        return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
-
-      default:
-        return "border-border bg-muted text-muted-foreground";
-    }
-  };
-
-  const getPriorityClassName = (priority: string) => {
-    if (priority === "HIGH") {
-      return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
-    }
-
-    return "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-300";
-  };
-
-  const handleUpdateStatus = (outageId: string) => {
-    console.log(outageId, "update status clicked");
-  };
-
-  const handleAssignTechnician = (outageId: string) => {
-    console.log(outageId, "assign technician clicked");
-  };
-
-  const handleDelete = (outageId: string) => {
-    console.log(outageId, "delete clicked");
-  };
-
   if (isPending) {
     return (
-      <div className="flex min-h-72 items-center justify-center">
-        <Spinner className="size-6" />
-      </div>
+      <MyOutagesSkleton/>
     );
   }
 
@@ -115,9 +113,7 @@ const AllReportedOutages = () => {
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
-
-
-
+      {/* Desktop Table */}
       <div className="hidden xl:block">
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           <div className="overflow-x-auto">
@@ -127,27 +123,19 @@ const AllReportedOutages = () => {
                   <TableHead className="h-12 whitespace-nowrap pl-6">
                     Cause
                   </TableHead>
-
-                  <TableHead className="h-12 whitespace-nowrap">
-                    Area
-                  </TableHead>
-
+                  <TableHead className="h-12 whitespace-nowrap">Area</TableHead>
                   <TableHead className="h-12 whitespace-nowrap">
                     Priority
                   </TableHead>
-
                   <TableHead className="h-12 whitespace-nowrap">
                     Technician
                   </TableHead>
-
                   <TableHead className="h-12 whitespace-nowrap">
                     Status
                   </TableHead>
-
                   <TableHead className="h-12 whitespace-nowrap">
                     Reported At
                   </TableHead>
-
                   <TableHead className="h-12 whitespace-nowrap pr-6 text-right">
                     Actions
                   </TableHead>
@@ -166,7 +154,6 @@ const AllReportedOutages = () => {
                         <p className="truncate font-medium text-card-foreground">
                           {outage.cause}
                         </p>
-
                         <p className="mt-0.5 text-xs text-muted-foreground">
                           #{outage.id.slice(0, 8)}
                         </p>
@@ -179,7 +166,6 @@ const AllReportedOutages = () => {
                         <p className="max-w-40 truncate font-medium text-card-foreground">
                           {outage.area?.name ?? "N/A"}
                         </p>
-
                         <p className="text-xs text-muted-foreground">
                           {outage.area?.code ?? "N/A"}
                         </p>
@@ -203,7 +189,7 @@ const AllReportedOutages = () => {
                           {outage.techician.name}
                         </span>
                       ) : (
-                        <span className="text-xs text-muted-foreground bg-rose-300">
+                        <span className="text-xs text-muted-foreground">
                           Unassigned
                         </span>
                       )}
@@ -227,36 +213,7 @@ const AllReportedOutages = () => {
                     {/* Actions */}
                     <TableCell className="pr-6">
                       <div className="flex items-center justify-end gap-1.5">
-                        <UpdateReportedOutageStatus
-                          outageId={outage.id}
-                          currentStatus={outage.status}
-                        />
-
-
-
-                        {
-                          outage.status === "REPORTED" ? <AssignTechnicianModal outageId={outage.id} /> : <Button
-                            type="button"
-                            size="sm"
-                            disabled
-                            variant="outline"
-                            className="h-8 gap-1.5 rounded-lg border-primary/25  px-3 text-xs font-semibold text-white shadow-none transition-colors cursor-not-allowed hover:border-primary/40 hover:bg-primary/10 dark:text-white disabled:bg-slate-600"
-                          >
-                             Technician Assigned
-                          </Button>
-                        }
-
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="size-8 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive cursor-pointer"
-                          title="Delete outage"
-                          aria-label="Delete outage"
-                          onClick={() => handleDelete(outage.id)}
-                        >
-                          <FiTrash2 className="size-4" />
-                        </Button>
+                        {renderActions(outage)}
                       </div>
                     </TableCell>
                   </TableRow>
@@ -267,7 +224,7 @@ const AllReportedOutages = () => {
         </div>
       </div>
 
-
+      {/* Mobile Tablet Cards */}
       <div className="space-y-2.5 xl:hidden">
         {outages.map((outage) => (
           <Card
@@ -275,15 +232,14 @@ const AllReportedOutages = () => {
             className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
           >
             <CardContent className="px-4 py-3.5 sm:px-5">
-          
-              <div className="hidden items-center gap-3 sm:flex">
+       
+              <div className="hidden flex-wrap items-center gap-3 sm:flex">
                 {/* Cause  Area */}
                 <div className="min-w-0 flex-1">
                   <div className="flex min-w-0 items-center gap-2">
                     <p className="truncate text-sm font-semibold text-card-foreground sm:text-base">
                       {outage.cause}
                     </p>
-
                     <span className="shrink-0 text-xs text-muted-foreground">
                       #{outage.id.slice(0, 8)}
                     </span>
@@ -293,11 +249,9 @@ const AllReportedOutages = () => {
                     <span className="truncate">
                       {outage.area?.name ?? "N/A"}
                     </span>
-
                     <span className="hidden text-muted-foreground/50 md:inline">
                       •
                     </span>
-
                     <span className="hidden md:inline">
                       {outage.area?.code ?? "N/A"}
                     </span>
@@ -308,7 +262,7 @@ const AllReportedOutages = () => {
                 <Badge
                   variant="outline"
                   className={`hidden shrink-0 md:inline-flex ${getPriorityClassName(
-                    outage.priority,
+                    outage.priority
                   )}`}
                 >
                   {outage.priority}
@@ -316,23 +270,20 @@ const AllReportedOutages = () => {
 
                 {/* Technician */}
                 <div className="hidden shrink-0 lg:block">
-                  {outage.techician ? (
-                    <p className="max-w-28 truncate text-xs font-medium text-card-foreground">
-                      {outage.techician.name}
-                    </p>
-                  ) : (
-                    <p className="text-xs text-muted-foreground">
-                      Unassigned
-                    </p>
-                  )}
+                  <p
+                    className={`max-w-28 truncate text-xs ${
+                      outage.techician
+                        ? "font-medium text-card-foreground"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    {outage.techician?.name ?? "Unassigned"}
+                  </p>
                 </div>
 
                 {/* Reported */}
                 <div className="hidden shrink-0 lg:block">
-                  <p className="text-[11px] text-muted-foreground">
-                    Reported
-                  </p>
-
+                  <p className="text-[11px] text-muted-foreground">Reported</p>
                   <p className="text-xs font-medium text-card-foreground">
                     {formatDate(outage.reported_At)}
                   </p>
@@ -348,57 +299,27 @@ const AllReportedOutages = () => {
 
                 {/* Actions */}
                 <div className="flex shrink-0 items-center gap-1">
-                  <UpdateReportedOutageStatus
-                    outageId={outage.id}
-                    currentStatus={outage.status}
-                  />
-
-              {
-                          outage.status === "REPORTED" ? <AssignTechnicianModal outageId={outage.id} /> : <Button
-                            type="button"
-                            size="sm"
-                            disabled
-                            variant="outline"
-                            className="h-8 gap-1.5 rounded-lg border-primary/25  px-3 text-xs font-semibold text-white shadow-none transition-colors cursor-not-allowed hover:border-primary/40 hover:bg-primary/10 dark:text-white disabled:bg-slate-600"
-                          >
-                             Technician Assigned
-                          </Button>
-                        }
-
-
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="size-8 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
-                    title="Delete outage"
-                    aria-label="Delete outage"
-                    onClick={() => handleDelete(outage.id)}
-                  >
-                    <FiTrash2 className="size-3.5" />
-                  </Button>
+                  {renderActions(outage)}
                 </div>
               </div>
 
-    
+              {/* below sm */}
               <div className="relative sm:hidden">
-           
                 <Badge
                   variant="outline"
                   className={`absolute right-0 top-0 text-[10px] font-semibold ${getStatusClassName(
-                    outage.status,
+                    outage.status
                   )}`}
                 >
                   {outage.status.replace("_", " ")}
                 </Badge>
 
-                {/* Cause Area */}
+                {/* Cause + Area */}
                 <div className="min-w-0 pr-24">
                   <div className="flex items-center gap-1.5">
                     <p className="truncate text-sm font-semibold text-card-foreground">
                       {outage.cause}
                     </p>
-
                     <span className="shrink-0 text-[10px] text-muted-foreground">
                       #{outage.id.slice(0, 8)}
                     </span>
@@ -406,7 +327,6 @@ const AllReportedOutages = () => {
 
                   <div className="mt-1.5 flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
                     <FiMapPin className="size-3.5 shrink-0" />
-
                     <span className="truncate">
                       {outage.area?.name ?? "N/A"}
                     </span>
@@ -419,7 +339,7 @@ const AllReportedOutages = () => {
                     <Badge
                       variant="outline"
                       className={`text-[10px] ${getPriorityClassName(
-                        outage.priority,
+                        outage.priority
                       )}`}
                     >
                       {outage.priority}
@@ -436,22 +356,8 @@ const AllReportedOutages = () => {
                 </div>
 
                 {/* Mobile Actions */}
-                <div className="mt-2.5 grid grid-cols-[1fr_1fr_auto] gap-1.5 border-t border-border pt-2.5">
-           
-
-             
-
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="size-9 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
-                    title="Delete outage"
-                    aria-label="Delete outage"
-                    onClick={() => handleDelete(outage.id)}
-                  >
-                    <FiTrash2 className="size-4" />
-                  </Button>
+                <div className="mt-2.5 flex flex-wrap items-center gap-1.5 border-t border-border pt-2.5">
+                  {renderActions(outage)}
                 </div>
               </div>
             </CardContent>
