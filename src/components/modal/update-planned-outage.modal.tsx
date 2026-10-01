@@ -43,8 +43,7 @@ const UpdatePlannedOutageModal = ({
     },
 
     onSubmit: async ({ value }) => {
-      console.log(id, "planned outage id");
-      console.log(value, "update planned outage value");
+     
         const payload ={
             id,
             title:value.title,
@@ -53,7 +52,7 @@ const UpdatePlannedOutageModal = ({
         }
         updatePlannedOutage(payload,{
             onSuccess:(res)=>{
-                console.log(res,"planned outage updated successfully")
+              
                 toast.success(res.message || "Planned outage updated successfully")
             },
             onError:(err)=>{
