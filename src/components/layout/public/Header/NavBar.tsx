@@ -12,12 +12,16 @@ import { toast } from "sonner";
 const NavBar = () => {
   const pathname = usePathname();
   const { data, isPending } = useGetMe();
+    const user = data?.data;
+    const isLoggedIn = !!user;
   const routes = [
-    { name: "Home", url: "/" },
-    { name: "About us", url: "/about-us" },
-    { name: "Dashboard", url: `/${data?.data?.role.toLowerCase()}/dashboard` },
+    { name: "Home", url: "/", protected: false },
+    { name: "About us", url: "/about-us", protected: false },
+    { name: "Dashboard", url: `/${data?.data?.role.toLowerCase()}/dashboard` , protected: true},
   ];
-console.log(data,"from navbar")
+  const visibleRoutes = routes.filter(
+    (route) => !route.protected || isLoggedIn
+  );
   const { mutate: logout } = useLogout();
 
   const queryClient = useQueryClient();
@@ -42,7 +46,7 @@ console.log(data,"from navbar")
         <Logo />
 
         <nav className="hidden items-center gap-1 rounded-full border border-border/70 bg-muted/40 p-1.5 md:flex">
-          {routes.map((route) => {
+          {visibleRoutes.map((route) => {
             const isActive = pathname === route.url;
 
             return (
