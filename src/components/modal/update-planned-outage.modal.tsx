@@ -18,6 +18,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { useUpdatePlannedOutage } from "@/hooks";
+import { toast } from "sonner";
 
 interface IProps {
   id: string;
@@ -32,7 +34,7 @@ const UpdatePlannedOutageModal = ({
   description,
   reason,
 }: IProps) => {
-    
+    const {mutate:updatePlannedOutage,isPending} = useUpdatePlannedOutage();
   const form = useForm({
     defaultValues: {
       title,
@@ -49,6 +51,16 @@ const UpdatePlannedOutageModal = ({
             reason:value.reason,
             description:value.description
         }
+        updatePlannedOutage(payload,{
+            onSuccess:(res)=>{
+                console.log(res,"planned outage updated successfully")
+                toast.success(res.message || "Planned outage updated successfully")
+            },
+            onError:(err)=>{
+                console.log(err,"error updating planned outage")
+                toast.error(err.message || "Error updating planned outage")
+            }
+        })
     },
   });
 
