@@ -199,14 +199,14 @@ const ManagePlannedOutage = () => {
                         </Badge>
                       </TableCell>
 
-                       {/* action update */}
+                      {/* action update */}
                       <TableCell className={`pr-6 ${cellBorder}`}>
-                       <UpdatePlannedOutageModal
-                        id={outage.id}
-                        title={outage.title}
-                        description={outage.description}
-                        reason={outage.reason}
-                       />
+                        <UpdatePlannedOutageModal
+                          id={outage.id}
+                          title={outage.title}
+                          description={outage.description}
+                          reason={outage.reason}
+                        />
                       </TableCell>
                     </TableRow>
                   );
@@ -271,7 +271,12 @@ const ManagePlannedOutage = () => {
                     {formatDate(outage.startTime)}
                   </p>
                 </div>
-
+                <UpdatePlannedOutageModal
+                  id={outage.id}
+                  title={outage.title}
+                  description={outage.description}
+                  reason={outage.reason}
+                />
                 {/* End */}
                 <div className="hidden shrink-0 lg:block">
                   <p className="text-[11px] text-muted-foreground">Ends</p>
@@ -325,6 +330,12 @@ const ManagePlannedOutage = () => {
                   </span>
                 </div>
               </div>
+              <UpdatePlannedOutageModal
+                id={outage.id}
+                title={outage.title}
+                description={outage.description}
+                reason={outage.reason}
+              />
             </CardContent>
           </Card>
         ))}
