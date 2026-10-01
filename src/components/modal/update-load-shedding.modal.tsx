@@ -13,9 +13,10 @@ import {
 } from "@/components/ui/dialog";
 
 interface IProps {
-  id: string;
-  title: string;
-  currentAreaId: string;
+  id?: string;
+  title?: string;
+  currentAreaId?: string;
+  currentAreaName?: string;
 }
 
 const UpdateLoadSheddingModal = ({ id, title, currentAreaId }: IProps) => {

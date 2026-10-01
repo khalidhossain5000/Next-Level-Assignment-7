@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/pagination";
 
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
+import UpdateLoadSheddingModal from "@/components/modal/update-load-shedding.modal";
 
 interface IArea {
   id: string;
@@ -215,20 +216,12 @@ const ManageLoadShedding = () => {
 
                       {/* Action */}
                       <TableCell className={`pr-6 ${cellBorder}`}>
-                        <div className="flex items-center">
-                          <button
-                            type="button"
-                            className="text-sm font-medium text-primary hover:underline"
-                            onClick={() =>
-                              console.log(
-                                schedule.id,
-                                "update load shedding schedule"
-                              )
-                            }
-                          >
-                            Update
-                          </button>
-                        </div>
+                   < UpdateLoadSheddingModal
+                   id={schedule.id}
+                   title={schedule.title}
+                   currentAreaId={schedule.area?.id ?? ""}
+                   currentAreaName={schedule.area?.name ?? ""}
+                   />
                       </TableCell>
                     </TableRow>
                   );
