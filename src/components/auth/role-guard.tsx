@@ -1,5 +1,6 @@
 "use client"
 const RoleGuard = () => {
+    const router=useRouter
     return (
         <div>
             
