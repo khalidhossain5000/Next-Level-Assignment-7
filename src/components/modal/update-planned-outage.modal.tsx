@@ -1,17 +1,6 @@
 "use client";
 
-import {
-  FiActivity,
-  FiCalendar,
-  FiChevronDown,
-  FiClock,
-  FiEdit3,
-  FiFileText,
-  FiGrid,
-  FiTool,
-} from "react-icons/fi";
-
-import { useGetArea } from "@/hooks";
+import { FiActivity, FiEdit3, FiFileText, FiTool } from "react-icons/fi";
 
 import { useForm } from "@tanstack/react-form";
 
@@ -43,21 +32,15 @@ const UpdatePlannedOutageModal = ({
   description,
   reason,
 }: IProps) => {
-  const { data, isPending: areaPending } = useGetArea();
-
-  const areas = data?.data ?? [];
-
   const form = useForm({
     defaultValues: {
       title,
       reason,
       description,
-      startTime: "",
-      endTime: "",
-      areaId: "",
     },
 
     onSubmit: async ({ value }) => {
+      console.log(id, "planned outage id");
       console.log(value, "update planned outage value");
 
       // Update function will be added here later.
@@ -80,7 +63,7 @@ const UpdatePlannedOutageModal = ({
         }
       />
 
-      <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto gap-0 rounded-2xl p-0">
+      <DialogContent className="max-h-[90vh] max-w-2xl gap-0 overflow-y-auto rounded-2xl p-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -100,8 +83,8 @@ const UpdatePlannedOutageModal = ({
                 </DialogTitle>
 
                 <DialogDescription className="mt-1 text-sm leading-6 text-muted-foreground">
-                  Update the planned power interruption information for this
-                  area.
+                  Update the title, reason, and description of this planned
+                  outage.
                 </DialogDescription>
               </DialogHeader>
             </div>
@@ -110,7 +93,7 @@ const UpdatePlannedOutageModal = ({
           {/* Form Body */}
           <div className="relative p-6 sm:p-8">
             <FieldGroup>
-              <div className="grid gap-6 sm:grid-cols-2">
+              <div className="grid gap-6">
                 {/* Title */}
                 <form.Field name="title">
                   {(field) => {
@@ -118,7 +101,7 @@ const UpdatePlannedOutageModal = ({
                       field.state.meta.isTouched && !field.state.meta.isValid;
 
                     return (
-                      <Field data-invalid={isInvalid} className="sm:col-span-2">
+                      <Field data-invalid={isInvalid}>
                         <Label
                           htmlFor={field.name}
                           className="mb-2 block text-sm font-semibold text-card-foreground"
@@ -140,82 +123,6 @@ const UpdatePlannedOutageModal = ({
                             aria-invalid={isInvalid}
                             className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
                             autoComplete="off"
-                          />
-                        </div>
-
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-
-                {/* Start Time */}
-                <form.Field name="startTime">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <Label
-                          htmlFor={field.name}
-                          className="mb-2 block text-sm font-semibold text-card-foreground"
-                        >
-                          Start Time <span className="text-destructive">*</span>
-                        </Label>
-
-                        <div className="group relative">
-                          <FiClock className="pointer-events-none absolute left-3.5 top-1/2 z-10 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
-
-                          <Input
-                            id={field.name}
-                            type="datetime-local"
-                            name={field.name}
-                            value={field.state.value}
-                            onBlur={field.handleBlur}
-                            onChange={(e) => field.handleChange(e.target.value)}
-                            aria-invalid={isInvalid}
-                            className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
-                          />
-                        </div>
-
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-
-                {/* End Time */}
-                <form.Field name="endTime">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <Label
-                          htmlFor={field.name}
-                          className="mb-2 block text-sm font-semibold text-card-foreground"
-                        >
-                          End Time <span className="text-destructive">*</span>
-                        </Label>
-
-                        <div className="group relative">
-                          <FiCalendar className="pointer-events-none absolute left-3.5 top-1/2 z-10 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
-
-                          <Input
-                            id={field.name}
-                            type="datetime-local"
-                            name={field.name}
-                            value={field.state.value}
-                            onBlur={field.handleBlur}
-                            onChange={(e) => field.handleChange(e.target.value)}
-                            aria-invalid={isInvalid}
-                            className="h-11 rounded-xl border-border bg-background pl-10 text-sm shadow-none transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
                           />
                         </div>
 
@@ -266,59 +173,6 @@ const UpdatePlannedOutageModal = ({
                   }}
                 </form.Field>
 
-                {/* Area */}
-                <form.Field name="areaId">
-                  {(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <Label
-                          htmlFor={field.name}
-                          className="mb-2 block text-sm font-semibold text-card-foreground"
-                        >
-                          Assign Area{" "}
-                          <span className="text-destructive">*</span>
-                        </Label>
-
-                        <div className="group relative">
-                          <FiGrid className="pointer-events-none absolute left-3.5 top-1/2 z-10 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
-
-                          <select
-                            id={field.name}
-                            name={field.name}
-                            value={field.state.value}
-                            onBlur={field.handleBlur}
-                            onChange={(e) => field.handleChange(e.target.value)}
-                            aria-invalid={isInvalid}
-                            disabled={areaPending}
-                            className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-background pl-10 pr-10 text-sm shadow-none transition-all focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/15 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-background"
-                          >
-                            <option value="" disabled>
-                              {areaPending
-                                ? "Loading areas..."
-                                : "Select an area"}
-                            </option>
-
-                            {areas.map((area: any) => (
-                              <option key={area.id} value={area.id}>
-                                {area.name} ({area.code})
-                              </option>
-                            ))}
-                          </select>
-
-                          <FiChevronDown className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                        </div>
-
-                        {isInvalid && (
-                          <FieldError errors={field.state.meta.errors} />
-                        )}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-
                 {/* Description */}
                 <form.Field name="description">
                   {(field) => {
@@ -326,7 +180,7 @@ const UpdatePlannedOutageModal = ({
                       field.state.meta.isTouched && !field.state.meta.isValid;
 
                     return (
-                      <Field data-invalid={isInvalid} className="sm:col-span-2">
+                      <Field data-invalid={isInvalid}>
                         <Label
                           htmlFor={field.name}
                           className="mb-2 block text-sm font-semibold text-card-foreground"
@@ -346,7 +200,7 @@ const UpdatePlannedOutageModal = ({
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
                             aria-invalid={isInvalid}
-                            className="min-h-28 rounded-xl border-border bg-background pl-10 pt-3.5 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
+                            className="min-h-32 rounded-xl border-border bg-background pl-10 pt-3.5 text-sm shadow-none transition-all placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
                           />
                         </div>
 
@@ -364,14 +218,12 @@ const UpdatePlannedOutageModal = ({
           {/* Footer */}
           <div className="relative border-t border-border bg-muted/30 px-6 py-5 sm:px-8">
             <p className="mb-3 text-xs text-muted-foreground">
-              Make sure the planned outage information is accurate before
-              updating.
+              Only the title, reason, and description can be updated.
             </p>
 
             <Button
               type="submit"
-              disabled={areaPending}
-              className="h-11 w-full cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+              className="h-11 w-full cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98]"
             >
               Update Planned Outage
             </Button>
