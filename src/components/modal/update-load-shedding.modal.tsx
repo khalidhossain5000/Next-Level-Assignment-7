@@ -211,11 +211,13 @@ const UpdateLoadSheddingModal = ({ id, title, currentAreaId }: IProps) => {
 
                         <Button
                             type="submit"
-                            disabled={areaPending}
+                            disabled={areaPending || updatePending}
                             className="h-11 w-full cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                            {areaPending && <Spinner />}
-                            {areaPending ? "Loading Areas..." : "Update Load Shedding"}
+                          
+                            {
+                                updatePending ? "Updating..." : "Update Load Shedding"
+                            }
                         </Button>
                     </div>
                 </form>
