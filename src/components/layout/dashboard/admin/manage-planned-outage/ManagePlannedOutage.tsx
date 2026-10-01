@@ -24,6 +24,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
+import UpdatePlannedOutageModal from "@/components/modal/update-planned-outage.modal";
 
 interface IArea {
   id: string;
@@ -196,6 +197,16 @@ const ManagePlannedOutage = () => {
                         >
                           {outage.status.replace("_", " ")}
                         </Badge>
+                      </TableCell>
+
+                       {/* action update */}
+                      <TableCell className={`pr-6 ${cellBorder}`}>
+                       <UpdatePlannedOutageModal
+                        id={outage.id}
+                        title={outage.title}
+                        description={outage.description}
+                        reason={outage.reason}
+                       />
                       </TableCell>
                     </TableRow>
                   );
