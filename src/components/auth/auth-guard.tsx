@@ -11,10 +11,13 @@ const AuthGuard = ({children}:{children: React.ReactNode}) => {
     const router=useRouter()
     console.log(data,'user data')
     useEffect(()=>{
+        if(isPending) {
+            return
+        }
         if(isError || !user){
             router.replace('/login')
         }
-    },[isError,user,router])
+    },[isError,user,router,isPending])
     return (
         <div>
             {children}
