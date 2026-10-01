@@ -24,5 +24,11 @@ export interface IUpdateLoadSheddingPayload {
 }
 
 export function updateLoadShedding(payload:IUpdateLoadSheddingPayload){
-
+    return apiClient(`/load-shedding/${payload.id}`,{
+        method:"PATCH",
+        body:{
+            title:payload.title,
+            areaId:payload.areaId
+        }
+    })
 }
