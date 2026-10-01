@@ -240,9 +240,13 @@ const UpdatePlannedOutageModal = ({
 
             <Button
               type="submit"
-              className="h-11 w-full cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98]"
+              disabled={isPending}
+              className="h-11 w-full cursor-pointer rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Update Planned Outage
+              
+              {
+                isPending ? "Updating....." : "Update Planned Outage"
+              }
             </Button>
           </div>
         </form>
