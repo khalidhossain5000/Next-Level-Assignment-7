@@ -32,6 +32,7 @@ const UpdatePlannedOutageModal = ({
   description,
   reason,
 }: IProps) => {
+    
   const form = useForm({
     defaultValues: {
       title,
@@ -42,8 +43,12 @@ const UpdatePlannedOutageModal = ({
     onSubmit: async ({ value }) => {
       console.log(id, "planned outage id");
       console.log(value, "update planned outage value");
-
-      // Update function will be added here later.
+        const payload ={
+            id,
+            title:value.title,
+            reason:value.reason,
+            description:value.description
+        }
     },
   });
 
