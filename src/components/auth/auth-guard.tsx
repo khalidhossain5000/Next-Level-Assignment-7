@@ -2,11 +2,11 @@
 
 import { useGetMe } from "@/hooks";
 
-const AuthGuard = () => {
+const AuthGuard = ({children}:{children: React.ReactNode}) => {
     const {data,isPending} = useGetMe()
     return (
         <div>
-            
+            {children}
         </div>
     );
 };
