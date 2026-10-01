@@ -56,7 +56,7 @@ const UpdateLoadSheddingModal = ({ id, title, currentAreaId }: IProps) => {
           <Button
             type="button"
             size="sm"
-            className="rounded-lg bg-primary text-primary-foreground hover:bg-primary/90"
+            className="rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer"
           />
         }
       >
