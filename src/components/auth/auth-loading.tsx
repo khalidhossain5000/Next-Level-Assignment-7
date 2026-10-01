@@ -9,7 +9,7 @@ const AuthLoading = () => {
         >
             <div
                 aria-hidden="true"
-                 className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_oklch,var(--border)_45%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--border)_45%,transparent)_1px,transparent_1px)] bg-size-[56px_56px] mask-[radial-gradient(ellipse_at_center,black_0%,transparent_72%)]"
+                className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_oklch,var(--border)_45%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--border)_45%,transparent)_1px,transparent_1px)] bg-size-[56px_56px] mask-[radial-gradient(ellipse_at_center,black_0%,transparent_72%)]"
             />
 
             <section className="relative w-full max-w-sm rounded-lg border border-border/80 bg-card/95 px-7 py-9 text-center shadow-xl shadow-foreground/5 backdrop-blur-sm sm:px-10">
