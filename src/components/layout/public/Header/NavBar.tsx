@@ -17,6 +17,10 @@ const NavBar = () => {
   const routes = [
     { name: "Home", url: "/", protected: false },
     { name: "About us", url: "/about-us", protected: false },
+    { name: "All Zones", url: "/all-zones", protected: false },
+    { name: "Load Shedding Schedule", url: "/load-shedding-schedule", protected: false },
+    { name: "Planned Outage", url: "/planned-outage", protected: false },
+    { name: "Outages", url: "/unexpected-outage", protected: true },
     { name: "Dashboard", url: `/${data?.data?.role.toLowerCase()}/dashboard` , protected: true},
   ];
   const visibleRoutes = routes.filter(
