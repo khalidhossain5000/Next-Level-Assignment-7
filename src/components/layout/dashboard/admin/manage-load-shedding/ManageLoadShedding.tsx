@@ -216,12 +216,12 @@ const ManageLoadShedding = () => {
 
                       {/* Action */}
                       <TableCell className={`pr-6 ${cellBorder}`}>
-                   < UpdateLoadSheddingModal
-                   id={schedule.id}
-                   title={schedule.title}
-                   currentAreaId={schedule.area?.id ?? ""}
-                   currentAreaName={schedule.area?.name ?? ""}
-                   />
+                        < UpdateLoadSheddingModal
+                          id={schedule.id}
+                          title={schedule.title}
+                          currentAreaId={schedule.area?.id ?? ""}
+                          currentAreaName={schedule.area?.name ?? ""}
+                        />
                       </TableCell>
                     </TableRow>
                   );
@@ -290,15 +290,12 @@ const ManageLoadShedding = () => {
                 </div>
 
                 {/* Action */}
-                <button
-                  type="button"
-                  className="shrink-0 text-sm font-medium text-primary hover:underline"
-                  onClick={() =>
-                    console.log(schedule.id, "update load shedding schedule")
-                  }
-                >
-                  Update
-                </button>
+                < UpdateLoadSheddingModal
+                  id={schedule.id}
+                  title={schedule.title}
+                  currentAreaId={schedule.area?.id ?? ""}
+                  currentAreaName={schedule.area?.name ?? ""}
+                />
 
                 {/* End */}
                 <div className="hidden shrink-0 lg:block">
@@ -357,15 +354,12 @@ const ManageLoadShedding = () => {
               </div>
 
               <div className="mt-3 flex justify-end">
-                <button
-                  type="button"
-                  className="text-sm font-medium text-primary hover:underline"
-                  onClick={() =>
-                    console.log(schedule.id, "update load shedding schedule")
-                  }
-                >
-                  Update
-                </button>
+                < UpdateLoadSheddingModal
+                  id={schedule.id}
+                  title={schedule.title}
+                  currentAreaId={schedule.area?.id ?? ""}
+                  currentAreaName={schedule.area?.name ?? ""}
+                />
               </div>
             </CardContent>
           </Card>
