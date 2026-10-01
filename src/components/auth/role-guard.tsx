@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import AuthLoading from "./auth-loading";
 import type { TUserRole } from "@/types";
+import AccessDenied from "./access-denied";
 interface IProps {
     children:React.ReactNode; 
     roles:TUserRole[]
@@ -26,11 +27,11 @@ const RoleGuard = ({ children, roles }: IProps) => {
     }, [isError, user, router, isPending])
 
     if (isPending) return <AuthLoading />
-    return (
-        <div>
+     if (isAuthorized) {
+    return <>{children}</>;
+  }
 
-        </div>
-    );
+    return <AccessDenied />;
 };
 
 export default RoleGuard;
