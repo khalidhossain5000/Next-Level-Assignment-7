@@ -127,6 +127,7 @@ const ManagePlannedOutage = () => {
                   <TableHead className={headClass}>Start Time</TableHead>
                   <TableHead className={headClass}>End Time</TableHead>
                   <TableHead className={`${headClass} pr-6`}>Status</TableHead>
+                  <TableHead className={`${headClass} pr-6`}>Action</TableHead>
                 </TableRow>
               </TableHeader>
 
