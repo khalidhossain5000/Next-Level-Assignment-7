@@ -82,18 +82,19 @@ const HeroSection = () => {
               className="mt-8 flex flex-col gap-3 sm:flex-row"
             >
               <Link
-                href="/auth/register/customer"
+              href="/load-shedding"
+
                 className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 font-inter text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/25"
               >
-                Get Started
+                View Power Schedule
                 <FiArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
 
               <Link
-                href="/login"
+                href="/outage-reports"
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 font-inter text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent"
               >
-                Sign In
+               Track Reported Outages
               </Link>
             </motion.div>
 
