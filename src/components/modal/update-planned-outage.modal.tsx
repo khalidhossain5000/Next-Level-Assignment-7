@@ -63,7 +63,7 @@ const UpdatePlannedOutageModal = ({
         }
       />
 
-      <DialogContent className="max-h-[90vh] max-w-2xl gap-0 overflow-y-auto rounded-2xl p-0">
+      <DialogContent className="max-h-[90vh] max-w-5xl! gap-0 overflow-y-auto rounded-2xl p-0">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -74,7 +74,7 @@ const UpdatePlannedOutageModal = ({
         >
           {/* Header */}
           <div className="relative overflow-hidden border-b border-border px-6 py-6 sm:px-8">
-            <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
+            <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-linear-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
 
             <div className="relative">
               <DialogHeader>
