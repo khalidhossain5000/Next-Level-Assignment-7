@@ -6,9 +6,9 @@ const AllZones = () => {
     const {data,isPending}=useGetAllZone()
 console.log(data,"this is data zone")
     return (
-        <div>
+        <section>
             
-        </div>
+        </section>
     );
 };
 
