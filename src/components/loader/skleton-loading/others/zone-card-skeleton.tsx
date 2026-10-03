@@ -1,9 +1,6 @@
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
+  Card
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -11,7 +8,7 @@ const ZoneSkeleton = () => {
   return (
     <section className="flex w-full flex-col gap-6 lg:flex-row lg:items-start">
       {/* sidebar skeleton */}
-      <div className="w-full rounded-2xl border border-border bg-card p-5 lg:w-72 lg:shrink-0">
+      <div className="w-full rounded-2xl border border-slate-200 bg-card p-5 lg:w-72 lg:shrink-0">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Skeleton className="size-9 rounded-xl" />
@@ -46,20 +43,20 @@ const ZoneSkeleton = () => {
             <Card key={index} className="gap-0 overflow-hidden py-0">
               <Skeleton className="aspect-video w-full rounded-none" />
 
-              <CardHeader className="gap-2 px-4 pb-0 pt-4">
+              <div className="gap-2 px-4 pb-0 pt-4">
                 <Skeleton className="h-3 w-16" />
                 <Skeleton className="h-5 w-3/4" />
                 <Skeleton className="h-3 w-full" />
                 <Skeleton className="h-3 w-2/3" />
-              </CardHeader>
+              </div>
 
-              <CardContent className="px-4 pb-0 pt-3">
+              <div className="px-4 pb-0 pt-3">
                 <Skeleton className="h-10 w-full rounded-lg" />
-              </CardContent>
+              </div>
 
-              <CardFooter className="p-4">
+              <div className="p-4">
                 <Skeleton className="h-9 w-full rounded-md" />
-              </CardFooter>
+              </div>
             </Card>
           ))}
         </div>
