@@ -1,4 +1,4 @@
-import { createLoadShedding, getLoadSheddingSchedule, ILoadSheddingQuery, updateLoadShedding } from "@/api/load-shedding.api";
+import { createLoadShedding, getLoadSheddingDetails, getLoadSheddingSchedule, ILoadSheddingQuery, updateLoadShedding } from "@/api/load-shedding.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useAddLoadShedding(){
@@ -15,6 +15,15 @@ export function useGetLoadSheddingSchedule(params:ILoadSheddingQuery={}) {
     queryFn: () => getLoadSheddingSchedule(params),
   });
 }
+
+
+export function useGetLoadSheddingDetails(id:string){
+    return useQuery({
+        queryKey:["load-shedding-details",id],
+        queryFn:()=>getLoadSheddingDetails(id)
+    })
+}
+
 
 
 export function useUpdateLoadShedding(){
