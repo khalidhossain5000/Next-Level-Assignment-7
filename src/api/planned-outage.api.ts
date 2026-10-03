@@ -1,5 +1,5 @@
 import apiClient from "@/lib/apiClient";
-import type { IPlannedOutagePayload, IUpdatePayload } from "@/types";
+import type { IPlannedOutagePayload, IQueryParams, IUpdatePayload } from "@/types";
 
 export function addPlannedOutage(payload:IPlannedOutagePayload){
     return apiClient("/planned-outage",{
@@ -8,8 +8,8 @@ export function addPlannedOutage(payload:IPlannedOutagePayload){
     })
 }
 
-export function getPlannedOutage(page: number = 1, limit: number = 10) {
-  return apiClient(`/planned-outage?page=${page}&limit=${limit}`);
+export function getPlannedOutage(params: IQueryParams = {}) {
+   return apiClient("/planned-outage", { query: params })
 }
 
 

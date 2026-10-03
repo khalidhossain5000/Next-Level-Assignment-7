@@ -9,7 +9,7 @@ export interface ILoadSheddingPayload {
 
 
 
-type Area = {
+export type Area = {
   id: string;
   name: string;
   code: string;

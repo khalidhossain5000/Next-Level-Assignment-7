@@ -1,4 +1,5 @@
 import { addPlannedOutage, getPlannedOutage, updatePlannedOutage } from "@/api/planned-outage.api";
+import { IQueryParams } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useAddPlannedOutage() {
@@ -6,10 +7,10 @@ export function useAddPlannedOutage() {
     mutationFn: addPlannedOutage
   })
 }
-export function useGetPlannedOutage(page: number = 1, limit: number = 10) {
+export function useGetPlannedOutage(params:IQueryParams={}) {
   return useQuery({
-    queryKey: ["planned-outage", page, limit],
-    queryFn: () => getPlannedOutage(page, limit),
+    queryKey: ["planned-outage", params],
+    queryFn: () => getPlannedOutage(params),
   });
 }
 
