@@ -1,4 +1,4 @@
-import { createLoadShedding, getLoadSheddingSchedule, updateLoadShedding } from "@/api/load-shedding.api";
+import { createLoadShedding, getLoadSheddingSchedule, ILoadSheddingQuery, updateLoadShedding } from "@/api/load-shedding.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useAddLoadShedding(){
@@ -9,10 +9,10 @@ export function useAddLoadShedding(){
 
 
 
-export function useGetLoadSheddingSchedule(page: number = 1, limit: number = 10) {
+export function useGetLoadSheddingSchedule(params:ILoadSheddingQuery={}) {
   return useQuery({
-    queryKey: ["load-shedding-schedule", page, limit],
-    queryFn: () => getLoadSheddingSchedule(page, limit),
+    queryKey: ["load-shedding-schedule"],
+    queryFn: () => getLoadSheddingSchedule(params),
   });
 }
 

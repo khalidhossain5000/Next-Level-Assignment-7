@@ -1,4 +1,5 @@
 import PageHeader from "@/components/layout/shared/page-header/PageHeader";
+import LoadSheddingSchedule from "@/components/modules/load-shedding/LoadSheddingSchedule";
 
 const page = () => {
   return (
@@ -15,7 +16,7 @@ const page = () => {
         />
 
         <div className="mt-8">
-         
+         <LoadSheddingSchedule/>
         </div>
       </div>
     </section>

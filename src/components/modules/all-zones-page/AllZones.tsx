@@ -1,38 +1,20 @@
 "use client";
 
-import { ArrowRight, CalendarClock, Zap } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import {  useState } from "react";
 
 import FilterSidebar from "@/components/layout/shared/filter-search-sidebar/FilterSearchSidebar";
-import ZoneSkeleton from "@/components/loader/skleton-loading/others/zone-card-skeleton";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { useGetAllZone } from "@/hooks";
 import Link from "next/link";
 import useDebounce from "@/hooks/debounce.hook";
 import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
+import PublicDataSkeleton from "@/components/loader/skleton-loading/others/public-data.skeleton";
+import { Zone } from "@/types";
 
-type Substation = {
-  id: string;
-  name: string;
-  capacity: string;
-  code: string;
-  location: string;
-  status: string;
-};
-
-type Zone = {
-  id: string;
-  name: string;
-  code: string;
-  description: string;
-  status: string;
-  zoneImageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-  substations: Substation[];
-};
 
 const AllZones = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,10 +31,10 @@ const AllZones = () => {
     limit,
   });
 
-  if (isPending) return <ZoneSkeleton />;
+  if (isPending) return <PublicDataSkeleton />;
 
   const zones = data?.data as Zone[];
-  console.log(data, "full zone response");
+
   return (
     <section className="flex w-full flex-col gap-6 lg:flex-row lg:items-start">
       {/* Filter Sidebar */}
@@ -60,6 +42,7 @@ const AllZones = () => {
         <FilterSidebar
           searchTerm={searchTerm}
           sortOrder={sortOrder}
+          showSortOrder={true}
           onSearchChange={(value) => {
             setSearchTerm(value);
             setPage(1);

@@ -4,7 +4,7 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const ZoneSkeleton = () => {
+const PublicDataSkeleton = () => {
   return (
     <section className="flex w-full flex-col gap-6 lg:flex-row lg:items-start">
       {/* sidebar skeleton */}
@@ -65,4 +65,4 @@ const ZoneSkeleton = () => {
   );
 };
 
-export default ZoneSkeleton;
+export default PublicDataSkeleton;
