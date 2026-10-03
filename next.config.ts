@@ -15,9 +15,9 @@ const nextConfig: NextConfig = {
         hostname: "i.ibb.co.com",
       },
     ],
-    unoptimized: true 
+    // unoptimized: true 
   },
-  output: "export",
+  // output: "export",
   
 };
 
