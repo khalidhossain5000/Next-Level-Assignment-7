@@ -11,37 +11,17 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-import ZoneDetailsSkeleton from "@/components/loader/skleton-loading/others/zone-details-skeleton";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetLoadSheddingDetails } from "@/hooks";
+import DetailsSkeleton from "@/components/loader/skleton-loading/others/details-skeleton";
+import { LoadSheddingSchedule } from "@/types";
 
 interface IProps {
     id: string;
 }
 
-interface Area {
-    id: string;
-    name: string;
-    code: string;
-    address: string;
-    status: string;
-    feederId: string;
-    createdAt: string;
-    updatedAt: string;
-}
 
-interface LoadSheddingSchedule {
-    id: string;
-    title: string;
-    startTime: string;
-    endTime: string;
-    status: string;
-    reason: string;
-    areaId: string;
-    createdAt: string;
-    updatedAt: string;
-    area?: Area;
-}
 
 const formatDate = (value: string) => {
     const date = new Date(value);
@@ -68,7 +48,7 @@ const getDuration = (startTime: string, endTime: string) => {
 const LoadSheddingDetails = ({ id }: IProps) => {
     const { data, isPending, isError } = useGetLoadSheddingDetails(id);
 
-    if (isPending) return <ZoneDetailsSkeleton />;
+    if (isPending) return <DetailsSkeleton />;
 
     const schedule = data?.data as LoadSheddingSchedule | undefined;
 

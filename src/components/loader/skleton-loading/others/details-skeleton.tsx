@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const placeholders = ["first", "second", "third"];
 
-const ZoneDetailsSkeleton = () => (
+const DetailsSkeleton = () => (
     <section className="mx-auto max-w-7xl px-4 pb-14 pt-8 sm:px-6 sm:pb-20 lg:px-8">
         <Skeleton className="mb-5 h-5 w-24 rounded" />
         <div className="grid overflow-hidden rounded-2xl border border-border bg-card shadow-xl shadow-primary/5 lg:grid-cols-[1.15fr_0.85fr]">
@@ -44,4 +44,4 @@ const ZoneDetailsSkeleton = () => (
     </section>
 );
 
-export default ZoneDetailsSkeleton;
+export default DetailsSkeleton;
