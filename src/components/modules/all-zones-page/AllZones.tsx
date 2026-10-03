@@ -13,7 +13,7 @@ import Link from "next/link";
 import useDebounce from "@/hooks/debounce.hook";
 import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
 import PublicDataSkeleton from "@/components/loader/skleton-loading/others/public-data.skeleton";
-import { Zone } from "@/types";
+import type { Zone } from "@/types";
 
 
 const AllZones = () => {

@@ -12,32 +12,9 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useGetLoadSheddingSchedule } from "@/hooks";
 import useDebounce from "@/hooks/debounce.hook";
 import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
+import type { LoadSheddingSchedule } from "@/types";
 
-type Area = {
-  id: string;
-  name: string;
-  code: string;
-  address: string;
-  status: string;
-  feederId: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-type LoadSheddingSchedule = {
-  id: string;
-  title: string;
-  startTime: string;
-  endTime: string;
-  status: string;
-  reason: string;
-  areaId: string;
-  createdAt: string;
-  updatedAt: string;
-  area: Area;
-};
-
-const LoadSheddingSchedule = () => {
+const LoadSheddingSchedules = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -249,4 +226,4 @@ const LoadSheddingSchedule = () => {
   );
 };
 
-export default LoadSheddingSchedule;
+export default LoadSheddingSchedules;

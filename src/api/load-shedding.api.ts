@@ -17,6 +17,7 @@ export interface ILoadSheddingQuery {
 }
 
 export function getLoadSheddingSchedule( params: ILoadSheddingQuery) {
+    console.log(params,"params from load shedding get")
   return apiClient(`/load-shedding`,{
     query:params
   });

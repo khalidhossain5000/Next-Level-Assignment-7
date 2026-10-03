@@ -5,3 +5,30 @@ export interface ILoadSheddingPayload {
   reason?: string;
   areaId: string;
 }
+
+
+
+
+type Area = {
+  id: string;
+  name: string;
+  code: string;
+  address: string;
+  status: string;
+  feederId: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type LoadSheddingSchedule = {
+  id: string;
+  title: string;
+  startTime: string;
+  endTime: string;
+  status: string;
+  reason: string;
+  areaId: string;
+  createdAt: string;
+  updatedAt: string;
+  area: Area;
+};
