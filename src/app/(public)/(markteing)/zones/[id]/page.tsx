@@ -1,8 +1,9 @@
 
-const page = () => {
+const page = async ({ params }: { params: Promise<{ id: string }> }) => {
+
     return (
         <div>
-            
+
         </div>
     );
 };
