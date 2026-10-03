@@ -11,7 +11,7 @@ const page = () => {
               Load Shedding <span className="text-primary">Schedule</span>
             </>
           }
-          description="Stay informed about planned power outages across the network. Check upcoming load shedding times, affected zones, and expected restoration details in one place."
+         description="Stay informed about load shedding across the network. Check zone-wise schedules, time slots, and the areas affected by supply shortages in one place."
         />
 
         <div className="mt-8">
