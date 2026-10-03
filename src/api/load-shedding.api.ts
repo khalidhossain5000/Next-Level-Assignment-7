@@ -39,3 +39,8 @@ export function updateLoadShedding(payload:IUpdateLoadSheddingPayload){
         }
     })
 }
+
+
+export function getLoadSheddingDetails(id:string){
+    return apiClient(`/load-shedding/${id}`)
+}
