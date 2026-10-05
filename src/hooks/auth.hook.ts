@@ -1,4 +1,4 @@
-import { approveTechnicanProfile, getAllTechnician, getAllUsers, getMe, googleLogin, refreshToken, registerUser, resendOtp, updateTechProfile, updateUserProfile, updateUserStatus, userLogin, userLogout, verifyUserEmail } from "@/api";
+import { approveTechnicanProfile, getAllTechnician, getAllUsers, getMe, googleLogin, registerUser, resendOtp, updateTechProfile, updateUserProfile, updateUserStatus, userLogin, userLogout, verifyUserEmail } from "@/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useLogin(){
@@ -118,10 +118,3 @@ export function useUpdateUserProfile(){
     })
 }
 
-
-
-export function useRefreshToken(){
-    return useMutation({
-        mutationFn:refreshToken
-    })
-}
