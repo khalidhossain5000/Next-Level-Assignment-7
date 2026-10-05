@@ -20,7 +20,7 @@ const NavBar = () => {
     { name: "Zones", url: "/zones", protected: false },
     { name: "Load Shedding Schedule", url: "/load-shedding-schedule", protected: false },
     { name: "Planned Outage", url: "/planned-outage", protected: false },
-    { name: "Outages", url: "/unexpected-outage", protected: true },
+    // { name: "Outages", url: "/unexpected-outage", protected: true },
     { name: "Dashboard", url: `/${data?.data?.role.toLowerCase()}/dashboard` , protected: true},
   ];
   const visibleRoutes = routes.filter(
