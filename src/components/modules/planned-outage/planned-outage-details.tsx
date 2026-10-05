@@ -1,5 +1,5 @@
 
-const PlannedOutageDetails = () => {
+const PlannedOutageDetails = ({id}:{id:string}) => {
     return (
         <div>
             

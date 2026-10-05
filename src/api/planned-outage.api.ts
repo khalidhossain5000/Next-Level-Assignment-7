@@ -27,3 +27,10 @@ export function updatePlannedOutage(payload:IUpdatePayload){
         }
     })
 }
+
+
+
+
+export function getPlannedOutageDetails(id:string){
+    return apiClient(`/planned-outage/${id}`)
+}
