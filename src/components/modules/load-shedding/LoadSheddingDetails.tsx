@@ -15,7 +15,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetLoadSheddingDetails } from "@/hooks";
 import DetailsSkeleton from "@/components/loader/skleton-loading/others/details-skeleton";
-import { LoadSheddingSchedule } from "@/types";
+import type { IPlannedOutage, LoadSheddingSchedule } from "@/types";
 
 interface IProps {
     id: string;
@@ -50,7 +50,7 @@ const LoadSheddingDetails = ({ id }: IProps) => {
 
     if (isPending) return <DetailsSkeleton />;
 
-    const schedule = data?.data as LoadSheddingSchedule | undefined;
+    const schedule = data?.data as IPlannedOutage | undefined;
 
     if (isError || !schedule) {
         return (
@@ -84,7 +84,7 @@ const LoadSheddingDetails = ({ id }: IProps) => {
             />
             <div className="mx-auto max-w-7xl px-4 pb-14 pt-6 sm:px-6 sm:pb-20 sm:pt-8 lg:px-8">
                 <Link
-                    href="/load-shedding-schedule"
+                    href="/planned-outage"
                     className="mb-5 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
                 >
                     <ArrowLeft className="size-4" /> All schedules
@@ -124,7 +124,7 @@ const LoadSheddingDetails = ({ id }: IProps) => {
 
                     <div className="flex min-w-0 flex-col justify-center p-5 sm:p-8 lg:p-10">
                         <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary">
-                            <Activity className="size-3.5" /> Load-shedding schedule
+                            <Activity className="size-3.5" /> Planned outage
                         </span>
                         <h1 className="mt-5 break-words font-manrope text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
                             {schedule.title}

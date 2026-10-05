@@ -1,5 +1,5 @@
-import { addPlannedOutage, getPlannedOutage, updatePlannedOutage } from "@/api/planned-outage.api";
-import { IQueryParams } from "@/types";
+import { addPlannedOutage, getPlannedOutage, getPlannedOutageDetails, updatePlannedOutage } from "@/api/planned-outage.api";
+import type { IQueryParams } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useAddPlannedOutage() {
@@ -22,4 +22,14 @@ export function useUpdatePlannedOutage() {
       queryClient.invalidateQueries({ queryKey: ["planned-outage"] });
     },
   })
+}
+
+
+
+
+export function useGetPlannedOutageDetails(id:string){
+    return useQuery({
+        queryKey:["planned-outage-details",id],
+        queryFn:()=>getPlannedOutageDetails(id)
+    })
 }

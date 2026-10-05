@@ -4,6 +4,7 @@ import PlannedOutages from "@/components/modules/planned-outage/PlannedOutages";
 
 const page = () => {
   return (
+    
     <section className="bg-background">
       <div className="mx-auto max-w-7xl px-4 pb-12 pt-8 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8">
         <PageHeader

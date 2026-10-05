@@ -35,7 +35,6 @@ const PlannedOutages = () => {
 
   const schedules: IPlannedOutage[] = data?.data?.data ?? [];
   const meta = data?.data?.meta;
-console.log(schedules,"plannedoutage schdeule")
   const formatDateTime = (value: string) => {
     return new Date(value).toLocaleString("en-GB", {
       day: "2-digit",
@@ -196,7 +195,7 @@ console.log(schedules,"plannedoutage schdeule")
                     {/* Action */}
                     <CardFooter className="mt-auto px-0 pb-0 pt-0">
                       <Link
-                        href={`/load-shedding-schedule/${schedule.id}`}
+                        href={`/planned-outage/${schedule.id}`}
                         className="w-full"
                       >
                         <Button className="group/button h-10 w-full cursor-pointer gap-2 rounded-xl bg-primary font-medium text-primary-foreground transition-all duration-200 hover:bg-primary/90">
