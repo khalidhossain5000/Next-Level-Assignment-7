@@ -135,3 +135,8 @@ export function updateUserProfile(payload:IUpdateUserProfile){
 
 
 
+export function refreshToken(){
+    return apiClient("/auth/refresh-token",{
+        method:"POST"
+    })
+}
