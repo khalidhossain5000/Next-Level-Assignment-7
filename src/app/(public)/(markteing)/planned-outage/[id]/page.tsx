@@ -5,7 +5,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     console.log(id,"details id")
     return (
         <section>   
-                  
+                 
         </section>
     );
 };
