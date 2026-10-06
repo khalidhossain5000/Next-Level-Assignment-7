@@ -38,6 +38,7 @@ export default function LoginForm() {
           router.push("/")
         },
         onError: (err) => {
+          
           toast.success(err.message || "Login failed!Somehting went wrong")
           console.log(err, 'this is error in login')
         }

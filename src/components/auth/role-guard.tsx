@@ -1,10 +1,11 @@
 "use client"
 
 import { useGetMe } from "@/hooks";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import AuthLoading from "./auth-loading";
 import type { TUserRole } from "@/types";
+import { buildLoginUrl } from "@/lib/redirect";
 
 interface IProps {
     children: React.ReactNode;
@@ -15,7 +16,7 @@ const RoleGuard = ({ children, roles }: IProps) => {
     const router = useRouter();
     const { data, isPending, isError } = useGetMe();
     const user = data?.data;
-
+    const pathname=usePathname()
     const isAuthorized = !!user && roles.includes(user.role);
 
     useEffect(() => {
@@ -23,7 +24,7 @@ const RoleGuard = ({ children, roles }: IProps) => {
 
       
         if (isError || !user) {
-            router.replace("/login");
+           router.replace(buildLoginUrl(pathname));
             return;
         }
 
@@ -31,7 +32,7 @@ const RoleGuard = ({ children, roles }: IProps) => {
         if (!isAuthorized) {
             router.replace("/unauthorized"); 
         }
-    }, [isPending, isError, user, isAuthorized, router]);
+    }, [isPending, isError, user, isAuthorized, router,pathname]);
 
     
     if (isPending) return <AuthLoading />;

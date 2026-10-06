@@ -22,7 +22,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
         }
     }, [isError, user, router, isPending,pathname])
 
-    if (isPending) return <AuthLoading />
+    if (isPending || !user) return <AuthLoading />
 
     return (
         <div>
