@@ -3,6 +3,8 @@ import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { useRouter, useSearchParams } from "next/navigation";
+import { getSafeRedirect } from "@/lib/redirect";
 
 const GoogleLoginComponet = ({
   role,
@@ -10,7 +12,8 @@ const GoogleLoginComponet = ({
   role?: "ADMIN" | "TECHNICIAN" | "CUSTOMER";
 }) => {
   const { mutate: googleLogin, isPending } = useGoogleLogin();
-
+const router = useRouter();
+const searchParams = useSearchParams();
   const handleGoogleSuccess = (credentialResponse: { credential?: string }) => {
     const idToken = credentialResponse?.credential;
 
@@ -22,6 +25,8 @@ const GoogleLoginComponet = ({
         onSuccess: (res) => {
           console.log(res, "Success google login res");
           toast.success(res.message || "Google login is successfully")
+            router.replace(getSafeRedirect(searchParams.get("redirect")));
+
         },
         onError: (err) => {
           const message =

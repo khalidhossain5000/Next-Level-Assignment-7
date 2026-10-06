@@ -41,8 +41,9 @@ export default function LoginForm() {
 
         },
         onError: (err) => {
-          
-          toast.error(err.message || "Login failed!Somehting went wrong")
+          const message =
+            (err as any)?.data?.message || err.message || " login failed";
+          toast.error(message || "Login failed!Somehting went wrong")
           console.log(err, 'this is error in login')
         }
       })
