@@ -12,12 +12,14 @@ import { useRegisterUser } from "@/hooks";
 import { toast } from "sonner";
 import type { TUserRole } from "@/types";
 import { registerUserValidationSchema } from "@/validation";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { getSafeRedirect } from "@/lib/redirect";
 
 const RegisterForm = ({ role }: { role: TUserRole }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { mutate: register, isPending } = useRegisterUser()
   const router = useRouter()
+  const searchParams = useSearchParams();
   console.log(role,'user role')
   const form = useForm({
     defaultValues: {
@@ -41,7 +43,10 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
           console.log(res, "Register success res")
           toast.success(res.message || "Registration Success Otp send to email")
           const params = new URLSearchParams({ email: registerData.email })
-          router.push(`/${role}/register/verify-account?${params.toString()}`)
+         const redirect = getSafeRedirect(searchParams.get("redirect"), "")
+if (redirect) params.set("redirect", redirect)
+
+router.push(`/${role}/register/verify-account?${params.toString()}`)
         },
         onError: (err) => {
           const message =
