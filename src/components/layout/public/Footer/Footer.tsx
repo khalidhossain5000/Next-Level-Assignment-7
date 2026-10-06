@@ -6,12 +6,8 @@ import { FiArrowUp, FiArrowUpRight, FiHeart, FiZap } from "react-icons/fi";
 import { FaGithub, FaGlobe, FaLinkedin, FaTwitter } from "react-icons/fa";
 import type { FooterLink, FooterProps } from "@/types";
 
-
-
-
 const isExternalLink = (href: string) =>
   href.startsWith("http://") || href.startsWith("https://");
-
 
 const container: Variants = {
   hidden: { opacity: 0 },
@@ -25,8 +21,6 @@ const item: Variants = {
   hidden: { opacity: 0, y: 26 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
-
-
 
 const FooterNavLink = ({ link }: { link: FooterLink }) => {
   const classes =
@@ -56,22 +50,17 @@ const FooterNavLink = ({ link }: { link: FooterLink }) => {
   );
 };
 
-
-
 const Footer = ({
   brandName = "PowerPulse",
   description = "A smarter way to monitor, manage, and understand power services with confidence.",
   quickLinks = [
     { label: "Home", href: "/" },
-    { label: "Dashboard", href: "/dashboard" },
+    { label: "Zones", href: "/zones" },
     { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
   ],
   resourceLinks = [
-    { label: "Load Shedding Schedule", href: "/schedule" },
-    { label: "Documentation", href: "/docs" },
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Service", href: "/terms" },
+    { label: "Load Shedding Schedule", href: "/load-shedding-schedule" },
+    { label: "Planned Outages", href: "/planned-outages" },
   ],
   socialLinks = [
     {
@@ -84,7 +73,11 @@ const Footer = ({
       href: "https://khalid-hossain-self.vercel.app",
       icon: <FaGlobe />,
     },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/md-khalid-hossain-s", icon: <FaLinkedin /> },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/md-khalid-hossain-s",
+      icon: <FaLinkedin />,
+    },
     { label: "Twitter", href: "https://twitter.com", icon: <FaTwitter /> },
   ],
   stats = [
@@ -98,7 +91,7 @@ const Footer = ({
 
   return (
     <footer className="relative overflow-hidden border-t border-slate-200/70 bg-slate-50 text-slate-600 dark:border-white/10 dark:bg-[#060b16] dark:text-slate-300">
-     
+      {/*    Ambient Background    */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -138,9 +131,10 @@ const Footer = ({
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-       
+        {/*    Top Hairline    */}
         <div className="h-px w-full bg-linear-to-r from-transparent via-primary/70 to-transparent" />
 
+        {/*    Status Board    */}
         <motion.div
           variants={container}
           initial="hidden"
@@ -148,7 +142,7 @@ const Footer = ({
           viewport={{ once: true, amount: 0.3 }}
           className="grid gap-8 pt-14 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-14"
         >
-    
+          {/*   Left: headline   */}
           <motion.div variants={item}>
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3.5 py-1.5 text-xs font-medium text-primary dark:bg-primary/10">
               <span className="relative flex h-2 w-2">
@@ -159,19 +153,19 @@ const Footer = ({
             </div>
 
             <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-              Stay ahead of every{" "}
+              Never get left{" "}
               <span className="bg-linear-to-r from-primary to-blue-500 bg-clip-text text-transparent">
-                outage.
+                in the dark.
               </span>
             </h2>
 
             <p className="mt-4 max-w-lg text-sm leading-7 text-slate-600 dark:text-slate-400">
-              Real-time load-shedding schedules, outage reports and smart power
-              insights — all in one clean dashboard.
+              Get instant load-shedding alerts, outage reports and smart power
+              insights — delivered straight to you, all in one clean dashboard.
             </p>
           </motion.div>
 
-          {/*  Right- glass status card */}
+          {/*   Right: glass status card   */}
           <motion.div
             variants={item}
             className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white/70 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-white/4 dark:shadow-black/30"
@@ -220,42 +214,12 @@ const Footer = ({
             {/* divider */}
             <div className="relative my-6 h-px w-full bg-linear-to-r from-transparent via-slate-300/60 to-transparent dark:via-white/10" />
 
-            {/* CTA buttons */}
-            <div className="relative flex flex-col gap-3 sm:flex-row">
-              <motion.div
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                className="flex-1"
-              >
-                <Link
-                  href="/dashboard"
-                  className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-primary to-blue-600 px-5 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition-shadow hover:shadow-xl hover:shadow-primary/40"
-                >
-                  Open Dashboard
-                  <FiArrowUpRight className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </Link>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 400, damping: 18 }}
-                className="flex-1"
-              >
-                <Link
-                  href="/schedule"
-                  className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white/60 px-5 text-sm font-semibold text-slate-700 backdrop-blur-sm transition-colors hover:border-primary/30 hover:text-primary dark:border-white/10 dark:bg-white/3 dark:text-slate-200 dark:hover:text-primary"
-                >
-                  View Schedule
-                  <FiArrowUpRight className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </Link>
-              </motion.div>
-            </div>
+            
           </motion.div>
         </motion.div>
-
-        {/*  Main Grid  */}
+       {/* divider */}
+            <div className="relative my-6 h-px w-full bg-linear-to-r from-transparent via-slate-600/60 to-transparent dark:via-white/10" />
+        {/*    Main Grid    */}
         <motion.div
           variants={container}
           initial="hidden"
@@ -263,7 +227,7 @@ const Footer = ({
           viewport={{ once: true, amount: 0.15 }}
           className="grid gap-12 py-14 lg:grid-cols-[1.4fr_0.7fr_0.75fr_1fr] lg:gap-10 lg:py-16"
         >
-          {/* Brand */}
+          {/*   Brand   */}
           <motion.div variants={item} className="max-w-sm">
             <Link href="/" className="group inline-flex items-center gap-3">
               <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-linear-to-br from-primary to-blue-600 text-white shadow-lg shadow-primary/25 transition duration-300 group-hover:scale-105 group-hover:shadow-primary/40">
@@ -289,7 +253,7 @@ const Footer = ({
             </div>
           </motion.div>
 
-          {/* Explore  */}
+          {/*   Explore   */}
           <motion.div variants={item}>
             <p className="text-sm font-semibold text-slate-900 dark:text-white">
               Explore
@@ -301,7 +265,7 @@ const Footer = ({
             </div>
           </motion.div>
 
-          {/* Resources */}
+          {/*   Resources   */}
           <motion.div variants={item}>
             <p className="text-sm font-semibold text-slate-900 dark:text-white">
               Resources
@@ -313,7 +277,7 @@ const Footer = ({
             </div>
           </motion.div>
 
-          {/*  Social*/}
+          {/* Social */}
           <motion.div variants={item}>
             <p className="text-sm font-semibold text-slate-900 dark:text-white">
               Connect
@@ -351,7 +315,7 @@ const Footer = ({
           </motion.div>
         </motion.div>
 
-        {/* Bottom Bar  */}
+        {/*  Bottom Bar  */}
         <div className="relative border-t border-slate-200/70 py-6 dark:border-white/10">
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
             <p className="text-xs text-slate-500 dark:text-slate-500">
@@ -380,7 +344,7 @@ const Footer = ({
         </div>
       </div>
 
-      {/*  Brand Watermark  */}
+      {/* Brand Watermark */}
       <div
         aria-hidden="true"
         className="pointer-events-none relative select-none overflow-hidden"
@@ -397,7 +361,7 @@ const Footer = ({
         </motion.div>
       </div>
 
-      {/* Bottom Glow  */}
+      {/*  Bottom Glow */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute bottom-0 left-1/2 h-20 w-1/2 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"
