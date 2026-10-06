@@ -42,7 +42,7 @@ const PowerZones = () => {
 
   return (
     <HomeSectionHeader
-    
+     topGlowClassName="bg-primary/5"
       badge="Power Zones"
       title="Explore power"
       highlight="zones"
