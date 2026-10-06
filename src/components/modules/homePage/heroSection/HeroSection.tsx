@@ -26,7 +26,7 @@ const HeroSection = () => {
         <div className="absolute -right-25 top-[25%] h-75 w-75 rounded-full bg-primary/5 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-7xl overflow-hidden px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8 lg:pb-24 lg:pt-20">
+      <div className="mx-auto max-w-[1400px] overflow-hidden px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8 lg:pb-24 lg:pt-20">
         <div className="grid min-w-0 items-center gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:gap-10 xl:gap-16">
           {/* Left Content */}
           <motion.div
