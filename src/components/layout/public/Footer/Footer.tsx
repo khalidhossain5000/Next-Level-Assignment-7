@@ -83,7 +83,7 @@ const Footer = ({
   ],
   stats = [
     { value: "24/7", label: "Monitoring" },
-    { value: "50", label: "Zones" },
+    { value: "10+", label: "Zones" },
     { value: "99.9%", label: "Uptime" },
   ],
   copyrightText = "All rights reserved.",
