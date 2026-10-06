@@ -5,6 +5,7 @@ import { motion, type Variants } from "motion/react";
 import { FiArrowUp, FiArrowUpRight, FiHeart, FiZap } from "react-icons/fi";
 import { FaGithub, FaGlobe, FaLinkedin, FaTwitter } from "react-icons/fa";
 import type { FooterLink, FooterProps } from "@/types";
+import Logo from "@/assets/svg/Logo";
 
 const isExternalLink = (href: string) =>
   href.startsWith("http://") || href.startsWith("https://");
@@ -51,7 +52,7 @@ const FooterNavLink = ({ link }: { link: FooterLink }) => {
 };
 
 const Footer = ({
-  brandName = "PowerPulse",
+  brandName = "Md Khalid Hossain",
   description = "A smarter way to monitor, manage, and understand power services with confidence.",
   quickLinks = [
     { label: "Home", href: "/" },
@@ -213,12 +214,10 @@ const Footer = ({
 
             {/* divider */}
             <div className="relative my-6 h-px w-full bg-linear-to-r from-transparent via-slate-300/60 to-transparent dark:via-white/10" />
-
-            
           </motion.div>
         </motion.div>
-       {/* divider */}
-            <div className="relative my-6 h-px w-full bg-linear-to-r from-transparent via-slate-600/60 to-transparent dark:via-white/10" />
+        {/* divider */}
+        <div className="relative my-6 h-px w-full bg-linear-to-r from-transparent via-slate-600/60 to-transparent dark:via-white/10" />
         {/*    Main Grid    */}
         <motion.div
           variants={container}
@@ -229,16 +228,7 @@ const Footer = ({
         >
           {/*   Brand   */}
           <motion.div variants={item} className="max-w-sm">
-            <Link href="/" className="group inline-flex items-center gap-3">
-              <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-linear-to-br from-primary to-blue-600 text-white shadow-lg shadow-primary/25 transition duration-300 group-hover:scale-105 group-hover:shadow-primary/40">
-                <FiZap className="text-xl" />
-                <span className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 blur-md transition duration-300 group-hover:opacity-100" />
-              </div>
-
-              <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                {brandName}
-              </span>
-            </Link>
+           <Logo/>
 
             <p className="mt-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
               {description}
