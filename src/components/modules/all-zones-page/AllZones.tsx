@@ -38,7 +38,7 @@ const AllZones = () => {
   return (
     <section className="flex w-full flex-col gap-6 lg:flex-row lg:items-start">
       {/* Filter Sidebar */}
-      <div className="w-full lg:sticky lg:top-6 lg:w-72 lg:shrink-0">
+      <div className="w-full md:sticky md:top-6 lg:w-72 lg:shrink-0 z-999999">
         <FilterSidebar
           searchTerm={searchTerm}
           sortOrder={sortOrder}
@@ -61,13 +61,13 @@ const AllZones = () => {
 
       {/* Zone Cards and pagination */}
       <div className="flex min-w-0 flex-1 flex-col gap-6">
-        {zones.length === 0 ? (
+        {zones?.length === 0 ? (
           <div className="flex min-h-60 items-center justify-center rounded-2xl border border-dashed border-border bg-card text-sm text-muted-foreground">
             No zones found
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {zones.map((zone) => {
+            {zones?.map((zone) => {
               const count = zone.substations.length;
               const isActive = zone.status === "ACTIVE";
 
