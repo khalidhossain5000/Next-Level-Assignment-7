@@ -50,7 +50,7 @@ const Overview = () => {
   const [hasEntered, setHasEntered] = useState(false);
   const [progress, setProgress] = useState(0);
 
- //count up
+  //count up
   useEffect(() => {
     if (!hasEntered || shouldReduceMotion) return;
 
@@ -62,15 +62,6 @@ const Overview = () => {
 
     return () => controls.stop();
   }, [hasEntered, shouldReduceMotion]);
-
-  if (
-    zonePending ||
-    loadSheddingPending ||
-    plannedOutagePending ||
-    technicianCountPending
-  ) {
-    return <HomeCardSkeleton length={4} />;
-  }
 
   const zoneCount = zone?.data?.length || 0;
   const loadSheddingCount = loadShedding?.data?.data?.length || 0;
@@ -129,7 +120,6 @@ const Overview = () => {
   return (
     <MotionConfig reducedMotion="user">
       <section className="relative isolate w-full overflow-hidden">
-    
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(var(--border)_1px,transparent_1px)] bg-size-[24px_24px] mask-[radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"
@@ -197,78 +187,84 @@ const Overview = () => {
             </p>
           </motion.div>
 
-          {/* Cards */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            onViewportEnter={() => setHasEntered(true)}
-            className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4"
-          >
-            {overviewItems.map((item) => {
-              const Icon = item.icon;
+          {zonePending ||
+          loadSheddingPending ||
+          plannedOutagePending ||
+          technicianCountPending ? (
+            <HomeCardSkeleton length={4} />
+          ) : (
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              onViewportEnter={() => setHasEntered(true)}
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4"
+            >
+              {overviewItems.map((item) => {
+                const Icon = item.icon;
 
-              return (
-                <motion.div
-                  key={item.title}
-                  variants={cardVariants}
-                  whileHover={{ y: -4 }}
-                  className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card/60 p-6 backdrop-blur-sm transition-colors duration-300 hover:border-primary/40"
-                >
-                  {/* Top color wash */}
-                  <div
-                    aria-hidden
-                    className={`pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b to-transparent ${item.wash}`}
-                  />
+                return (
+                  <motion.div
+                    key={item.title}
+                    variants={cardVariants}
+                    whileHover={{ y: -4 }}
+                    className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card/60 p-6 backdrop-blur-sm transition-colors duration-300 hover:border-primary/40"
+                  >
+                    {/* Top color wash */}
+                    <div
+                      aria-hidden
+                      className={`pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b to-transparent ${item.wash}`}
+                    />
 
-                  {/* Hover glow */}
-                  <div
-                    aria-hidden
-                    className={`pointer-events-none absolute -right-10 -top-10 size-40 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100 ${item.glow}`}
-                  />
+                    {/* Hover glow */}
+                    <div
+                      aria-hidden
+                      className={`pointer-events-none absolute -right-10 -top-10 size-40 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100 ${item.glow}`}
+                    />
 
-                  <div className="relative">
-                    {/* Icon + live dot */}
-                    <div className="flex items-start justify-between">
-                      <div
-                        className={`flex size-12 items-center justify-center rounded-xl ring-1 transition-transform duration-300 group-hover:scale-110 ${item.iconClass}`}
-                      >
-                        <Icon className="size-5" />
+                    <div className="relative">
+                      {/* Icon + live dot */}
+                      <div className="flex items-start justify-between">
+                        <div
+                          className={`flex size-12 items-center justify-center rounded-xl ring-1 transition-transform duration-300 group-hover:scale-110 ${item.iconClass}`}
+                        >
+                          <Icon className="size-5" />
+                        </div>
+
+                        <span className="relative flex size-2">
+                          <span
+                            className={`absolute inline-flex size-full animate-ping rounded-full opacity-60 ${item.dot}`}
+                          />
+                          <span
+                            className={`relative inline-flex size-2 rounded-full ${item.dot}`}
+                          />
+                        </span>
                       </div>
 
-                      <span className="relative flex size-2">
-                        <span
-                          className={`absolute inline-flex size-full animate-ping rounded-full opacity-60 ${item.dot}`}
-                        />
-                        <span
-                          className={`relative inline-flex size-2 rounded-full ${item.dot}`}
-                        />
-                      </span>
+                      {/* Value */}
+                      <p className="mt-8 text-4xl font-bold tracking-tight text-foreground tabular-nums sm:text-5xl">
+                        {Math.round(item.value * displayProgress)}
+                      </p>
+
+                      <h3 className="mt-2 text-sm font-semibold text-foreground">
+                        {item.title}
+                      </h3>
+
+                      <p className="mt-1.5 text-xs leading-5 text-muted-foreground">
+                        {item.description}
+                      </p>
+
+                      {/* Bottom accent */}
+                      <div
+                        className={`mt-6 h-0.5 w-10 rounded-full bg-linear-to-r transition-all duration-500 group-hover:w-full ${item.line}`}
+                      />
                     </div>
-
-                    {/* Value */}
-                    <p className="mt-8 text-4xl font-bold tracking-tight text-foreground tabular-nums sm:text-5xl">
-                      {Math.round(item.value * displayProgress)}
-                    </p>
-
-                    <h3 className="mt-2 text-sm font-semibold text-foreground">
-                      {item.title}
-                    </h3>
-
-                    <p className="mt-1.5 text-xs leading-5 text-muted-foreground">
-                      {item.description}
-                    </p>
-
-                    {/* Bottom accent */}
-                    <div
-                      className={`mt-6 h-0.5 w-10 rounded-full bg-linear-to-r transition-all duration-500 group-hover:w-full ${item.line}`}
-                    />
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          )}
         </div>
       </section>
     </MotionConfig>
