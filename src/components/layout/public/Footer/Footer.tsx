@@ -52,7 +52,7 @@ const FooterNavLink = ({ link }: { link: FooterLink }) => {
 };
 
 const Footer = ({
-  brandName = "Md Khalid Hossain",
+  brandName = "Power Pulse",
   description = "A smarter way to monitor, manage, and understand power services with confidence.",
   quickLinks = [
     { label: "Home", href: "/" },
@@ -143,7 +143,7 @@ const Footer = ({
           viewport={{ once: true, amount: 0.3 }}
           className="grid gap-8 pt-14 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-14"
         >
-          {/*   Left: headline   */}
+          {/*   Left headline   */}
           <motion.div variants={item}>
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3.5 py-1.5 text-xs font-medium text-primary dark:bg-primary/10">
               <span className="relative flex h-2 w-2">
@@ -166,7 +166,7 @@ const Footer = ({
             </p>
           </motion.div>
 
-          {/*   Right: glass status card   */}
+          {/*   Right glass status card   */}
           <motion.div
             variants={item}
             className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white/70 p-6 shadow-xl shadow-slate-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-white/4 dark:shadow-black/30"
@@ -192,7 +192,7 @@ const Footer = ({
             </div>
 
             {/* stats grid */}
-            <div className="relative mt-6 grid grid-cols-3 gap-3">
+            <div className="relative mt-5 grid grid-cols-3 gap-3">
               {stats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
@@ -213,11 +213,10 @@ const Footer = ({
             </div>
 
             {/* divider */}
-            <div className="relative my-6 h-px w-full bg-linear-to-r from-transparent via-slate-300/60 to-transparent dark:via-white/10" />
+            <div className="relative my-5 h-px w-full bg-linear-to-r from-transparent via-slate-300/60 to-transparent dark:via-white/10" />
           </motion.div>
         </motion.div>
-        {/* divider */}
-        <div className="relative my-6 h-px w-full bg-linear-to-r from-transparent via-slate-600/60 to-transparent dark:via-white/10" />
+       
         {/*    Main Grid    */}
         <motion.div
           variants={container}
@@ -228,19 +227,11 @@ const Footer = ({
         >
           {/*   Brand   */}
           <motion.div variants={item} className="max-w-sm">
-           <Logo/>
+            <Logo />
 
             <p className="mt-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
               {description}
             </p>
-
-            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3.5 py-2 text-xs font-medium text-primary dark:border-primary/20 dark:bg-primary/10">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-              </span>
-              All systems operational
-            </div>
           </motion.div>
 
           {/*   Explore   */}
@@ -306,10 +297,10 @@ const Footer = ({
         </motion.div>
 
         {/*  Bottom Bar  */}
-        <div className="relative border-t border-slate-200/70 py-6 dark:border-white/10">
+        <div className="relative border-t border-slate-200/70 py-4 dark:border-white/10">
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-            <p className="text-xs text-slate-500 dark:text-slate-500">
-              © {currentYear} {brandName}. {copyrightText}
+            <p className="text-xs text-slate-500 dark:text-slate-500 font-inter">
+              © {currentYear} <span className="text-primary">Md Khalid Hossain. </span>{copyrightText}
             </p>
 
             <div className="flex items-center gap-4">
@@ -325,7 +316,7 @@ const Footer = ({
                 whileHover={{ y: -4 }}
                 whileTap={{ scale: 0.92 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="group flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition-colors duration-300 hover:border-primary/30 hover:bg-primary hover:text-white dark:border-white/10 dark:bg-white/3 dark:text-slate-400 dark:hover:bg-primary"
+                className="group flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition-colors duration-300 hover:border-primary/30 hover:bg-primary hover:text-white dark:border-white/10 dark:bg-white/3 dark:text-slate-400 dark:hover:bg-primary cursor-pointer"
               >
                 <FiArrowUp className="transition-transform duration-300 group-hover:-translate-y-0.5" />
               </motion.button>
