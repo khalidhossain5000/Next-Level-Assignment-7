@@ -8,7 +8,7 @@ interface IProps {
 }
 const HomeCardSkeleton = ({length}:IProps) => {
   return (
-    <section className="max-w-7xl mx-auto">
+    <section className="max-w-7xl mx-auto py-6">
      
 
       {/* cards skeleton */}

@@ -1,13 +1,14 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { CalendarClock, MapPinned, ShieldCheck, Zap } from "lucide-react";
 import {
-  CalendarClock,
-  CheckCircle2,
-  MapPinned,
-  ShieldCheck,
-  UsersRound,
-  Zap,
-} from "lucide-react";
+  MotionConfig,
+  animate,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "motion/react";
 
 import HomeCardSkeleton from "@/components/loader/skleton-loading/others/home-card.skeleton";
 import {
@@ -16,6 +17,22 @@ import {
   useGetPlannedOutage,
   useGetTechnicianCount,
 } from "@/hooks";
+
+const containerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
 
 const Overview = () => {
   const { data: zone, isPending: zonePending } = useGetAllZone();
@@ -29,6 +46,23 @@ const Overview = () => {
   const { data: technicianCount, isPending: technicianCountPending } =
     useGetTechnicianCount();
 
+  const shouldReduceMotion = useReducedMotion();
+  const [hasEntered, setHasEntered] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+ //count up
+  useEffect(() => {
+    if (!hasEntered || shouldReduceMotion) return;
+
+    const controls = animate(0, 1, {
+      duration: 1.4,
+      ease: "easeOut",
+      onUpdate: (latest) => setProgress(latest),
+    });
+
+    return () => controls.stop();
+  }, [hasEntered, shouldReduceMotion]);
+
   if (
     zonePending ||
     loadSheddingPending ||
@@ -41,171 +75,203 @@ const Overview = () => {
   const zoneCount = zone?.data?.length || 0;
   const loadSheddingCount = loadShedding?.data?.data?.length || 0;
   const plannedOutageCount = plannedOutage?.data?.data?.length || 0;
-  const technicianCountValue = technicianCount?.data || 0;
+  const technicianCountValue = Number(technicianCount?.data) || 0;
+
+  const displayProgress = shouldReduceMotion ? 1 : progress;
 
   const overviewItems = [
     {
       title: "Power Zones",
       value: zoneCount,
-      description: "Active distribution zones",
+      description: "Distribution zones monitored across the network",
       icon: MapPinned,
-      iconColor: "text-primary",
-      iconBg: "bg-primary/10",
-      glow: "bg-primary/20",
-      accent: "from-primary via-primary/60 to-transparent",
+      iconClass: "bg-primary/10 text-primary ring-primary/20",
+      wash: "from-primary/10",
+      glow: "bg-primary/25",
+      line: "from-primary to-primary/0",
+      dot: "bg-primary",
     },
     {
       title: "Load Shedding",
       value: loadSheddingCount,
-      description: "Scheduled power events",
+      description: "Scheduled supply-shortage events",
       icon: Zap,
-      iconColor: "text-[#f9a300]",
-      iconBg: "bg-[#f9a300]/10",
-      glow: "bg-[#f9a300]/20",
-      accent: "from-[#f9a300] via-[#f9a300]/60 to-transparent",
+      iconClass: "bg-chart-2/10 text-chart-2 ring-chart-2/20",
+      wash: "from-chart-2/10",
+      glow: "bg-chart-2/25",
+      line: "from-chart-2 to-chart-2/0",
+      dot: "bg-chart-2",
     },
     {
       title: "Planned Outages",
       value: plannedOutageCount,
-      description: "Upcoming maintenance events",
+      description: "Upcoming maintenance windows",
       icon: CalendarClock,
-      iconColor: "text-[#009689]",
-      iconBg: "bg-[#009689]/10",
-      glow: "bg-[#009689]/20",
-      accent: "from-[#009689] via-[#009689]/60 to-transparent",
+      iconClass: "bg-chart-3/10 text-chart-3 ring-chart-3/20",
+      wash: "from-chart-3/10",
+      glow: "bg-chart-3/25",
+      line: "from-chart-3 to-chart-3/0",
+      dot: "bg-chart-3",
     },
     {
       title: "Technicians",
       value: technicianCountValue,
-      description: "Available service professionals",
+      description: "Service professionals ready to respond",
       icon: ShieldCheck,
-      iconColor: "text-emerald-500",
-      iconBg: "bg-emerald-500/10",
-      glow: "bg-emerald-500/15",
-      accent: "from-emerald-500 via-emerald-500/50 to-transparent",
+      iconClass: "bg-chart-4/10 text-chart-4 ring-chart-4/20",
+      wash: "from-chart-4/10",
+      glow: "bg-chart-4/25",
+      line: "from-chart-4 to-chart-4/0",
+      dot: "bg-chart-4",
     },
   ];
 
   return (
-    <section className="relative py-4 max-w-7xl mx-auto">
-      {/* Ambient background glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/4 top-0 size-72 -translate-x-1/2 rounded-full bg-primary/5 blur-3xl"
-      />
+    <MotionConfig reducedMotion="user">
+      <section className="relative isolate w-full overflow-hidden">
+    
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(var(--border)_1px,transparent_1px)] bg-size-[24px_24px] mask-[radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"
+        />
 
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-0 right-1/4 size-72 translate-x-1/2 rounded-full bg-[#009689]/5 blur-3xl"
-      />
+        {/* Glow top center */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-32 -z-10 mx-auto h-72 w-[min(60rem,90%)] rounded-full bg-primary/15 blur-3xl"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
 
-      <div className="relative">
-        {/* Section Header */}
-        <div className="mb-7 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">
-              <span className="size-1.5 rounded-full bg-primary shadow-[0_0_8px_var(--primary)]" />
-              System Overview
+        {/* Glow bottom right */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-32 -right-24 -z-10 size-96 rounded-full bg-chart-2/15 blur-3xl"
+          animate={{ opacity: [1, 0.5, 1], scale: [1.1, 1, 1.1] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        {/* Glow left */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -left-32 top-1/2 -z-10 size-96 rounded-full bg-chart-4/10 blur-3xl"
+          animate={{ opacity: [0.4, 0.9, 0.4] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        {/* Top hairline */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-linear-to-r from-transparent via-primary/50 to-transparent"
+        />
+
+        {/* Centered content */}
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="mx-auto mb-10 max-w-3xl text-center lg:mb-14"
+          >
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3.5 py-1 text-xs font-semibold text-primary">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-60" />
+                <span className="relative inline-flex size-2 rounded-full bg-primary" />
+              </span>
+              Platform Overview
             </div>
 
-            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              PowerPulse at a glance
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              PowerPulse{" "}
+              <span className="bg-linear-to-r from-primary to-chart-3 bg-clip-text text-transparent">
+                by the numbers
+              </span>
             </h2>
 
-            <p className="mt-1.5 max-w-2xl text-sm leading-6 text-muted-foreground">
-              A quick look at the power infrastructure, scheduled events, and
-              service network.
+            <p className="mt-4 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+              Live data from across the network: the power zones we monitor,
+              upcoming load shedding and planned outages, and the technicians
+              available to restore your service.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="hidden items-center gap-2 text-xs text-muted-foreground sm:flex">
-            <CheckCircle2 className="size-4 text-emerald-500" />
-            System monitored
-          </div>
-        </div>
+          {/* Cards */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            onViewportEnter={() => setHasEntered(true)}
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4"
+          >
+            {overviewItems.map((item) => {
+              const Icon = item.icon;
 
-        {/* Overview Cards */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {overviewItems.map((item) => {
-            const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.title}
+                  variants={cardVariants}
+                  whileHover={{ y: -4 }}
+                  className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card/60 p-6 backdrop-blur-sm transition-colors duration-300 hover:border-primary/40"
+                >
+                  {/* Top color wash */}
+                  <div
+                    aria-hidden
+                    className={`pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b to-transparent ${item.wash}`}
+                  />
 
-            return (
-              <div
-                key={item.title}
-                className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5"
-              >
-                {/* Card glow */}
-                <div
-                  aria-hidden
-                  className={`pointer-events-none absolute -right-12 -top-12 size-32 rounded-full ${item.glow} opacity-60 blur-3xl transition-all duration-300 group-hover:scale-125 group-hover:opacity-90`}
-                />
+                  {/* Hover glow */}
+                  <div
+                    aria-hidden
+                    className={`pointer-events-none absolute -right-10 -top-10 size-40 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100 ${item.glow}`}
+                  />
 
-                {/* Top accent */}
-                <div
-                  aria-hidden
-                  className={`absolute inset-x-0 top-0 h-0.5 bg-linear-to-r ${item.accent}`}
-                />
+                  <div className="relative">
+                    {/* Icon + live dot */}
+                    <div className="flex items-start justify-between">
+                      <div
+                        className={`flex size-12 items-center justify-center rounded-xl ring-1 transition-transform duration-300 group-hover:scale-110 ${item.iconClass}`}
+                      >
+                        <Icon className="size-5" />
+                      </div>
 
-                <div className="relative">
-                  {/* Icon + status */}
-                  <div className="flex items-start justify-between">
-                    <div
-                      className={`flex size-11 items-center justify-center rounded-xl ${item.iconBg} ${item.iconColor} transition-transform duration-300 group-hover:scale-105`}
-                    >
-                      <Icon className="size-5" />
+                      <span className="relative flex size-2">
+                        <span
+                          className={`absolute inline-flex size-full animate-ping rounded-full opacity-60 ${item.dot}`}
+                        />
+                        <span
+                          className={`relative inline-flex size-2 rounded-full ${item.dot}`}
+                        />
+                      </span>
                     </div>
 
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                      Live
-                    </span>
-                  </div>
-
-                  {/* Value */}
-                  <div className="mt-6">
-                    <p className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                      {item.value}
+                    {/* Value */}
+                    <p className="mt-8 text-4xl font-bold tracking-tight text-foreground tabular-nums sm:text-5xl">
+                      {Math.round(item.value * displayProgress)}
                     </p>
 
-                    <h3 className="mt-1 text-sm font-semibold text-foreground">
+                    <h3 className="mt-2 text-sm font-semibold text-foreground">
                       {item.title}
                     </h3>
 
                     <p className="mt-1.5 text-xs leading-5 text-muted-foreground">
                       {item.description}
                     </p>
-                  </div>
 
-                  {/* Bottom accent */}
-                  <div className="mt-5 flex items-center gap-2">
+                    {/* Bottom accent */}
                     <div
-                      className={`h-1 w-8 rounded-full bg-linear-to-r ${item.accent}`}
+                      className={`mt-6 h-0.5 w-10 rounded-full bg-linear-to-r transition-all duration-500 group-hover:w-full ${item.line}`}
                     />
-
-                    <div className="h-px flex-1 bg-border/70" />
                   </div>
-                </div>
-              </div>
-            );
-          })}
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
-
-        {/* Bottom info strip */}
-        <div className="mt-4 rounded-2xl border border-border/70 bg-card/70 px-4 py-3 backdrop-blur-sm sm:px-5">
-          <div className="flex flex-col gap-2 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-2">
-              <UsersRound className="size-3.5 text-[#009689]" />
-              <span>
-                PowerPulse connects infrastructure data with service teams.
-              </span>
-            </div>
-
-            <span className="font-medium text-foreground">
-              Real-time overview
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </MotionConfig>
   );
 };
 
