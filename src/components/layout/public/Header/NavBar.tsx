@@ -22,11 +22,12 @@ const NavBar = () => {
   const router=useRouter()
   const routes = [
     { name: "Home", url: "/", protected: false },
-    { name: "About us", url: "/about-us", protected: false },
+    
     { name: "Zones", url: "/zones", protected: false },
     { name: "Load Shedding Schedule", url: "/load-shedding-schedule", protected: false },
     { name: "Planned Outage", url: "/planned-outage", protected: false },
     // { name: "Outages", url: "/unexpected-outage", protected: true },
+    { name: "About us", url: "/about-us", protected: false },
     { name: "Dashboard", url: `/${data?.data?.role.toLowerCase()}/dashboard`, protected: true },
   ];
   const visibleRoutes = routes.filter(

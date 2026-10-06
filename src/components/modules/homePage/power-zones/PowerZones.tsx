@@ -53,7 +53,7 @@ const PowerZones = () => {
           length={4}
           className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         />
-      ) : zones.length === 0 ? (
+      ) : zones?.length === 0 ? (
         <div className="flex min-h-40 items-center justify-center rounded-2xl border border-dashed border-border bg-card/60 text-sm text-muted-foreground">
           No zones available
         </div>
