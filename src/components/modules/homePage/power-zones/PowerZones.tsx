@@ -34,7 +34,7 @@ const cardVariants: Variants = {
 const   PowerZones = () => {
   const { data, isPending } = useGetAllZone();
 
-   const zones = data?.data as Zone[];
+   const zones = data?.data.slice(0,8) as Zone[];
 
   return (
     <HomeSectionHeader
