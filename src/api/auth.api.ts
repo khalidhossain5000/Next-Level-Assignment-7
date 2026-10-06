@@ -135,5 +135,5 @@ export function updateUserProfile(payload:IUpdateUserProfile){
 
 
 export function getTechnicianCount(){
-    return apiClient("/technician-count")
+    return apiClient("/auth/technician-count")
 }

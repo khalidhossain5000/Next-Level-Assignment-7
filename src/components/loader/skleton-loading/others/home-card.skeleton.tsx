@@ -3,16 +3,18 @@ import {
   Card
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-
-const HomeCardSkeleton = () => {
+interface IProps {
+  length:number
+}
+const HomeCardSkeleton = ({length}:IProps) => {
   return (
-    <section className="">
+    <section className="max-w-7xl mx-auto">
      
 
       {/* cards skeleton */}
       <div className="min-w-0 ">
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, index) => (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {Array.from({ length }).map((_, index) => (
             <Card key={index} className="gap-0 overflow-hidden py-0">
               <Skeleton className="aspect-video w-full rounded-none" />
 
