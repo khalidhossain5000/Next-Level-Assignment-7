@@ -22,7 +22,7 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
   const form = useForm({
     defaultValues: {
       name: "Main Customer",
-      email: "mdshafin5000@gmail.com",
+      email: "admin@powerpulse.coms",
       password: "admin"
     },
     validators: {
@@ -176,7 +176,7 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
       </form>
 
       <FieldSeparator>Or continue with</FieldSeparator>
-
+    {/* <Suspense fallback={null}></Suspense> */}
       <GoogleLoginComponet role={role}/>
     </div>
   );
