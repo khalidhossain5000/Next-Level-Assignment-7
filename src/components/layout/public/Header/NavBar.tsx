@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import ModeToggle from "@/components/layout/shared/modeToggle/ModeToggle";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/assets/svg/Logo";
 import { useGetMe, useLogout } from "@/hooks";
 import { useQueryClient } from "@tanstack/react-query";
@@ -19,6 +19,7 @@ const NavBar = () => {
   const { data, isPending } = useGetMe();
   const user = data?.data;
   const isLoggedIn = !!user;
+  const router=useRouter()
   const routes = [
     { name: "Home", url: "/", protected: false },
     { name: "About us", url: "/about-us", protected: false },
@@ -42,6 +43,7 @@ const NavBar = () => {
         queryClient.removeQueries({
           queryKey: ["user"],
         });
+        router.push("/login")
       },
       onError: () => {
         toast.error("Log out failed");
