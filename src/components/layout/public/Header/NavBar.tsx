@@ -125,7 +125,7 @@ const NavBar = () => {
 
             <ModeToggle />
 
-            {/* Hamburger (below xl) */}
+            {/* Hamburger  */}
             <Button
               type="button"
               variant="outline"

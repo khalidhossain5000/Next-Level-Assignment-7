@@ -2,22 +2,40 @@
 
 import { FiLogOut, FiSettings, FiShield } from "react-icons/fi";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import Logo from "@/assets/svg/Logo";
 import { sidebarRoutes } from "./sidebarRoutes";
-import { useGetMe } from "@/hooks";
+import { useGetMe, useLogout } from "@/hooks";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const DashboardSidebar = () => {
   const pathname = usePathname();
   const { data: getMe, isPending } = useGetMe();
 
   const currentRole = getMe?.data?.role;
-
+  const router=useRouter()
   const visibleRoutes = sidebarRoutes.filter((route) =>
     route.roles.includes(currentRole)
   );
-
+  const queryClient = useQueryClient();
+    const { mutate: logout } = useLogout();
+  
+  const handleLogout = () => {
+    logout(undefined, {
+      onSuccess: () => {
+        toast.info("Log out success");
+        queryClient.removeQueries({
+          queryKey: ["user"],
+        });
+        router.push("/login")
+      },
+      onError: () => {
+        toast.error("Log out failed");
+      },
+    });
+  };
   return (
     <aside className="flex w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground md:sticky md:top-0 md:h-screen">
       {/* Logo */}
@@ -72,6 +90,7 @@ const DashboardSidebar = () => {
 
           <button
             type="button"
+            onClick={handleLogout}
             className="flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-destructive/10 hover:text-destructive cursor-pointer "
           >
             <FiLogOut className="size-4" aria-hidden="true" />

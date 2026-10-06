@@ -148,6 +148,7 @@ export const sidebarRoutes: SidebarRoute[] = [
     icon: TbWindElectricity ,
     roles: ["TECHNICIAN"],
   },
+  
    {
     label: "My Technician Profile",
     href: "/technician/update-tech-profile",
