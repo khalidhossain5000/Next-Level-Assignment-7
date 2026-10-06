@@ -79,7 +79,9 @@ const headClass =
 const ManagePlannedOutage = () => {
   const [page, setPage] = useState(1);
 
-  const { data: plannedOutage, isPending } = useGetPlannedOutage(page);
+  const { data: plannedOutage, isPending } = useGetPlannedOutage({
+    page
+  });
 
   const outages: IPlannedOutage[] = plannedOutage?.data?.data ?? [];
   const meta: IMeta | undefined = plannedOutage?.data?.meta;

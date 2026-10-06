@@ -86,7 +86,9 @@ const headClass =
 const ManageLoadShedding = () => {
   const [page, setPage] = useState(1);
 
-  const { data: loadShedding, isPending } = useGetLoadSheddingSchedule(page);
+  const { data: loadShedding, isPending } = useGetLoadSheddingSchedule({
+    page
+  });
 
   const schedules: ILoadShedding[] = loadShedding?.data?.data ?? [];
 
