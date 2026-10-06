@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+
 import { motion } from "framer-motion";
 import {
   FiActivity,
@@ -25,27 +26,28 @@ const HeroSection = () => {
         <div className="absolute -right-25 top-[25%] h-75 w-75 rounded-full bg-primary/5 blur-3xl" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-5 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8 lg:pb-24 lg:pt-20">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:gap-10 xl:gap-16">
+      <div className="mx-auto max-w-7xl overflow-hidden px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8 lg:pb-24 lg:pt-20">
+        <div className="grid min-w-0 items-center gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:gap-10 xl:gap-16">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, x: -35 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="max-w-2xl"
+            className="min-w-0 max-w-2xl"
           >
             {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3.5 py-2 text-sm font-medium text-primary"
+              className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3.5 py-2 text-sm font-medium text-primary"
             >
-              <span className="relative flex size-2">
+              <span className="relative flex size-2 shrink-0">
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary/60" />
                 <span className="relative inline-flex size-2 rounded-full bg-primary" />
               </span>
-              Smart Power Management Platform
+
+              <span className="truncate">Smart Power Management Platform</span>
             </motion.div>
 
             {/* Heading */}
@@ -79,22 +81,21 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.38, duration: 0.65 }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row"
+              className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
             >
               <Link
-              href="/load-shedding"
-
-                className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 font-inter text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/25"
+                href="/load-shedding"
+                className="group inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-primary px-6 font-inter text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/25 sm:w-auto"
               >
                 View Power Schedule
-                <FiArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+                <FiArrowRight className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
 
               <Link
                 href="/outage-reports"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 font-inter text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent"
+                className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 font-inter text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent sm:w-auto"
               >
-               Track Reported Outages
+                Track Reported Outages
               </Link>
             </motion.div>
 
@@ -106,17 +107,17 @@ const HeroSection = () => {
               className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-sm text-muted-foreground"
             >
               <div className="flex items-center gap-2">
-                <FiCheckCircle className="size-4 text-primary" />
+                <FiCheckCircle className="size-4 shrink-0 text-primary" />
                 Real-time monitoring
               </div>
 
               <div className="flex items-center gap-2">
-                <FiCheckCircle className="size-4 text-primary" />
+                <FiCheckCircle className="size-4 shrink-0 text-primary" />
                 Role-based access
               </div>
 
               <div className="flex items-center gap-2">
-                <FiCheckCircle className="size-4 text-primary" />
+                <FiCheckCircle className="size-4 shrink-0 text-primary" />
                 Secure platform
               </div>
             </motion.div>
@@ -126,37 +127,43 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.58, duration: 0.65 }}
-              className="mt-10 grid max-w-xl grid-cols-2 gap-3 sm:grid-cols-3"
+              className="mt-10 grid w-full max-w-xl grid-cols-2 gap-3 sm:grid-cols-3"
             >
-              <div className="rounded-2xl border border-border bg-card/70 p-4 backdrop-blur-sm">
+              <div className="min-w-0 rounded-2xl border border-border bg-card/70 p-4 backdrop-blur-sm">
                 <div className="mb-2 flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <FiActivity className="size-4" />
                 </div>
+
                 <p className="font-manrope text-xl font-bold text-foreground">
                   Live
                 </p>
+
                 <p className="mt-1 text-xs text-muted-foreground">
                   System Status
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-border bg-card/70 p-4 backdrop-blur-sm">
+              <div className="min-w-0 rounded-2xl border border-border bg-card/70 p-4 backdrop-blur-sm">
                 <div className="mb-2 flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <FiClock className="size-4" />
                 </div>
+
                 <p className="font-manrope text-xl font-bold text-foreground">
                   24/7
                 </p>
+
                 <p className="mt-1 text-xs text-muted-foreground">Monitoring</p>
               </div>
 
-              <div className="col-span-2 rounded-2xl border border-border bg-card/70 p-4 backdrop-blur-sm sm:col-span-1">
+              <div className="col-span-2 min-w-0 rounded-2xl border border-border bg-card/70 p-4 backdrop-blur-sm sm:col-span-1">
                 <div className="mb-2 flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <FiShield className="size-4" />
                 </div>
+
                 <p className="font-manrope text-xl font-bold text-foreground">
                   Secure
                 </p>
+
                 <p className="mt-1 text-xs text-muted-foreground">
                   Access Control
                 </p>
@@ -169,7 +176,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.94, x: 30 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative mx-auto w-full max-w-155 lg:ml-auto"
+            className="relative mx-auto min-w-0 w-full max-w-155 overflow-visible lg:ml-auto"
           >
             {/* Main dashboard */}
             <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card/80 p-4 shadow-2xl shadow-primary/10 backdrop-blur-xl sm:p-5">
@@ -184,48 +191,50 @@ const HeroSection = () => {
               />
 
               {/* Header */}
-              <div className="relative z-10 flex items-center justify-between rounded-2xl border border-border bg-background/75 p-4 backdrop-blur-md">
-                <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/20">
+              <div className="relative z-10 flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-border bg-background/75 p-4 backdrop-blur-md">
+                <div className="flex min-w-0 items-center gap-3">
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/20">
                     <FiZap className="size-5" />
                   </div>
 
-                  <div>
-                    <p className="font-manrope text-sm font-bold text-foreground">
+                  <div className="min-w-0">
+                    <p className="truncate font-manrope text-sm font-bold text-foreground">
                       PowerPulse Grid
                     </p>
-                    <p className="text-xs text-muted-foreground">
+
+                    <p className="truncate text-xs text-muted-foreground">
                       Infrastructure Overview
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-semibold text-primary">
-                  <span className="size-2 rounded-full bg-primary" />
+                <div className="flex shrink-0 items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1.5 text-[10px] font-semibold text-primary sm:px-3 sm:text-xs">
+                  <span className="size-2 shrink-0 rounded-full bg-primary" />
                   Operational
                 </div>
               </div>
 
               {/* Main Visualization */}
               <div className="relative z-10 mt-4 overflow-hidden rounded-2xl border border-border bg-background/65 p-4 backdrop-blur-md sm:p-5">
-                <div className="flex items-center justify-between">
-                  <div>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
                     <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
                       Grid Flow
                     </p>
+
                     <p className="mt-1 font-manrope text-2xl font-bold text-foreground">
                       98.6%
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary">
+                  <div className="flex shrink-0 items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary">
                     <FiTrendingUp className="size-3.5" />
                     +4.8%
                   </div>
                 </div>
 
                 {/* Animated Power Flow */}
-                <div className="relative mt-6 h-62.5 sm:h-72.5">
+                <div className="relative mt-6 h-62.5 overflow-hidden sm:h-72.5">
                   <svg
                     viewBox="0 0 600 300"
                     className="absolute inset-0 size-full"
@@ -375,17 +384,19 @@ const HeroSection = () => {
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                    className="absolute left-0 top-3 rounded-xl border border-border bg-card/90 p-3 shadow-lg backdrop-blur-md"
+                    className="absolute left-1 top-3 origin-top-left scale-90 rounded-xl border border-border bg-card/90 p-2.5 shadow-lg backdrop-blur-md sm:left-0 sm:scale-100 sm:p-3"
                   >
-                    <div className="flex items-center gap-2.5">
-                      <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <div className="flex items-center gap-2">
+                      <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <FiRadio className="size-4" />
                       </div>
+
                       <div>
-                        <p className="text-[11px] text-muted-foreground">
+                        <p className="text-[10px] text-muted-foreground sm:text-[11px]">
                           Zone A
                         </p>
-                        <p className="text-xs font-bold text-foreground">
+
+                        <p className="text-[11px] font-bold text-foreground sm:text-xs">
                           Stable
                         </p>
                       </div>
@@ -399,17 +410,19 @@ const HeroSection = () => {
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                    className="absolute bottom-3 left-0 rounded-xl border border-border bg-card/90 p-3 shadow-lg backdrop-blur-md"
+                    className="absolute bottom-3 left-1 origin-bottom-left scale-90 rounded-xl border border-border bg-card/90 p-2.5 shadow-lg backdrop-blur-md sm:left-0 sm:scale-100 sm:p-3"
                   >
-                    <div className="flex items-center gap-2.5">
-                      <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <div className="flex items-center gap-2">
+                      <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <FiMapPin className="size-4" />
                       </div>
+
                       <div>
-                        <p className="text-[11px] text-muted-foreground">
+                        <p className="text-[10px] text-muted-foreground sm:text-[11px]">
                           Area 04
                         </p>
-                        <p className="text-xs font-bold text-foreground">
+
+                        <p className="text-[11px] font-bold text-foreground sm:text-xs">
                           Connected
                         </p>
                       </div>
@@ -423,17 +436,19 @@ const HeroSection = () => {
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                    className="absolute right-0 top-3 rounded-xl border border-border bg-card/90 p-3 shadow-lg backdrop-blur-md"
+                    className="absolute right-1 top-3 origin-top-right scale-90 rounded-xl border border-border bg-card/90 p-2.5 shadow-lg backdrop-blur-md sm:right-0 sm:scale-100 sm:p-3"
                   >
-                    <div className="flex items-center gap-2.5">
-                      <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <div className="flex items-center gap-2">
+                      <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <FiActivity className="size-4" />
                       </div>
+
                       <div>
-                        <p className="text-[11px] text-muted-foreground">
+                        <p className="text-[10px] text-muted-foreground sm:text-[11px]">
                           Load
                         </p>
-                        <p className="text-xs font-bold text-foreground">
+
+                        <p className="text-[11px] font-bold text-foreground sm:text-xs">
                           72.4 MW
                         </p>
                       </div>
@@ -447,17 +462,19 @@ const HeroSection = () => {
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                    className="absolute bottom-3 right-0 rounded-xl border border-border bg-card/90 p-3 shadow-lg backdrop-blur-md"
+                    className="absolute bottom-3 right-1 origin-bottom-right scale-90 rounded-xl border border-border bg-card/90 p-2.5 shadow-lg backdrop-blur-md sm:right-0 sm:scale-100 sm:p-3"
                   >
-                    <div className="flex items-center gap-2.5">
-                      <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <div className="flex items-center gap-2">
+                      <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <FiShield className="size-4" />
                       </div>
+
                       <div>
-                        <p className="text-[11px] text-muted-foreground">
+                        <p className="text-[10px] text-muted-foreground sm:text-[11px]">
                           Security
                         </p>
-                        <p className="text-xs font-bold text-foreground">
+
+                        <p className="text-[11px] font-bold text-foreground sm:text-xs">
                           Protected
                         </p>
                       </div>
@@ -467,28 +484,31 @@ const HeroSection = () => {
 
                 {/* Bottom metrics */}
                 <div className="grid grid-cols-3 gap-2 border-t border-border pt-4">
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
                       Substations
                     </p>
+
                     <p className="mt-1 font-manrope text-sm font-bold text-foreground">
                       24
                     </p>
                   </div>
 
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
                       Feeders
                     </p>
+
                     <p className="mt-1 font-manrope text-sm font-bold text-foreground">
                       86
                     </p>
                   </div>
 
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
                       Active Alerts
                     </p>
+
                     <p className="mt-1 font-manrope text-sm font-bold text-primary">
                       03
                     </p>
@@ -505,13 +525,15 @@ const HeroSection = () => {
               className="absolute -bottom-5 left-5 hidden rounded-2xl border border-border bg-card/90 px-4 py-3 shadow-xl backdrop-blur-md sm:block"
             >
               <div className="flex items-center gap-3">
-                <div className="flex size-9 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                   <FiCheckCircle className="size-4" />
                 </div>
+
                 <div>
                   <p className="text-xs font-semibold text-foreground">
                     Power status synchronized
                   </p>
+
                   <p className="text-[11px] text-muted-foreground">
                     All systems are up to date
                   </p>
