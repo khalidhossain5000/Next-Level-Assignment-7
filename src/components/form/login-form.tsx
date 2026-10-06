@@ -11,14 +11,16 @@ import { useLogin } from "@/hooks";
 import { Spinner } from "../ui/spinner";
 import { toast } from "sonner";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import GoogleLoginComponet from "../modules/google/GoogleComponent";
+import { getSafeRedirect } from "@/lib/redirect";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const { mutate: login, isPending } = useLogin()
   const router = useRouter()
+  const searchParams = useSearchParams();
   const form = useForm({
     defaultValues: {
       email: "powerpulse@admin.com",
@@ -35,11 +37,12 @@ export default function LoginForm() {
       login(loginData, {
         onSuccess: (res) => {
           toast.success(res.message || "User log-in successfull")
-          router.push("/")
+          router.replace(getSafeRedirect(searchParams.get("redirect")))
+
         },
         onError: (err) => {
           
-          toast.success(err.message || "Login failed!Somehting went wrong")
+          toast.error(err.message || "Login failed!Somehting went wrong")
           console.log(err, 'this is error in login')
         }
       })
