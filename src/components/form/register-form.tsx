@@ -52,9 +52,9 @@ router.push(`/${role}/register/verify-account?${params.toString()}`)
           const message =
             (err as any)?.data?.message ||
             err.message ||
-            "Google login failed";
+            "Registration failed";
           console.log(err, "this is register error")
-          toast.error(message || "Register failed try again")
+          toast.error(message || "Registration failed try again")
         }
       })
     }

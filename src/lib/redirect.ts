@@ -19,3 +19,13 @@ export const getSafeRedirect = (
 
 export const buildLoginUrl = (currentPath: string) =>
   `/login?redirect=${encodeURIComponent(currentPath)}`;
+
+
+
+export const withRedirect = (path: string, redirect?: string | null) => {
+  const safeRedirect = getSafeRedirect(redirect, "");
+  if (!safeRedirect) return path;
+
+  const separator = path.includes("?") ? "&" : "?";
+  return `${path}${separator}redirect=${encodeURIComponent(safeRedirect)}`;
+};
