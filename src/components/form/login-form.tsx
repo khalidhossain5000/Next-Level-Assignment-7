@@ -15,7 +15,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 import GoogleLoginComponet from "../modules/google/GoogleComponent";
-import { getSafeRedirect } from "@/lib/redirect";
+import { getSafeRedirect, withRedirect } from "@/lib/redirect";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -148,8 +148,7 @@ export default function LoginForm() {
 
       <p className="text-center text-sm text-muted-foreground">
         Don&apos;t have an account?{" "}
-        <Link
-          href="/select-role"
+      <Link href={withRedirect("/select-role", searchParams.get("redirect"))}
           className="font-semibold text-primary underline-offset-4 transition-colors hover:underline"
         >
           Register

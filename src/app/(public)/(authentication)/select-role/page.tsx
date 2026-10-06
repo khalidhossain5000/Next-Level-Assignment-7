@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HiOutlineWrenchScrewdriver, HiOutlineUserGroup, HiOutlineArrowRight } from "react-icons/hi2";
+import { withRedirect } from "@/lib/redirect";
 
 const roleOptions = [
     {
@@ -20,7 +21,14 @@ const roleOptions = [
     },
 ];
 
-const SelectUserRolePage = () => {
+type TProps = {
+    searchParams: Promise<{ redirect?: string | string[] }>;
+};
+
+const SelectUserRolePage = async ({ searchParams }: TProps) => {
+    const params = await searchParams;
+    const redirect = typeof params.redirect === "string" ? params.redirect : null;
+
     return (
         <section className="min-h-svh flex items-center justify-center bg-background px-4 sm:px-6 py-12">
             <div className="w-full max-w-4xl">
@@ -51,7 +59,7 @@ const SelectUserRolePage = () => {
                         return (
                             <Link
                                 key={role.id}
-                                href={role.href}
+                                href={withRedirect(role.href, redirect)}
                                 className="group relative flex flex-col items-start rounded-3xl border border-border bg-card p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-xl"
                             >
                                 <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 group-hover:bg-primary transition-colors duration-300">
