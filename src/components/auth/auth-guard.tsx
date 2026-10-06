@@ -5,10 +5,11 @@ import { usePathname, useRouter } from "next/navigation";
 import type React from "react";
 import { useEffect } from "react";
 import AuthLoading from "./auth-loading";
+import { buildLoginUrl } from "@/lib/redirect";
 
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     const { data, isPending, isError } = useGetMe()
-    const user = data?.data ?? []
+    const user = data?.data
     const router = useRouter()
     const pathname = usePathname();
     console.log(data, 'user data')
@@ -17,9 +18,9 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
             return
         }
         if (isError || !user) {
-            router.replace('/login')
+            router.replace(buildLoginUrl(pathname))
         }
-    }, [isError, user, router, isPending])
+    }, [isError, user, router, isPending,pathname])
 
     if (isPending) return <AuthLoading />
 
