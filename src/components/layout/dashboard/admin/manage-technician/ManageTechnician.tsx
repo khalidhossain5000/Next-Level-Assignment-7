@@ -1,9 +1,16 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
-/** biome-ignore-all lint/style/noNonNullAssertion: <explanation> */
+/** biome-ignore-all lint/suspicious/noExplicitAny: API error payload and mutation variables are not typed in the current hooks. */
+/** biome-ignore-all lint/style/noNonNullAssertion: Expertise is checked before accessing its entries. */
 "use client";
 
 import { toast } from "sonner";
-import { FiAward, FiCheckCircle, FiClock, FiX } from "react-icons/fi";
+import {
+  FiAward,
+  FiCheckCircle,
+  FiClock,
+  FiExternalLink,
+  FiFileText,
+  FiX,
+} from "react-icons/fi";
 
 import { useApproveTechnician, useGetAllTechnician } from "@/hooks";
 import { TechnicianProfileStatus } from "@/types";
@@ -26,6 +33,7 @@ interface TechnicianProfile {
   expertise?: string[];
   experience?: number;
   bio?: string;
+  resume?: string | null;
   technicianvProfileVerificationStatus?: TechnicianProfileStatus;
 }
 
@@ -71,6 +79,25 @@ const getVerificationLabel = (status?: TechnicianProfileStatus) => {
 const headClass =
   "h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground";
 
+const renderResume = (resume?: string | null) => {
+  if (!resume) {
+    return <span className="text-xs text-muted-foreground">Not provided</span>;
+  }
+
+  return (
+    <a
+      href={resume}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-md border border-primary/20 bg-primary/5 px-2.5 text-xs font-medium text-primary transition-colors hover:border-primary/40 hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+    >
+      <FiFileText aria-hidden="true" className="size-3.5" />
+      View resume
+      <FiExternalLink aria-hidden="true" className="size-3 opacity-70" />
+    </a>
+  );
+};
+
 const ManageTechnician = () => {
   const { data: technician, isPending: technicianPending } =
     useGetAllTechnician();
@@ -105,12 +132,11 @@ const ManageTechnician = () => {
       onError: (error: any) => {
         toast.error(
           error?.data?.message ||
-            error?.message ||
-            `Failed to ${
-              status === TechnicianProfileStatus.APPROVED
-                ? "approve"
-                : "reject"
-            } technician.`,
+          error?.message ||
+          `Failed to ${status === TechnicianProfileStatus.APPROVED
+            ? "approve"
+            : "reject"
+          } technician.`,
         );
       },
     });
@@ -204,6 +230,7 @@ const ManageTechnician = () => {
                   </TableHead>
                   <TableHead className={headClass}>Expertise</TableHead>
                   <TableHead className={headClass}>Experience</TableHead>
+                  <TableHead className={headClass}>Resume</TableHead>
                   <TableHead className={headClass}>Availability</TableHead>
                   <TableHead className={headClass}>Assigned Outages</TableHead>
                   <TableHead className={headClass}>Verification</TableHead>
@@ -257,13 +284,13 @@ const ManageTechnician = () => {
                             ))}
                           {(item.technicianProfile?.expertise?.length ?? 0) >
                             2 && (
-                            <Badge
-                              variant="outline"
-                              className="text-[10px] font-normal text-muted-foreground"
-                            >
-                              +{item.technicianProfile!.expertise!.length - 2}
-                            </Badge>
-                          )}
+                              <Badge
+                                variant="outline"
+                                className="text-[10px] font-normal text-muted-foreground"
+                              >
+                                +{item.technicianProfile!.expertise!.length - 2}
+                              </Badge>
+                            )}
                         </div>
                       </TableCell>
 
@@ -272,6 +299,11 @@ const ManageTechnician = () => {
                         className={`whitespace-nowrap text-sm text-card-foreground ${cellBorder}`}
                       >
                         {item.technicianProfile?.experience ?? 0} yr
+                      </TableCell>
+
+                      {/* Resume */}
+                      <TableCell className={cellBorder}>
+                        {renderResume(item.technicianProfile?.resume)}
                       </TableCell>
 
                       {/* Availability */}
@@ -381,6 +413,10 @@ const ManageTechnician = () => {
                     {renderAction(item)}
                   </div>
                 </div>
+                <div className="mt-3 flex items-center justify-between gap-3 border-t border-border pt-2.5">
+                  <span className="text-xs text-muted-foreground">Resume</span>
+                  {renderResume(item.technicianProfile?.resume)}
+                </div>
               </CardContent>
 
               {/* below sm */}
@@ -419,6 +455,11 @@ const ManageTechnician = () => {
                     ))}
                   </div>
                 )}
+
+                <div className="mt-3 flex items-center justify-between gap-3 border-t border-border pt-2.5">
+                  <span className="text-xs text-muted-foreground">Resume</span>
+                  {renderResume(item.technicianProfile?.resume)}
+                </div>
 
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-2.5">
                   <div className="flex flex-wrap items-center gap-2">
