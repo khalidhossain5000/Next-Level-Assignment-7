@@ -1,19 +1,23 @@
-/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: Skeleton placeholder cards have no stable data IDs. */
 import {
   Card
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-interface IProps {
-  length:number
+import { cn } from "@/lib/utils";
+
+interface HomeCardSkeletonProps {
+  length: number;
+  className?: string;
 }
-const HomeCardSkeleton = ({length}:IProps) => {
+
+const HomeCardSkeleton = ({ length, className }: HomeCardSkeletonProps) => {
   return (
-    <section className="max-w-7xl mx-auto py-6">
-     
+    <section className="mx-auto max-w-7xl py-6">
+
 
       {/* cards skeleton */}
       <div className="min-w-0 ">
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className={cn("grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",className)}>
           {Array.from({ length }).map((_, index) => (
             <Card key={index} className="gap-0 overflow-hidden py-0">
               <Skeleton className="aspect-video w-full rounded-none" />
