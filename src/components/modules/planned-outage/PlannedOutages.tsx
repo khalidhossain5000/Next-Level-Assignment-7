@@ -11,8 +11,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import useDebounce from "@/hooks/debounce.hook";
 import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
-import type { IPlannedOutage, LoadSheddingSchedule } from "@/types";
+import type { IPlannedOutage } from "@/types";
 import { useGetPlannedOutage } from "@/hooks";
+import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 const PlannedOutages = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -50,7 +51,7 @@ const PlannedOutages = () => {
       {/* Filter Sidebar */}
       <div className="w-full lg:sticky lg:top-6 lg:w-72 lg:shrink-0">
         <FilterSidebar
-            searchTerm={searchTerm}
+          searchTerm={searchTerm}
           sortOrder={sortOrder}
           showSortOrder={true}
           onSearchChange={(value) => {
@@ -73,9 +74,7 @@ const PlannedOutages = () => {
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Schedule Cards */}
         {schedules.length === 0 ? (
-          <div className="flex min-h-60 items-center justify-center rounded-2xl border border-dashed border-border bg-card px-5 text-center text-sm text-muted-foreground">
-            No load shedding schedules found
-          </div>
+          <EmptyText title=" No load shedding schedules found" description="No Load Shedding Scheduled added yet"/>
         ) : (
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
             {schedules.map((schedule) => {
@@ -189,8 +188,6 @@ const PlannedOutages = () => {
                         </p>
                       </div>
                     </div>
-
-                   
 
                     {/* Action */}
                     <CardFooter className="mt-auto px-0 pb-0 pt-0">
