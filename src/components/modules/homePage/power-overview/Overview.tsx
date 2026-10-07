@@ -2,20 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { CalendarClock, MapPinned, ShieldCheck, Zap } from "lucide-react";
-import {
-  animate,
-  motion,
-  useReducedMotion,
-  type Variants,
-} from "motion/react";
+import { animate, motion, useReducedMotion, type Variants } from "motion/react";
 
 import HomeSectionHeader from "@/components/layout/shared/home-section-header/HomeSectionHeader";
 import HomeCardSkeleton from "@/components/loader/skleton-loading/others/home-card.skeleton";
 import {
   useGetAllZone,
-  useGetLoadSheddingSchedule,
   useGetOutageStats,
-  useGetPlannedOutage,
   useGetTechnicianCount,
 } from "@/hooks";
 
@@ -38,13 +31,11 @@ const cardVariants: Variants = {
 const Overview = () => {
   const { data: zone, isPending: zonePending } = useGetAllZone();
 
-
   const { data: technicianCount, isPending: technicianCountPending } =
-    useGetTechnicianCount(); 
-    
-    const { data: outageStats, isPending: statsPending } =
-    useGetOutageStats();
-console.log(outageStats,"stats")
+    useGetTechnicianCount();
+
+  const { data: outageStats, isPending: statsPending } = useGetOutageStats();
+  console.log(outageStats, "stats");
   const shouldReduceMotion = useReducedMotion();
   const [hasEntered, setHasEntered] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -63,8 +54,10 @@ console.log(outageStats,"stats")
   }, [hasEntered, shouldReduceMotion]);
 
   const zoneCount = zone?.data?.length || 0;
-  const totalReportedOutagesCount = outageStats?.data?.totalReportedOutages || 0;
-  const totalRestoredOutagesCount = outageStats?.data?.totalRestoredOutages || 0;
+  const totalReportedOutagesCount =
+    outageStats?.data?.totalReportedOutages || 0;
+  const totalRestoredOutagesCount =
+    outageStats?.data?.totalRestoredOutages || 0;
   const technicianCountValue = Number(technicianCount?.data) || 0;
 
   const displayProgress = shouldReduceMotion ? 1 : progress;
@@ -84,7 +77,7 @@ console.log(outageStats,"stats")
     {
       title: "Reported Outages",
       value: totalReportedOutagesCount,
-     description: "Reported Unexpected power outages",
+      description: "Reported Unexpected power outages",
       icon: Zap,
       iconClass: "bg-chart-2/10 text-chart-2 ring-chart-2/20",
       wash: "from-chart-2/10",
@@ -123,9 +116,7 @@ console.log(outageStats,"stats")
       highlight="by the numbers"
       description="Live data from across the network: the power zones we monitor, upcoming load shedding and planned outages, and the technicians available to restore your service."
     >
-      {zonePending ||
-     statsPending ||
-      technicianCountPending ? (
+      {zonePending || statsPending || technicianCountPending ? (
         <HomeCardSkeleton length={4} />
       ) : (
         <motion.div
