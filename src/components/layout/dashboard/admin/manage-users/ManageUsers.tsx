@@ -65,7 +65,8 @@ const ManageUsers = () => {
   } = useUpdateUserStatus();
 
   const allUsers: IUser[] = Array.isArray(users) ? users : (users?.data ?? []);
-  console.log(allUsers, 'ausers')
+  
+
   const handleToggleStatus = (userId: string, currentStatus: UserStatus) => {
     const newStatus: UserStatus =
       currentStatus === "ACTIVE" ? "BAN" : "ACTIVE";
@@ -112,11 +113,14 @@ const ManageUsers = () => {
           size="sm"
           disabled={isThisRowPending}
           onClick={() => handleToggleStatus(user.id, user.status)}
-          className={`gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30 ${compact ? "h-8" : "h-9"
+          className={`cursor-pointer gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30 ${compact ? "h-8" : "h-9"
             }`}
         >
           <FiLock className="size-3.5" />
-          Ban
+         
+          {
+            updating ? "Banning....." : "Ban"
+          }
         </Button>
       );
     }
@@ -127,11 +131,14 @@ const ManageUsers = () => {
         size="sm"
         disabled={isThisRowPending}
         onClick={() => handleToggleStatus(user.id, user.status)}
-        className={`gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 ${compact ? "h-8" : "h-9"
+        className={`cursor-pointer gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 ${compact ? "h-8" : "h-9"
           }`}
       >
         <FiUnlock className="size-3.5" />
-        Unban
+        
+         {
+            updating ? "UnBanning....." : "Unban"
+          }
       </Button>
     );
   };

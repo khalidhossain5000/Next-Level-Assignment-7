@@ -12,7 +12,8 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     const user = data?.data
     const router = useRouter()
     const pathname = usePathname();
-    console.log(data, 'user data')
+  
+    
     useEffect(() => {
         if (isPending) {
             return
