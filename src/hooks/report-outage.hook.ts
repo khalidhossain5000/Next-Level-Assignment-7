@@ -1,10 +1,10 @@
 import { assignTechnician, deleteMyOutage, getAllOutages, getCurrentTechnicainOutage, getMyOutages, getOutagesStats, reportOutage, updateMyOutage, updateOutageStatus } from "@/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export function useReportOutage(){
-     const queryClient = useQueryClient();
+export function useReportOutage() {
+    const queryClient = useQueryClient();
     return useMutation({
-        mutationFn:reportOutage,
+        mutationFn: reportOutage,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["my-outages"] });
         },
@@ -13,54 +13,55 @@ export function useReportOutage(){
 
 
 
-export function useGetMyOutages(){
+export function useGetMyOutages() {
     return useQuery({
-        queryKey:["my-outages"],
-        queryFn:getMyOutages
+        queryKey: ["my-outages"],
+        queryFn: getMyOutages
     })
 }
 
-export function useGetOutageStats(){
+export function useGetOutageStats() {
     return useQuery({
-        queryKey:["outage-stats"],
-        queryFn:getOutagesStats
+        queryKey: ["outage-stats"],
+        queryFn: getOutagesStats
     })
 }
 
 
-export function useGetAllOutages(){
+export function useGetAllOutages() {
     return useQuery({
-        queryKey:["all-outages"],
-        queryFn:getAllOutages
+        queryKey: ["all-outages"],
+        queryFn: getAllOutages
     })
 }
 
 
 //for admiin
 
-export function useUpdateStatus(){
-      const queryClient = useQueryClient();
+export function useUpdateStatus() {
+    const queryClient = useQueryClient();
     return useMutation({
-        mutationFn:updateOutageStatus,
-          onSuccess: () => {
+        mutationFn: updateOutageStatus,
+        onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["assigned-outages"] });
+            queryClient.invalidateQueries({ queryKey: ["all-outages"] });
         },
     })
 }
 
 
-export function useAssignTechnician(){
+export function useAssignTechnician() {
     return useMutation({
-        mutationFn:assignTechnician
+        mutationFn: assignTechnician
     })
 }
 
 
 
-export function useGetTechnicanAssignedOutages(){
+export function useGetTechnicanAssignedOutages() {
     return useQuery({
-        queryKey:["assigned-outages"],
-        queryFn:getCurrentTechnicainOutage
+        queryKey: ["assigned-outages"],
+        queryFn: getCurrentTechnicainOutage
     })
 }
 
@@ -77,8 +78,8 @@ export function useUpdateOutage() {
 
 
 
-export function useDeleteMyOutage(){
-     const queryClient = useQueryClient();
+export function useDeleteMyOutage() {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: deleteMyOutage,
         onSuccess: () => {

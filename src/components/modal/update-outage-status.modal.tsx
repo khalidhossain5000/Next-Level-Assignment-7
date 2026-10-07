@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FiAlertCircle, FiRefreshCw } from "react-icons/fi";
 
@@ -24,16 +24,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useUpdateStatus } from "@/hooks";
+import { toast } from "sonner";
+import type { IAllOutage } from "@/types";
 
 interface UpdateReportedOutageStatusProps {
   outageId: string;
-  currentStatus:
-    | "REPORTED"
-    | "ACKNOWLEDGED"
-    | "ASSIGNED"
-    | "IN_PROGRESS"
-    | "RESTORED"
-    | "CANCELLED";
+  currentStatus: IAllOutage["status"];
 }
 
 const statusOptions = [
@@ -68,12 +65,33 @@ const UpdateReportedOutageStatus = ({
   currentStatus,
 }: UpdateReportedOutageStatusProps) => {
   const [selectedStatus, setSelectedStatus] = useState(currentStatus);
+  const [isOpen, setIsOpen] = useState(false);
+  const { mutate: updateStatus, isPending } = useUpdateStatus();
+
+  useEffect(() => {
+    setSelectedStatus(currentStatus);
+  }, [currentStatus]);
 
   const handleUpdateStatus = () => {
-    console.log({
-      outageId,
-      status: selectedStatus,
-    });
+    if (selectedStatus === currentStatus || isPending) return;
+
+    updateStatus(
+      { id: outageId, status: selectedStatus },
+      {
+        onSuccess: () => {
+          toast.success(`Outage status updated to ${selectedStatus.replace("_", " ")}.`);
+          setIsOpen(false);
+        },
+        onError: (error) => {
+          const updateError = error as { data?: { message?: string }; message?: string };
+          toast.error(
+            updateError.data?.message ||
+            updateError.message ||
+            "Failed to update status.",
+          );
+        },
+      },
+    );
   };
 
   const getStatusClassName = (status: string) => {
@@ -102,7 +120,13 @@ const UpdateReportedOutageStatus = ({
   };
 
   return (
-    <Dialog>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        setIsOpen(open);
+        if (!open) setSelectedStatus(currentStatus);
+      }}
+    >
       {/* Trigger */}
       {currentStatus !== "RESTORED" && (
         <DialogTrigger
@@ -168,11 +192,13 @@ const UpdateReportedOutageStatus = ({
 
             <Select
               value={selectedStatus}
-              onValueChange={(value) =>
-                setSelectedStatus(
-                  value as UpdateReportedOutageStatusProps["currentStatus"]
-                )
-              }
+              onValueChange={(value) => {
+                const nextStatus = statusOptions.find(
+                  (status) => status.value === value,
+                )?.value;
+                if (nextStatus) setSelectedStatus(nextStatus);
+              }}
+              disabled={isPending}
             >
               <SelectTrigger className="h-10 w-full rounded-lg border-border bg-background">
                 <SelectValue placeholder="Select outage status" />
@@ -206,6 +232,7 @@ const UpdateReportedOutageStatus = ({
               <Button
                 type="button"
                 variant="outline"
+                disabled={isPending}
                 className="flex-1 rounded-lg cursor-pointer"
               >
                 Cancel
@@ -217,10 +244,10 @@ const UpdateReportedOutageStatus = ({
             type="button"
             className="flex-1 gap-1.5 rounded-lg bg-primary font-semibold text-primary-foreground hover:bg-primary/90 cursor-pointer"
             onClick={handleUpdateStatus}
-            disabled={selectedStatus === currentStatus}
+            disabled={selectedStatus === currentStatus || isPending}
           >
-            <FiRefreshCw className="size-3.5" />
-            Update Status
+            <FiRefreshCw className={`size-3.5 ${isPending ? "animate-spin" : ""}`} />
+            {isPending ? "Updating..." : "Update Status"}
           </Button>
         </DialogFooter>
       </DialogContent>
