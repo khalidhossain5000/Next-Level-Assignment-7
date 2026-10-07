@@ -16,7 +16,6 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 
 import type { IAllOutage } from "@/types";
 import UpdateReportedOutageStatus from "@/components/modal/update-outage-status.modal";

@@ -104,18 +104,20 @@ const UpdateReportedOutageStatus = ({
   return (
     <Dialog>
       {/* Trigger */}
-      <DialogTrigger
-        render={
-          <Button
-            type="button"
-            size="sm"
-            className="h-8 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
-          >
-            <FiRefreshCw className="size-3.5" />
-            Update Status
-          </Button>
-        }
-      />
+     {currentStatus !== "RESTORED" && (
+  <DialogTrigger
+    render={
+      <Button
+        type="button"
+        size="sm"
+        className="h-8 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 cursor-pointer"
+      >
+        <FiRefreshCw className="size-3.5" />
+        Update Status
+      </Button>
+    }
+  />
+)}
 
       {/* Dialog */}
       <DialogContent className="max-w-sm gap-0 overflow-hidden rounded-2xl p-0">
