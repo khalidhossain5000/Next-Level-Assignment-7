@@ -1,4 +1,6 @@
-import { createLoadShedding, getLoadSheddingDetails, getLoadSheddingSchedule, ILoadSheddingQuery, updateLoadShedding } from "@/api/load-shedding.api";
+
+import { createLoadShedding, getLoadSheddingDetails, getLoadSheddingSchedule, updateLoadShedding } from "@/api";
+import type { ILoadSheddingQuery } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useAddLoadShedding(){

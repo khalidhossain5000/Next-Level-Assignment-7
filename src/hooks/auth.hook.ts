@@ -82,8 +82,14 @@ export function useGetAllUsers(){
 
 
 export function useUpdateUserStatus(){
+      const queryClient = useQueryClient()
+
     return useMutation({
-        mutationFn:updateUserStatus
+        mutationFn:updateUserStatus,
+        onSuccess:()=>{
+      queryClient.invalidateQueries({queryKey:["all-users"]})
+    }
+  
     })
 }
 
