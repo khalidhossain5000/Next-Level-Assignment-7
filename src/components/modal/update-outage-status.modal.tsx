@@ -104,20 +104,20 @@ const UpdateReportedOutageStatus = ({
   return (
     <Dialog>
       {/* Trigger */}
-     {currentStatus !== "RESTORED" && (
-  <DialogTrigger
-    render={
-      <Button
-        type="button"
-        size="sm"
-        className="h-8 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 cursor-pointer"
-      >
-        <FiRefreshCw className="size-3.5" />
-        Update Status
-      </Button>
-    }
-  />
-)}
+      {currentStatus !== "RESTORED" && (
+        <DialogTrigger
+          render={
+            <Button
+              type="button"
+              size="sm"
+              className="h-8 gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 cursor-pointer"
+            >
+              <FiRefreshCw className="size-3.5" />
+              Update Status
+            </Button>
+          }
+        />
+      )}
 
       {/* Dialog */}
       <DialogContent className="max-w-sm gap-0 overflow-hidden rounded-2xl p-0">
@@ -144,9 +144,7 @@ const UpdateReportedOutageStatus = ({
           <div className="rounded-xl border border-border bg-muted/30 px-4 py-3.5">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs text-muted-foreground">
-                  Current status
-                </p>
+                <p className="text-xs text-muted-foreground">Current status</p>
 
                 <p className="mt-1 text-sm font-semibold text-card-foreground">
                   {currentStatus.replace("_", " ")}
@@ -172,7 +170,7 @@ const UpdateReportedOutageStatus = ({
               value={selectedStatus}
               onValueChange={(value) =>
                 setSelectedStatus(
-                  value as UpdateReportedOutageStatusProps["currentStatus"],
+                  value as UpdateReportedOutageStatusProps["currentStatus"]
                 )
               }
             >
