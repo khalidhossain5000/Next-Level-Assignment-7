@@ -14,6 +14,7 @@ import HomeCardSkeleton from "@/components/loader/skleton-loading/others/home-ca
 import {
   useGetAllZone,
   useGetLoadSheddingSchedule,
+  useGetOutageStats,
   useGetPlannedOutage,
   useGetTechnicianCount,
 } from "@/hooks";
@@ -37,15 +38,13 @@ const cardVariants: Variants = {
 const Overview = () => {
   const { data: zone, isPending: zonePending } = useGetAllZone();
 
-  const { data: loadShedding, isPending: loadSheddingPending } =
-    useGetLoadSheddingSchedule();
-
-  const { data: plannedOutage, isPending: plannedOutagePending } =
-    useGetPlannedOutage();
 
   const { data: technicianCount, isPending: technicianCountPending } =
-    useGetTechnicianCount();
-
+    useGetTechnicianCount(); 
+    
+    const { data: outageStats, isPending: statsPending } =
+    useGetOutageStats();
+console.log(outageStats,"stats")
   const shouldReduceMotion = useReducedMotion();
   const [hasEntered, setHasEntered] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -64,8 +63,8 @@ const Overview = () => {
   }, [hasEntered, shouldReduceMotion]);
 
   const zoneCount = zone?.data?.length || 0;
-  const loadSheddingCount = loadShedding?.data?.data?.length || 0;
-  const plannedOutageCount = plannedOutage?.data?.data?.length || 0;
+  const totalReportedOutagesCount = outageStats?.data?.totalReportedOutages || 0;
+  const totalRestoredOutagesCount = outageStats?.data?.totalRestoredOutages || 0;
   const technicianCountValue = Number(technicianCount?.data) || 0;
 
   const displayProgress = shouldReduceMotion ? 1 : progress;
@@ -84,7 +83,7 @@ const Overview = () => {
     },
     {
       title: "Reported Outages",
-      value: loadSheddingCount,
+      value: totalReportedOutagesCount,
      description: "Reported Unexpected power outages",
       icon: Zap,
       iconClass: "bg-chart-2/10 text-chart-2 ring-chart-2/20",
@@ -95,7 +94,7 @@ const Overview = () => {
     },
     {
       title: "Restored Outages",
-      value: plannedOutageCount,
+      value: totalRestoredOutagesCount,
       description: "Outages resolved and power restored",
       icon: CalendarClock,
       iconClass: "bg-chart-3/10 text-chart-3 ring-chart-3/20",
@@ -125,8 +124,7 @@ const Overview = () => {
       description="Live data from across the network: the power zones we monitor, upcoming load shedding and planned outages, and the technicians available to restore your service."
     >
       {zonePending ||
-      loadSheddingPending ||
-      plannedOutagePending ||
+     statsPending ||
       technicianCountPending ? (
         <HomeCardSkeleton length={4} />
       ) : (
