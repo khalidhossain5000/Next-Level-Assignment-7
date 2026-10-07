@@ -55,7 +55,6 @@ const getPriorityClassName = (priority: string) => {
   return "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-300";
 };
 
-
 const renderActions = (outage: IAllOutage) => (
   <>
     <UpdateReportedOutageStatus
@@ -65,6 +64,16 @@ const renderActions = (outage: IAllOutage) => (
 
     {outage.status === "REPORTED" ? (
       <AssignTechnicianModal outageId={outage.id} />
+    ) : outage.status === "RESTORED" ? (
+      <Button
+        type="button"
+        size="sm"
+        disabled
+        variant="outline"
+        className="h-8 cursor-not-allowed gap-1.5 rounded-lg px-3 text-xs font-semibold text-white shadow-none disabled:bg-green-600 disabled:opacity-100"
+      >
+        Outage Restored
+      </Button>
     ) : (
       <Button
         type="button"
@@ -85,9 +94,7 @@ const AllReportedOutages = () => {
   const outages: IAllOutage[] = data?.data ?? [];
 
   if (isPending) {
-    return (
-      <MyOutagesSkleton/>
-    );
+    return <MyOutagesSkleton />;
   }
 
   if (outages.length === 0) {
@@ -231,7 +238,6 @@ const AllReportedOutages = () => {
             className="rounded-xl border-border bg-card shadow-sm transition-colors hover:bg-muted/20"
           >
             <CardContent className="px-4 py-3.5 sm:px-5">
-       
               <div className="hidden flex-wrap items-center gap-3 sm:flex">
                 {/* Cause  Area */}
                 <div className="min-w-0 flex-1">
