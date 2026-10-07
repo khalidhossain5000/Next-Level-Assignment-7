@@ -166,13 +166,13 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
             disabled={isPending}
             className="min-h-11 w-full rounded-lg font-semibold"
           >
-            {isPending && <Spinner />} {isPending ? "Submitting...." : "Submits"}
+            {isPending && <Spinner />} {isPending ? "Submitting...." : "Submit"}
           </Button>
         </FieldGroup>
       </form>
 
       <FieldSeparator>Or continue with</FieldSeparator>
-      {/* <Suspense fallback={null}></Suspense> */}
+      
       <GoogleLoginComponet role={role} />
     </div>
   );

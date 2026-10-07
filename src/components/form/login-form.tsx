@@ -47,6 +47,7 @@ export default function LoginForm({ quickLoginAccounts }: { quickLoginAccounts: 
     setSigningInAs(role ?? null);
     login(credentials, {
       onSuccess: (res) => {
+        console.log(res,"login res")
         setSigningInAs(null);
         toast.success(res.message || "User login successful");
         router.replace(getSafeRedirect(searchParams.get("redirect")));
