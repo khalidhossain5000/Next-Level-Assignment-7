@@ -33,7 +33,7 @@ interface UpdateReportedOutageStatusProps {
   currentStatus: IAllOutage["status"];
 }
 
-const statusOptions = [
+const outageStatusOptions = [
   {
     value: "REPORTED",
     label: "Reported",
@@ -193,7 +193,7 @@ const UpdateReportedOutageStatus = ({
             <Select
               value={selectedStatus}
               onValueChange={(value) => {
-                const nextStatus = statusOptions.find(
+                const nextStatus = outageStatusOptions.find(
                   (status) => status.value === value,
                 )?.value;
                 if (nextStatus) setSelectedStatus(nextStatus);
@@ -205,7 +205,7 @@ const UpdateReportedOutageStatus = ({
               </SelectTrigger>
 
               <SelectContent>
-                {statusOptions.map((status) => (
+                {outageStatusOptions.map((status) => (
                   <SelectItem key={status.value} value={status.value}>
                     {status.label}
                   </SelectItem>
