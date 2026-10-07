@@ -20,7 +20,7 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
   const { mutate: register, isPending } = useRegisterUser()
   const router = useRouter()
   const searchParams = useSearchParams();
-  console.log(role,'user role')
+  console.log(role, 'user role')
   const form = useForm({
     defaultValues: {
       name: "Main Customer",
@@ -43,10 +43,10 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
           console.log(res, "Register success res")
           toast.success(res.message || "Registration Success Otp send to email")
           const params = new URLSearchParams({ email: registerData.email })
-         const redirect = getSafeRedirect(searchParams.get("redirect"), "")
-if (redirect) params.set("redirect", redirect)
+          const redirect = getSafeRedirect(searchParams.get("redirect"), "")
+          if (redirect) params.set("redirect", redirect)
 
-router.push(`/${role}/register/verify-account?${params.toString()}`)
+          router.push(`/${role}/register/verify-account?${params.toString()}`)
         },
         onError: (err) => {
           const message =
@@ -61,15 +61,6 @@ router.push(`/${role}/register/verify-account?${params.toString()}`)
   });
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold tracking-tight font-manrope">
-          Create your account
-        </h1>
-        <p className="text-balance text-sm text-muted-foreground">
-          Enter your details below to get started
-        </p>
-      </div>
-
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -97,7 +88,7 @@ router.push(`/${role}/register/verify-account?${params.toString()}`)
                     value={field.state.value}
                     autoComplete="off"
                     aria-invalid={isInvalid}
-                    className="bg-background rounded-xl shadow-sm "
+                    className="rounded-xl border-border bg-background shadow-sm"
                     placeholder="Enter Your Full Name"
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -122,7 +113,7 @@ router.push(`/${role}/register/verify-account?${params.toString()}`)
                     value={field.state.value}
                     autoComplete="off"
                     aria-invalid={isInvalid}
-                    className="bg-background rounded-xl shadow-sm "
+                    className="rounded-xl border-border bg-background shadow-sm"
                     placeholder="Enter Your Email Address"
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -149,7 +140,7 @@ router.push(`/${role}/register/verify-account?${params.toString()}`)
                       value={field.state.value}
                       autoComplete="off"
                       aria-invalid={isInvalid}
-                      className="bg-background rounded-xl shadow-sm"
+                      className="rounded-xl border-border bg-background shadow-sm"
                       placeholder="Enter Your Password"
                     />
                     <button
@@ -173,7 +164,7 @@ router.push(`/${role}/register/verify-account?${params.toString()}`)
           <Button
             type="submit"
             disabled={isPending}
-            className="cursor-pointer rounded-full"
+            className="min-h-11 w-full rounded-lg font-semibold"
           >
             {isPending && <Spinner />} {isPending ? "Submitting...." : "Submits"}
           </Button>
@@ -181,8 +172,8 @@ router.push(`/${role}/register/verify-account?${params.toString()}`)
       </form>
 
       <FieldSeparator>Or continue with</FieldSeparator>
-    {/* <Suspense fallback={null}></Suspense> */}
-      <GoogleLoginComponet role={role}/>
+      {/* <Suspense fallback={null}></Suspense> */}
+      <GoogleLoginComponet role={role} />
     </div>
   );
 };

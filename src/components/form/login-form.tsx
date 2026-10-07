@@ -149,7 +149,7 @@ export default function LoginForm({ quickLoginAccounts }: { quickLoginAccounts: 
                   variant="outline"
                   disabled={isSubmitting || !quickLoginAccounts[role].email || !quickLoginAccounts[role].password}
                   onClick={() => submitLogin(quickLoginAccounts[role], role)}
-                  className="h-auto min-h-16 min-w-0 flex-col gap-1.5 rounded-lg px-2 py-2.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                  className="h-auto min-h-16 min-w-0 flex-col gap-1.5 rounded-lg px-2 py-2.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary cursor-pointer"
                 >
                   {signingInAs === role ? <Spinner /> : <Icon aria-hidden="true" className="size-4" />}
                   <span className="truncate">{signingInAs === role ? "Signing in" : label}</span>

@@ -28,7 +28,7 @@ const Loginpage = () => {
         <main className="flex flex-1 items-center justify-center py-12">
           <div className="w-full max-w-md">
             <div className="mb-8 space-y-2">
-              <p className="text-sm font-semibold text-primary">POWERPULSE ACCOUNT</p>
+          
               <h1 className="font-manrope text-3xl font-bold sm:text-4xl">
                 Welcome back.
               </h1>
