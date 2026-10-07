@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { Field, FieldError, FieldGroup, FieldLabel, FieldSeparator } from "../ui/field";
 import { loginSchema } from "@/validation";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ShieldCheck, UserRound, Wrench } from "lucide-react";
 import { useLogin } from "@/hooks";
 import { Spinner } from "../ui/spinner";
 import { toast } from "sonner";
@@ -16,53 +16,53 @@ import Link from "next/link";
 
 import GoogleLoginComponet from "../modules/google/GoogleComponent";
 import { getSafeRedirect, withRedirect } from "@/lib/redirect";
+import type { TUserRole } from "@/types";
 
-export default function LoginForm() {
+type QuickLoginAccounts = Record<TUserRole, { email: string; password: string }>;
+
+const quickLoginOptions = [
+  { role: "ADMIN", label: "Admin", icon: ShieldCheck },
+  { role: "CUSTOMER", label: "Customer", icon: UserRound },
+  { role: "TECHNICIAN", label: "Technician", icon: Wrench },
+] as const;
+
+export default function LoginForm({ quickLoginAccounts }: { quickLoginAccounts: QuickLoginAccounts }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [signingInAs, setSigningInAs] = useState<TUserRole | null>(null);
   const { mutate: login, isPending } = useLogin()
   const router = useRouter()
   const searchParams = useSearchParams();
   const form = useForm({
     defaultValues: {
-      email: "powerpulse@admin.com",
-      password: "admin",
+      email: "",
+      password: "",
     },
     validators: {
       onSubmit: loginSchema,
     },
-    onSubmit: ({ value }) => {
-      const loginData = {
-        email: value.email,
-        password: value.password
-      }
-      login(loginData, {
-        onSuccess: (res) => {
-          toast.success(res.message || "User log-in successfull")
-          router.replace(getSafeRedirect(searchParams.get("redirect")))
-
-        },
-        onError: (err) => {
-          const message =
-            (err as any)?.data?.message || err.message || " login failed";
-          toast.error(message || "Login failed!Somehting went wrong")
-          console.log(err, 'this is error in login')
-        }
-      })
-      console.log(value);
-    },
+    onSubmit: ({ value }) => submitLogin(value),
   });
+
+  const submitLogin = (credentials: { email: string; password: string }, role?: TUserRole) => {
+    setSigningInAs(role ?? null);
+    login(credentials, {
+      onSuccess: (res) => {
+        setSigningInAs(null);
+        toast.success(res.message || "User login successful");
+        router.replace(getSafeRedirect(searchParams.get("redirect")));
+      },
+      onError: (error) => {
+        setSigningInAs(null);
+        const loginError = error as { data?: { message?: string }; message?: string };
+        toast.error(loginError.data?.message || loginError.message || "Login failed. Please try again.");
+      },
+    });
+  };
+
+  const isSubmitting = isPending || signingInAs !== null;
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold tracking-tight font-manrope">
-          Login to your account
-        </h1>
-        <p className="text-balance text-sm text-muted-foreground">
-          Enter your email below to login to your account
-        </p>
-      </div>
-
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -85,7 +85,7 @@ export default function LoginForm() {
                     onChange={(e) => field.handleChange(e.target.value)}
                     onBlur={field.handleBlur}
                     value={field.state.value}
-                    autoComplete="off"
+                    autoComplete="username"
                     aria-invalid={isInvalid}
                     className="bg-background rounded-xl shadow-sm "
                     placeholder="Enter Your Email Address"
@@ -112,12 +112,14 @@ export default function LoginForm() {
                       onChange={(e) => field.handleChange(e.target.value)}
                       onBlur={field.handleBlur}
                       value={field.state.value}
-                      autoComplete="off"
+                      autoComplete="current-password"
                       aria-invalid={isInvalid}
                       className="bg-background rounded-xl shadow-sm"
                       placeholder="Enter Your Password"
                     />
                     <button
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      aria-pressed={showPassword}
                       className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
                       type="button"
                       onClick={() => setShowPassword((prev) => !prev)}
@@ -137,7 +139,29 @@ export default function LoginForm() {
             }}
           </form.Field>
 
-          <Button type="submit" disabled={isPending} className="cursor-pointer rounded-full">{isPending && <Spinner />}  {isPending ? "Submitting...." : "Submit"}</Button>
+          <div className="pt-1">
+            <p className="mb-3 text-sm font-semibold text-foreground">Quick login</p>
+            <div className="grid grid-cols-3 gap-2">
+              {quickLoginOptions.map(({ role, label, icon: Icon }) => (
+                <Button
+                  key={role}
+                  type="button"
+                  variant="outline"
+                  disabled={isSubmitting || !quickLoginAccounts[role].email || !quickLoginAccounts[role].password}
+                  onClick={() => submitLogin(quickLoginAccounts[role], role)}
+                  className="h-auto min-h-16 min-w-0 flex-col gap-1.5 rounded-lg px-2 py-2.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                >
+                  {signingInAs === role ? <Spinner /> : <Icon aria-hidden="true" className="size-4" />}
+                  <span className="truncate">{signingInAs === role ? "Signing in" : label}</span>
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          <Button type="submit" disabled={isSubmitting} className="min-h-11 w-full rounded-lg font-semibold">
+            {isPending && <Spinner />}
+            {isPending ? "Signing in..." : "Sign in"}
+          </Button>
         </FieldGroup>
 
       </form>
@@ -148,7 +172,7 @@ export default function LoginForm() {
 
       <p className="text-center text-sm text-muted-foreground">
         Don&apos;t have an account?{" "}
-      <Link href={withRedirect("/select-role", searchParams.get("redirect"))}
+        <Link href={withRedirect("/select-role", searchParams.get("redirect"))}
           className="font-semibold text-primary underline-offset-4 transition-colors hover:underline"
         >
           Register
