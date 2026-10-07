@@ -66,3 +66,29 @@ export const getLoadSheddingStatusClassName = (status: string) => {
       return "border-border bg-muted text-muted-foreground";
   }
 };
+
+
+
+
+
+
+
+
+
+
+export const getPaymentsClassName = (status: string) => {
+  switch (status) {
+    case "COMPLETED":
+      return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
+
+    case "PENDING":
+      return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
+
+    case "FAILED":
+    case "CANCELLED":
+      return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
+
+    default:
+      return "border-border bg-muted text-muted-foreground";
+  }
+};

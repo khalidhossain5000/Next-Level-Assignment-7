@@ -19,57 +19,13 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
+import { IMeta, IPaymentRecord } from "@/types";
+import { getPaymentsClassName } from "@/lib/utils";
+import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
-interface IPaymentCustomer {
-  id: string;
-  name: string;
-  email: string;
-}
 
-interface IPaymentOutage {
-  id: string;
-  cause: string;
-  priority: "NORMAL" | "HIGH";
-  status: string;
-}
 
-interface IPaymentRecord {
-  id: string;
-  amount: string;
-  provider: string;
-  transactionId: string;
-  status: "COMPLETED" | "PENDING" | "FAILED" | "CANCELLED";
-  paidAt: string | null;
-  createdAt: string;
-  customer: IPaymentCustomer;
-  outage: IPaymentOutage;
-}
-
-interface IMeta {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
-
-const getStatusClassName = (status: string) => {
-  switch (status) {
-    case "COMPLETED":
-      return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
-
-    case "PENDING":
-      return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
-
-    case "FAILED":
-    case "CANCELLED":
-      return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
-
-    default:
-      return "border-border bg-muted text-muted-foreground";
-  }
-};
 
 const formatDate = (date: string | null) => {
   if (!date) return "—";
@@ -103,24 +59,10 @@ const PaymentRecords = () => {
 
   if (records.length === 0) {
     return (
-      <div className="mx-auto flex min-h-72 w-full max-w-7xl items-center justify-center rounded-2xl border border-border bg-card px-4 shadow-sm">
-        <div className="text-center">
-          <div className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <FiCreditCard className="size-5" />
-          </div>
-
-          <h3 className="font-manrope text-base font-semibold text-card-foreground">
-            No Payment Records Found
-          </h3>
-
-          <p className="mt-1 text-sm text-muted-foreground">
-            No priority restoration payments have been made yet.
-          </p>
-        </div>
-      </div>
+    <EmptyText title=" No Payment Records Found" description="No priority restoration payments have been made yet."/>
     );
   }
-
+ 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
       {/* Desktop */}
@@ -221,7 +163,7 @@ const PaymentRecords = () => {
                       <TableCell className={cellBorder}>
                         <Badge
                           variant="outline"
-                          className={getStatusClassName(payment.status)}
+                          className={getPaymentsClassName(payment.status)}
                         >
                           {payment.status}
                         </Badge>
@@ -270,7 +212,7 @@ const PaymentRecords = () => {
 
                 <Badge
                   variant="outline"
-                  className={`shrink-0 text-[10px] ${getStatusClassName(
+                  className={`shrink-0 text-[10px] ${getPaymentsClassName(
                     payment.status
                   )}`}
                 >

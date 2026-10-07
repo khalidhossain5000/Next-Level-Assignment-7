@@ -35,3 +35,28 @@ export type FooterProps = {
   copyrightText?: string;
 };
 
+
+export interface IPaymentCustomer {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface IPaymentOutage {
+  id: string;
+  cause: string;
+  priority: "NORMAL" | "HIGH";
+  status: string;
+}
+
+export interface IPaymentRecord {
+  id: string;
+  amount: string;
+  provider: string;
+  transactionId: string;
+  status: "COMPLETED" | "PENDING" | "FAILED" | "CANCELLED";
+  paidAt: string | null;
+  createdAt: string;
+  customer: IPaymentCustomer;
+  outage: IPaymentOutage;
+}
