@@ -35,7 +35,7 @@ const Overview = () => {
     useGetTechnicianCount();
 
   const { data: outageStats, isPending: statsPending } = useGetOutageStats();
-  console.log(outageStats, "stats");
+  console.log(outageStats, "stats all reporhome");
   const shouldReduceMotion = useReducedMotion();
   const [hasEntered, setHasEntered] = useState(false);
   const [progress, setProgress] = useState(0);
