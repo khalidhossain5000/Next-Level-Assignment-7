@@ -40,3 +40,14 @@ export type LoadSheddingSchedule = {
   updatedAt: string;
   area: Area;
 };
+
+
+export interface ILoadShedding {
+  id: string;
+  title: string;
+  reason: string;
+  status: "SCHEDULED" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
+  startTime: string;
+  endTime: string;
+  area: Area | null;
+}

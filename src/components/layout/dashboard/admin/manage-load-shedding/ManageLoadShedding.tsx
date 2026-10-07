@@ -30,30 +30,12 @@ import {
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 import UpdateLoadSheddingModal from "@/components/modal/update-load-shedding.modal";
 import { getLoadSheddingStatusClassName } from "@/lib/utils";
+import type { ILoadShedding, IMeta } from "@/types";
+import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
-interface IArea {
-  id: string;
-  name: string;
-  code: string;
-  address: string;
-}
 
-interface ILoadShedding {
-  id: string;
-  title: string;
-  reason: string;
-  status: "SCHEDULED" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
-  startTime: string;
-  endTime: string;
-  area: IArea | null;
-}
 
-interface IMeta {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
+
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleString("en-BD", {
@@ -88,24 +70,10 @@ const ManageLoadShedding = () => {
 
   if (schedules.length === 0) {
     return (
-      <div className="mx-auto flex min-h-72 w-full max-w-6xl items-center justify-center rounded-2xl border border-border bg-card px-4">
-        <div className="text-center">
-          <div className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <FiZap className="size-5" />
-          </div>
-
-          <h3 className="font-manrope text-base font-semibold text-card-foreground">
-            No Load Shedding Schedules
-          </h3>
-
-          <p className="mt-1 text-sm text-muted-foreground">
-            No load shedding has been scheduled yet.
-          </p>
-        </div>
-      </div>
+    <EmptyText title="No Load Shedding Schedules" description=" No load shedding has been scheduled yet."/>
     );
   }
-
+ 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
       {/* Desktop Table */}
