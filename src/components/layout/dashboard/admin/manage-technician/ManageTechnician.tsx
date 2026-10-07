@@ -13,7 +13,7 @@ import {
 } from "react-icons/fi";
 
 import { useApproveTechnician, useGetAllTechnician } from "@/hooks";
-import { TechnicianProfileStatus } from "@/types";
+import { Technician, TechnicianProfileStatus } from "@/types";
 
 import {
   Table,
@@ -27,25 +27,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
-
-interface TechnicianProfile {
-  availability?: "AVAILABLE" | "BUSY";
-  expertise?: string[];
-  experience?: number;
-  bio?: string;
-  resume?: string | null;
-  technicianvProfileVerificationStatus?: TechnicianProfileStatus;
-}
-
-interface Technician {
-  id: string;
-  name: string;
-  email: string;
-  profileImage?: string | null;
-  status?: string;
-  technicianProfile?: TechnicianProfile | null;
-  assignedOutages?: { id: string; status: string }[];
-}
 
 const getAvailabilityClassName = (availability?: string) => {
   if (availability === "AVAILABLE") {

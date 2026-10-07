@@ -34,3 +34,4 @@ export type FooterProps = {
   stats?: StatItem[];
   copyrightText?: string;
 };
+
