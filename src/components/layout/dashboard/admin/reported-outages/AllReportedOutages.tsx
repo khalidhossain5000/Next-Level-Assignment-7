@@ -21,6 +21,8 @@ import type { IAllOutage } from "@/types";
 import UpdateReportedOutageStatus from "@/components/modal/update-outage-status.modal";
 import AssignTechnicianModal from "@/components/modal/assign-technician.modal";
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
+import { getPriorityClassName, getStatusClassName } from "@/lib/utils";
+import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleString("en-BD", {
@@ -29,31 +31,6 @@ const formatDate = (date: string) => {
   });
 };
 
-const getStatusClassName = (status: string) => {
-  switch (status) {
-    case "REPORTED":
-      return "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300";
-    case "ACKNOWLEDGED":
-      return "border-cyan-200 bg-cyan-50 text-cyan-700 dark:border-cyan-900 dark:bg-cyan-950/40 dark:text-cyan-300";
-    case "ASSIGNED":
-      return "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900 dark:bg-violet-950/40 dark:text-violet-300";
-    case "IN_PROGRESS":
-      return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
-    case "RESTORED":
-      return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
-    case "CANCELLED":
-      return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
-    default:
-      return "border-border bg-muted text-muted-foreground";
-  }
-};
-
-const getPriorityClassName = (priority: string) => {
-  if (priority === "HIGH") {
-    return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
-  }
-  return "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-300";
-};
 
 const renderActions = (outage: IAllOutage) => (
   <>
@@ -99,21 +76,7 @@ const AllReportedOutages = () => {
 
   if (outages.length === 0) {
     return (
-      <div className="mx-auto flex min-h-72 w-full max-w-6xl items-center justify-center rounded-2xl border border-border bg-card px-4">
-        <div className="text-center">
-          <div className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <FiZap className="size-5" />
-          </div>
-
-          <h3 className="font-manrope text-base font-semibold text-card-foreground">
-            No Outages Reported
-          </h3>
-
-          <p className="mt-1 text-sm text-muted-foreground">
-            No customers have reported any power outages yet.
-          </p>
-        </div>
-      </div>
+    <EmptyText title="No Outages Reported" description="No customers have reported any power outages yet."/>
     );
   }
 
