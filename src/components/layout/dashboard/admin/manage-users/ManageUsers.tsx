@@ -23,28 +23,11 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
-import type { IUser, UserStatus } from "@/types";
+
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-const getRoleClassName = (role: string) => {
-  switch (role) {
-    case "ADMIN":
-      return "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900 dark:bg-violet-950/40 dark:text-violet-300";
-    case "TECHNICIAN":
-      return "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300";
-    default:
-      return "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-300";
-  }
-};
-
-const getStatusClassName = (status: string) => {
-  if (status === "ACTIVE") {
-    return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
-  }
-  return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
-};
+import type { IUser, UserStatus } from "@/types";
+import { getRoleClassName, getStatusClassName } from "@/lib/admin.libs";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("en-BD", {
@@ -64,12 +47,10 @@ const ManageUsers = () => {
     variables,
   } = useUpdateUserStatus();
 
-  const allUsers: IUser[] = Array.isArray(users) ? users : (users?.data ?? []);
-  
+  const allUsers: IUser[] = Array.isArray(users) ? users : users?.data ?? [];
 
   const handleToggleStatus = (userId: string, currentStatus: UserStatus) => {
-    const newStatus: UserStatus =
-      currentStatus === "ACTIVE" ? "BAN" : "ACTIVE";
+    const newStatus: UserStatus = currentStatus === "ACTIVE" ? "BAN" : "ACTIVE";
 
     updateUserStatus(
       { userId, status: newStatus },
@@ -78,20 +59,19 @@ const ManageUsers = () => {
           toast.success(
             newStatus === "BAN"
               ? "User banned successfully."
-              : "User unbanned successfully.",
+              : "User unbanned successfully."
           );
         },
         onError: (error: any) => {
           toast.error(
             error?.data?.message ||
-            error?.message ||
-            "Failed to update user status.",
+              error?.message ||
+              "Failed to update user status."
           );
         },
-      },
+      }
     );
   };
-
 
   const renderAction = (user: IUser, compact = false) => {
     if (user.role === "ADMIN") {
@@ -102,8 +82,7 @@ const ManageUsers = () => {
       );
     }
 
-    const isThisRowPending =
-      updating && (variables as any)?.userId === user.id;
+    const isThisRowPending = updating && (variables as any)?.userId === user.id;
 
     if (user.status === "ACTIVE") {
       return (
@@ -113,14 +92,13 @@ const ManageUsers = () => {
           size="sm"
           disabled={isThisRowPending}
           onClick={() => handleToggleStatus(user.id, user.status)}
-          className={`cursor-pointer gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30 ${compact ? "h-8" : "h-9"
-            }`}
+          className={`cursor-pointer gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30 ${
+            compact ? "h-8" : "h-9"
+          }`}
         >
           <FiLock className="size-3.5" />
-         
-          {
-            updating ? "Banning....." : "Ban"
-          }
+
+          {updating ? "Banning....." : "Ban"}
         </Button>
       );
     }
@@ -131,22 +109,19 @@ const ManageUsers = () => {
         size="sm"
         disabled={isThisRowPending}
         onClick={() => handleToggleStatus(user.id, user.status)}
-        className={`cursor-pointer gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 ${compact ? "h-8" : "h-9"
-          }`}
+        className={`cursor-pointer gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 ${
+          compact ? "h-8" : "h-9"
+        }`}
       >
         <FiUnlock className="size-3.5" />
-        
-         {
-            updating ? "UnBanning....." : "Unban"
-          }
+
+        {updating ? "UnBanning....." : "Unban"}
       </Button>
     );
   };
 
   if (isPending) {
-    return (
-      <MyOutagesSkleton />
-    );
+    return <MyOutagesSkleton />;
   }
 
   if (allUsers.length === 0) {
@@ -206,13 +181,11 @@ const ManageUsers = () => {
                       <TableCell className={`pl-6 ${cellBorder}`}>
                         <div className="flex items-center gap-2.5">
                           <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                     
                             <Avatar className="relative size-9 border border-background shadow-lg ring-1 ring-border">
                               <AvatarImage
                                 src={user?.profileImage as string}
                                 alt={user?.name}
                                 className="object-cover"
-
                               />
 
                               <AvatarFallback className="text-2xl font-semibold uppercase">
@@ -316,7 +289,7 @@ const ManageUsers = () => {
                       <Badge
                         variant="outline"
                         className={`shrink-0 text-[10px] font-semibold ${getStatusClassName(
-                          user.status,
+                          user.status
                         )}`}
                       >
                         {user.status}
@@ -333,7 +306,7 @@ const ManageUsers = () => {
                 <Badge
                   variant="outline"
                   className={`hidden shrink-0 md:inline-flex ${getRoleClassName(
-                    user.role,
+                    user.role
                   )}`}
                 >
                   {user.role}
@@ -390,7 +363,7 @@ const ManageUsers = () => {
                 <Badge
                   variant="outline"
                   className={`shrink-0 whitespace-nowrap text-[10px] font-semibold ${getStatusClassName(
-                    user.status,
+                    user.status
                   )}`}
                 >
                   {user.status}
