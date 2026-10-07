@@ -278,7 +278,7 @@ const AssignTechnicianModal = ({ outageId }: AssignTechnicianModalProps) => {
                 <Button
                   type="button"
                   variant="outline"
-                  className="flex-1 rounded-lg"
+                  className="flex-1 rounded-lg cursor-pointer"
                   disabled={assigning}
                 >
                   Cancel
@@ -288,7 +288,7 @@ const AssignTechnicianModal = ({ outageId }: AssignTechnicianModalProps) => {
 
             <Button
               type="submit"
-              className="flex-1 gap-1.5 rounded-lg bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
+              className="flex-1 gap-1.5 rounded-lg bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 cursor-pointer"
               disabled={
                 !selectedTechnicianId ||
                 technicianPending ||

@@ -206,7 +206,7 @@ const UpdateReportedOutageStatus = ({
               <Button
                 type="button"
                 variant="outline"
-                className="flex-1 rounded-lg"
+                className="flex-1 rounded-lg cursor-pointer"
               >
                 Cancel
               </Button>
@@ -215,7 +215,7 @@ const UpdateReportedOutageStatus = ({
 
           <Button
             type="button"
-            className="flex-1 gap-1.5 rounded-lg bg-primary font-semibold text-primary-foreground hover:bg-primary/90"
+            className="flex-1 gap-1.5 rounded-lg bg-primary font-semibold text-primary-foreground hover:bg-primary/90 cursor-pointer"
             onClick={handleUpdateStatus}
             disabled={selectedStatus === currentStatus}
           >
