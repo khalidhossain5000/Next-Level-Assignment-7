@@ -6,8 +6,16 @@ export interface ILoadSheddingPayload {
   areaId: string;
 }
 
-
-
+export interface ILoadSheddingQuery {
+    page?:number;
+    limit?:number;
+    searchTerm?:string;
+}
+export interface IUpdateLoadSheddingPayload {
+    id:string;
+    title?:string;
+    areaId?:string
+}
 
 export type Area = {
   id: string;
