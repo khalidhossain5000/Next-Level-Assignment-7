@@ -1,4 +1,4 @@
-import { assignTechnician, deleteMyOutage, getAllOutages, getCurrentTechnicainOutage, getMyOutages, reportOutage, updateMyOutage, updateOutageStatus } from "@/api";
+import { assignTechnician, deleteMyOutage, getAllOutages, getCurrentTechnicainOutage, getMyOutages, getOutagesStats, reportOutage, updateMyOutage, updateOutageStatus } from "@/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useReportOutage(){
@@ -17,6 +17,13 @@ export function useGetMyOutages(){
     return useQuery({
         queryKey:["my-outages"],
         queryFn:getMyOutages
+    })
+}
+
+export function useGetOutageStats(){
+    return useQuery({
+        queryKey:["outage-stats"],
+        queryFn:getOutagesStats
     })
 }
 
