@@ -26,6 +26,8 @@ import {
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 import UpdatePlannedOutageModal from "@/components/modal/update-planned-outage.modal";
 import { getPlannedOutageStatusClassName } from "@/lib/utils";
+import { IMeta, IPlannedOutage } from "@/types";
+import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleString("en-BD", {
@@ -58,21 +60,7 @@ const ManagePlannedOutage = () => {
 
   if (outages.length === 0) {
     return (
-      <div className="mx-auto flex min-h-72 w-full max-w-6xl items-center justify-center rounded-2xl border border-border bg-card px-4">
-        <div className="text-center">
-          <div className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <FiCalendar className="size-5" />
-          </div>
-
-          <h3 className="font-manrope text-base font-semibold text-card-foreground">
-            No Planned Outages
-          </h3>
-
-          <p className="mt-1 text-sm text-muted-foreground">
-            No planned maintenance outages have been scheduled yet.
-          </p>
-        </div>
-      </div>
+    <EmptyText title=" No Planned Outages" description="No planned maintenance outages have been scheduled yet."/>
     );
   }
 

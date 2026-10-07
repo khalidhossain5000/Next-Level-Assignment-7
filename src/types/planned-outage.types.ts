@@ -39,3 +39,15 @@ export interface IPlannedOutage {
   updatedAt:string;
   area:Area
 }
+
+
+
+
+
+
+export interface IMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
