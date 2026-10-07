@@ -20,7 +20,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
-import { IMeta, IPaymentRecord } from "@/types";
+import type { IMeta, IPaymentRecord } from "@/types";
 import { getPaymentsClassName } from "@/lib/utils";
 import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
