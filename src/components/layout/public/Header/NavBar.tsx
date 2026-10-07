@@ -83,7 +83,7 @@ const NavBar = () => {
           </nav>
 
           <div className="flex items-center gap-3">
-            {/* Desktop auth buttons (mobile: inside drawer) */}
+            {/* Desktop auth buttons ==- */}
             <div className="hidden items-center gap-3 xl:flex">
               {isPending ? (
                 <span className="animate-pulse px-3 text-sm font-medium text-muted-foreground">
