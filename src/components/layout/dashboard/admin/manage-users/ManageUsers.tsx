@@ -74,11 +74,11 @@ const ManageUsers = () => {
     );
   };
 
-  const renderAction = (user: IUser, compact = false) => {
+   const renderAction = (user: IUser, compact = false) => {
     if (user.role === "ADMIN") {
       return (
         <span className="text-xs text-muted-foreground">
-          {compact ? "No actions" : "—"}
+          {compact ? "No actions" : "Can't Ban An Admin"}
         </span>
       );
     }
