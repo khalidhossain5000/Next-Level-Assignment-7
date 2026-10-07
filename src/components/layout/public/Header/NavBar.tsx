@@ -19,10 +19,10 @@ const NavBar = () => {
   const { data, isPending } = useGetMe();
   const user = data?.data;
   const isLoggedIn = !!user;
-  const router=useRouter()
+  const router = useRouter();
   const routes = [
     { name: "Home", url: "/", protected: false },
-    
+
     { name: "Zones", url: "/zones", protected: false },
     { name: "Load Shedding Schedule", url: "/load-shedding-schedule", protected: false },
     { name: "Planned Outage", url: "/planned-outage", protected: false },
@@ -44,7 +44,7 @@ const NavBar = () => {
         queryClient.removeQueries({
           queryKey: ["user"],
         });
-        router.push("/login")
+        router.push("/login");
       },
       onError: () => {
         toast.error("Log out failed");
@@ -85,7 +85,11 @@ const NavBar = () => {
           <div className="flex items-center gap-3">
             {/* Desktop auth buttons (mobile: inside drawer) */}
             <div className="hidden items-center gap-3 xl:flex">
-              {data && !isPending ? (
+              {isPending ? (
+                <span className="animate-pulse px-3 text-sm font-medium text-muted-foreground">
+                  Checking authentication...
+                </span>
+              ) : data ? (
                 <Button
                   onClick={handleLogout}
                   variant="destructive"
