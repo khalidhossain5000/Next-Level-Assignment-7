@@ -26,7 +26,7 @@ import {
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 import UpdatePlannedOutageModal from "@/components/modal/update-planned-outage.modal";
 import { getPlannedOutageStatusClassName } from "@/lib/utils";
-import { IMeta, IPlannedOutage } from "@/types";
+import type { IMeta, IPlannedOutage } from "@/types";
 import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 const formatDate = (date: string) => {
