@@ -81,7 +81,7 @@ const PlannedOutages = () => {
               const statusStyles =
                 schedule.status === "SCHEDULED"
                   ? "border-primary/20 bg-primary/10 text-primary"
-                  : schedule.status === "IN_PROGRESS"
+                  : schedule.status === "ONGOING"
                   ? "border-[#009689]/20 bg-[#009689]/10 text-[#009689]"
                   : schedule.status === "COMPLETED"
                   ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-500"

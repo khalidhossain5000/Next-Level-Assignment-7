@@ -25,46 +25,7 @@ import {
 } from "@/components/ui/pagination";
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 import UpdatePlannedOutageModal from "@/components/modal/update-planned-outage.modal";
-
-interface IArea {
-  id: string;
-  name: string;
-  code: string;
-  address: string;
-}
-
-interface IPlannedOutage {
-  id: string;
-  title: string;
-  reason: string;
-  description: string;
-  status: "SCHEDULED" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
-  startTime: string;
-  endTime: string;
-  area: IArea | null;
-}
-
-interface IMeta {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
-
-const getStatusClassName = (status: string) => {
-  switch (status) {
-    case "SCHEDULED":
-      return "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300";
-    case "IN_PROGRESS":
-      return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
-    case "COMPLETED":
-      return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
-    case "CANCELLED":
-      return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
-    default:
-      return "border-border bg-muted text-muted-foreground";
-  }
-};
+import { getPlannedOutageStatusClassName } from "@/lib/utils";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleString("en-BD", {
@@ -195,7 +156,7 @@ const ManagePlannedOutage = () => {
                       <TableCell className={`pr-6 ${cellBorder}`}>
                         <Badge
                           variant="outline"
-                          className={getStatusClassName(outage.status)}
+                          className={getPlannedOutageStatusClassName(outage.status)}
                         >
                           {outage.status.replace("_", " ")}
                         </Badge>
@@ -242,7 +203,7 @@ const ManagePlannedOutage = () => {
 
                     <Badge
                       variant="outline"
-                      className={`shrink-0 text-[10px] font-semibold ${getStatusClassName(
+                      className={`shrink-0 text-[10px] font-semibold ${getPlannedOutageStatusClassName(
                         outage.status,
                       )}`}
                     >
@@ -305,7 +266,7 @@ const ManagePlannedOutage = () => {
 
                 <Badge
                   variant="outline"
-                  className={`shrink-0 whitespace-nowrap text-[10px] font-semibold ${getStatusClassName(
+                  className={`shrink-0 whitespace-nowrap text-[10px] font-semibold ${getPlannedOutageStatusClassName(
                     outage.status,
                   )}`}
                 >
