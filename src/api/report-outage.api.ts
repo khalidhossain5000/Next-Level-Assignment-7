@@ -19,7 +19,9 @@ export function getAllOutages(){
     return apiClient("/outage")
 }
 
-export fun
+export function getOutagesStats(){
+    return apiClient("/outage/counts")
+}
 
 export interface IUpdateStatus{
     id:string;
