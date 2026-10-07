@@ -28,6 +28,7 @@ import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-o
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { IUser, UserStatus } from "@/types";
 import { getRoleClassName, getStatusClassName } from "@/lib/admin.libs";
+import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("en-BD", {
@@ -126,24 +127,10 @@ const ManageUsers = () => {
 
   if (allUsers.length === 0) {
     return (
-      <div className="mx-auto flex min-h-72 w-full max-w-6xl items-center justify-center rounded-2xl border border-border bg-card px-4">
-        <div className="text-center">
-          <div className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <FiUsers className="size-5" />
-          </div>
-
-          <h3 className="font-manrope text-base font-semibold text-card-foreground">
-            No Users Found
-          </h3>
-
-          <p className="mt-1 text-sm text-muted-foreground">
-            No registered user accounts yet.
-          </p>
-        </div>
-      </div>
+     <EmptyText title="No Users Found" description="  No registered user accounts yet."/>
     );
   }
-<Empty
+
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
       {/* Desktop Table */}
