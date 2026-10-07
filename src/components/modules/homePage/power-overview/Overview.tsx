@@ -83,9 +83,9 @@ const Overview = () => {
       dot: "bg-primary",
     },
     {
-      title: "Load Shedding",
+      title: "Reported Outages",
       value: loadSheddingCount,
-      description: "Scheduled supply-shortage events",
+     description: "Reported Unexpected power outages",
       icon: Zap,
       iconClass: "bg-chart-2/10 text-chart-2 ring-chart-2/20",
       wash: "from-chart-2/10",
@@ -94,9 +94,9 @@ const Overview = () => {
       dot: "bg-chart-2",
     },
     {
-      title: "Planned Outages",
+      title: "Restored Outages",
       value: plannedOutageCount,
-      description: "Upcoming maintenance windows",
+      description: "Outages resolved and power restored",
       icon: CalendarClock,
       iconClass: "bg-chart-3/10 text-chart-3 ring-chart-3/20",
       wash: "from-chart-3/10",

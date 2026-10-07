@@ -2,6 +2,8 @@ import { ofetch } from "ofetch";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL_Production;
 
+console.log(baseURL,"Base url in the api client here")
+
 let refreshPromise: Promise<unknown> | null = null;
 
 const apiClient = ofetch.create({

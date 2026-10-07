@@ -19,7 +19,7 @@ export function getAllOutages(){
     return apiClient("/outage")
 }
 
-
+export fun
 
 export interface IUpdateStatus{
     id:string;
