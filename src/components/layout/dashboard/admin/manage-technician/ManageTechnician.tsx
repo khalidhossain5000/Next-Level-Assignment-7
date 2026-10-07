@@ -142,7 +142,7 @@ const ManageTechnician = () => {
     });
   };
 
-  // Approve / Reject বাটন (table আর card দুই জায়গায় একই)
+  
   const renderAction = (item: Technician, compact = false) => {
     const verificationStatus =
       item.technicianProfile?.technicianvProfileVerificationStatus;
@@ -169,7 +169,7 @@ const ManageTechnician = () => {
           onClick={() =>
             handleUpdateStatus(item.id, TechnicianProfileStatus.APPROVED)
           }
-          className={`${height} gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90`}
+          className={`${height} gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 cursor-pointer`}
         >
           <FiCheckCircle className="size-3.5" />
           Approve
