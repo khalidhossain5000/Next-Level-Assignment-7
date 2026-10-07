@@ -20,14 +20,16 @@ type EmptyTextProps = {
 const EmptyText = ({
   badge = "Not found",
   title = "No data found",
-
+  description = "We couldn't find anything to show here.",
+  action,
   compact = false,
   className,
   glowClassName,
   badgeClassName,
   contentClassName,
   titleClassName,
-
+  descriptionClassName,
+  actionClassName,
 }: EmptyTextProps) => {
   return (
     <div
@@ -72,10 +74,21 @@ const EmptyText = ({
         >
           {title}
         </h3>
-       
+        {description && (
+          <p
+            className={cn(
+              "text-pretty text-sm text-muted-foreground",
+              descriptionClassName
+            )}
+          >
+            {description}
+          </p>
+        )}
       </div>
 
-     
+      {action && (
+        <div className={cn("relative mt-1", actionClassName)}>{action}</div>
+      )}
     </div>
   );
 };

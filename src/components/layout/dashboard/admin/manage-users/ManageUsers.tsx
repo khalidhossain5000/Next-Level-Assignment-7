@@ -143,7 +143,7 @@ const ManageUsers = () => {
       </div>
     );
   }
-
+<Empty
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
       {/* Desktop Table */}
