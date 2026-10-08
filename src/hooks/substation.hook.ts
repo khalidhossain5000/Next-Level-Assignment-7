@@ -1,9 +1,14 @@
 import { addSubstation, getSubstation } from "@/api";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useAddSubstation(){
+      const queryClient = useQueryClient()
     return useMutation({
-        mutationFn:addSubstation
+        mutationFn:addSubstation,
+        onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get-substation"] })
+    }
+  
     })
 }
 
