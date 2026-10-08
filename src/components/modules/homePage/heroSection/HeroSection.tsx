@@ -419,7 +419,7 @@ const HeroSection = () => {
 
                       <div>
                         <p className="text-[10px] text-muted-foreground sm:text-[11px]">
-                          Area 04
+                          Area 0
                         </p>
 
                         <p className="text-[11px] font-bold text-foreground sm:text-xs">
@@ -449,7 +449,7 @@ const HeroSection = () => {
                         </p>
 
                         <p className="text-[11px] font-bold text-foreground sm:text-xs">
-                          72.4 MW
+                          192.4 MW
                         </p>
                       </div>
                     </div>
@@ -500,17 +500,17 @@ const HeroSection = () => {
                     </p>
 
                     <p className="mt-1 font-manrope text-sm font-bold text-foreground">
-                      86
+                      10+
                     </p>
                   </div>
 
                   <div className="min-w-0">
                     <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                      Active Alerts
+                      Active Outages
                     </p>
 
                     <p className="mt-1 font-manrope text-sm font-bold text-primary">
-                      03
+                      05 + 
                     </p>
                   </div>
                 </div>
