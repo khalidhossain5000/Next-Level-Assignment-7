@@ -36,6 +36,7 @@ import { useRef, useState } from "react";
 import { useForm } from "@tanstack/react-form";
 import { updateUserProfileSchema } from "@/validation";
 import { toast } from "sonner";
+import { MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_LABEL } from "@/lib/file-limits";
 
 const Settings = () => {
   const { data, isPending } = useGetMe();
@@ -191,6 +192,20 @@ const Settings = () => {
 
                               if (!file) return;
 
+                              if (!file.type.startsWith("image/")) {
+                                e.currentTarget.value = "";
+                                toast.error("Choose a valid image file.");
+                                return;
+                              }
+
+                              if (file.size > MAX_IMAGE_SIZE_BYTES) {
+                                e.currentTarget.value = "";
+                                toast.error(
+                                  `Profile image must be ${MAX_IMAGE_SIZE_LABEL} or smaller.`,
+                                );
+                                return;
+                              }
+
                               if (imagePreview) {
                                 URL.revokeObjectURL(imagePreview);
                               }
@@ -200,6 +215,10 @@ const Settings = () => {
                             }}
                           />
                         </div>
+
+                        <p className="text-xs text-muted-foreground">
+                          Image files only. Maximum size: {MAX_IMAGE_SIZE_LABEL}.
+                        </p>
 
                         {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />

@@ -20,6 +20,7 @@ import { Spinner } from "../ui/spinner";
 import { Button } from "../ui/button";
 import { addZoneSchema } from "@/validation";
 import { toast } from "sonner";
+import { MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_LABEL } from "@/lib/file-limits";
 
 const AddZoneForm = () => {
   const { mutate: addZone, isPending } = useAddZone();
@@ -257,6 +258,20 @@ const AddZoneForm = () => {
 
                           if (!file) return;
 
+                          if (!file.type.startsWith("image/")) {
+                            e.currentTarget.value = "";
+                            toast.error("Choose a valid image file.");
+                            return;
+                          }
+
+                          if (file.size > MAX_IMAGE_SIZE_BYTES) {
+                            e.currentTarget.value = "";
+                            toast.error(
+                              `Zone image must be ${MAX_IMAGE_SIZE_LABEL} or smaller.`,
+                            );
+                            return;
+                          }
+
                           if (imagePreview) {
                             URL.revokeObjectURL(imagePreview);
                           }
@@ -270,6 +285,9 @@ const AddZoneForm = () => {
                         aria-invalid={isInvalid}
                         className="h-11 cursor-pointer rounded-xl border-border bg-background text-sm shadow-none transition-all file:mr-3 file:h-7 file:rounded-lg file:border-0 file:bg-primary file:px-3 file:text-xs file:font-semibold file:text-primary-foreground hover:file:bg-primary/90 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 dark:bg-background"
                       />
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        Image files only. Maximum size: {MAX_IMAGE_SIZE_LABEL}.
+                      </p>
 
                       {/* Image Preview */}
                       {imagePreview && (

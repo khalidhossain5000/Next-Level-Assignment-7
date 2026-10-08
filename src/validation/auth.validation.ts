@@ -1,4 +1,5 @@
 import z from "zod";
+import { MAX_IMAGE_SIZE_BYTES } from "@/lib/file-limits";
 
 export const loginSchema = z.object({
     email: z.email("Invalid email address,Try again"),
@@ -69,8 +70,8 @@ export const updateUserProfileSchema = z.object({
             "Only image files are allowed",
         )
         .refine(
-            (file) => file.size <= 2 * 1024 * 1024,
-            "Image size must be less than 2MB",
+          (file) => file.size <= MAX_IMAGE_SIZE_BYTES,
+          "Image must be 1 MB or smaller",
         )
         .nullable()
         

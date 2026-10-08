@@ -1,5 +1,6 @@
-import LoadSheddingDetails from "@/components/modules/load-shedding/LoadSheddingDetails";
+import type LoadSheddingDetails from "@/components/modules/load-shedding/LoadSheddingDetails";
 import { createPageMetadata } from "@/lib/seo-metadata";
+import AuthGuard from "@/components/auth/auth-guard";
 
 export const metadata = createPageMetadata(
     "Load-Shedding Schedule Details",
@@ -8,11 +9,14 @@ export const metadata = createPageMetadata(
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
-    console.log(id,"details id")
+  
     return (
+        <AuthGuard>
         <section>   
+            
             <LoadSheddingDetails id={id} />         
         </section>
+         </AuthGuard>
     );
 };
 
