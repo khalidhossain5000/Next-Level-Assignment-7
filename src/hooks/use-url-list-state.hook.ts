@@ -28,7 +28,7 @@ export function useUrlListState(defaultLimit = 10) {
   const searchTerm =
     searchParams.get("search") ?? searchParams.get("searchTerm") ?? "";
   const requestedSortOrder = searchParams.get("sortOrder");
-  const sortOrder =
+  const sortOrder: "asc" | "desc" =
     requestedSortOrder === "desc" ? "desc" : "asc";
 
   const updateQuery = (
