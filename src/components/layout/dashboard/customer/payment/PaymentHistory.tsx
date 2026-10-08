@@ -17,6 +17,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PaymentHistorySkeleton from "@/components/loader/skleton-loading/dashboard/payment-history.skeleton";
 import type { IPaymentRecord } from "@/types";
+import { getPaymentsClassName } from "@/lib/utils";
+import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 
 
@@ -40,44 +42,12 @@ const PaymentHistory = () => {
     return provider.replaceAll("_", " ");
   };
 
-  const getStatusClassName = (status: string) => {
-    switch (status) {
-      case "PENDING":
-        return "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300";
-
-      case "COMPLETED":
-        return "border-green-200 bg-green-50 text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300";
-
-      case "FAILED":
-        return "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300";
-
-      case "REFUNDED":
-        return "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-300";
-
-      default:
-        return "border-border bg-muted text-muted-foreground";
-    }
-  };
-
+ 
   if (isPending) return <PaymentHistorySkeleton/>
 
   if (payments.length === 0) {
     return (
-      <div className="mx-auto flex min-h-72 w-full max-w-6xl items-center justify-center rounded-2xl border border-border bg-card px-4">
-        <div className="text-center">
-          <div className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <FiCreditCard className="size-5" />
-          </div>
-
-          <h3 className="font-manrope text-base font-semibold text-card-foreground">
-            No Payments Found
-          </h3>
-
-          <p className="mt-1 text-sm text-muted-foreground">
-            You have not made any payments yet.
-          </p>
-        </div>
-      </div>
+      <EmptyText title="No Payments Found" description="You have not made any payments yet."/>
     );
   }
 
@@ -170,7 +140,7 @@ const PaymentHistory = () => {
                       <TableCell className={cellBorder}>
                         <Badge
                           variant="outline"
-                          className={getStatusClassName(payment.status)}
+                          className={getPaymentsClassName(payment.status)}
                         >
                           {payment.status}
                         </Badge>
@@ -214,7 +184,7 @@ const PaymentHistory = () => {
 
                     <Badge
                       variant="outline"
-                      className={`shrink-0 text-[10px] font-semibold ${getStatusClassName(
+                      className={`shrink-0 text-[10px] font-semibold ${getPaymentsClassName(
                         payment.status
                       )}`}
                     >
@@ -272,7 +242,7 @@ const PaymentHistory = () => {
 
                 <Badge
                   variant="outline"
-                  className={`shrink-0 whitespace-nowrap text-[10px] font-semibold ${getStatusClassName(
+                  className={`shrink-0 whitespace-nowrap text-[10px] font-semibold ${getPaymentsClassName(
                     payment.status
                   )}`}
                 >
