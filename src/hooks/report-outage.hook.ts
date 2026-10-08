@@ -14,10 +14,10 @@ export function useReportOutage() {
 
 
 
-export function useGetMyOutages() {
+export function useGetMyOutages(params: IQueryParams = {}) {
     return useQuery({
-        queryKey: ["my-outages"],
-        queryFn: getMyOutages
+        queryKey: ["my-outages", params],
+        queryFn: () => getMyOutages(params)
     })
 }
 

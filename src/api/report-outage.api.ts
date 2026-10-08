@@ -9,8 +9,8 @@ export function reportOutage(payload: IReportOutagePayload) {
 }
 
 
-export function getMyOutages() {
-    return apiClient("/outage/my-outage")
+export function getMyOutages(params: IQueryParams = {}) {
+    return apiClient("/outage/my-outage", { query: params })
 }
 
 //for admin 

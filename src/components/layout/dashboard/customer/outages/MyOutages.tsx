@@ -1,8 +1,9 @@
 "use client";
 
-import { FiZap } from "react-icons/fi";
+import { useState } from "react";
 
 import { useGetMyOutages } from "@/hooks";
+import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
 
 import {
   Table,
@@ -25,9 +26,12 @@ import { getPriorityClassName, getStatusClassName } from "@/lib/utils";
 import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 const MyOutages = () => {
-  const { data: myOutages, isPending } = useGetMyOutages();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const { data: myOutages, isPending } = useGetMyOutages({ page, limit });
 
-  const outages = myOutages?.data ?? [];
+  const outages = myOutages?.data?.data ?? myOutages?.data ?? [];
+  const meta = myOutages?.data?.meta ?? myOutages?.meta;
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleString("en-BD", {
@@ -36,7 +40,7 @@ const MyOutages = () => {
     });
   };
 
- 
+
 
   if (isPending) {
     return <MyOutagesSkleton />;
@@ -44,7 +48,7 @@ const MyOutages = () => {
 
   if (outages.length === 0) {
     return (
-     <EmptyText title="  No Outages Reported" description="   You have not reported any power outages yet."/>
+      <EmptyText title="  No Outages Reported" description="   You have not reported any power outages yet." />
     );
   }
 
@@ -301,6 +305,22 @@ const MyOutages = () => {
           </Card>
         ))}
       </div>
+
+      {outages.length > 0 && (
+        <div className="w-full min-w-0 border-t border-border/60 pt-5 sm:pt-6">
+          <PaginationUi
+            currentPage={meta?.page ?? page}
+            itemsPerPage={meta?.limit ?? limit}
+            totalItems={meta?.total ?? outages.length}
+            totalPages={meta?.totalPages ?? 1}
+            onPageChange={setPage}
+            onItemsPerPageChange={(value) => {
+              setLimit(value);
+              setPage(1);
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
