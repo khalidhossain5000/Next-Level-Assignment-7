@@ -98,7 +98,7 @@ const NavBar = () => {
                   Logout
                 </Button>
               ) : (
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2">
                   <Button
                     variant="outline"
                     nativeButton={false}

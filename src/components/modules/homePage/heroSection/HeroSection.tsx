@@ -92,10 +92,10 @@ const HeroSection = () => {
               </Link>
 
               <Link
-                href="/outage-reports"
+                href="/planned-outage"
                 className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 font-inter text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent sm:w-auto"
               >
-                Track Reported Outages
+                Track Maintenance Schedule
               </Link>
             </motion.div>
 
