@@ -20,14 +20,14 @@ const nextConfig: NextConfig = {
   // output: "export",
 
 
-//   async rewrites() {
-//   return [
-//     {
-//       source: "/api/v1/:path*",
-//       destination: "https://next-level-assignment-6.vercel.app/api/v1/:path*",
-//     },
-//   ];
-// },
+  async rewrites() {
+  return [
+    {
+      source: "/api/v1/:path*",
+      destination: "https://next-level-assignment-6.vercel.app/api/v1/:path*",
+    },
+  ];
+},
 };
 
 export default nextConfig;
