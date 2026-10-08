@@ -59,7 +59,7 @@ const HeroSection = () => {
             >
               Smarter Power.
               <br />
-              <span className="bg-linear-to-r from-primary via-primary/80 to-primary/50 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-primary via-primary/80 to-primary/50 dark:to-chart-2 bg-clip-text text-transparent">
                 Better Connected.
               </span>
             </motion.h1>
@@ -272,7 +272,7 @@ const HeroSection = () => {
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeDasharray="6 8"
-                      className="text-primary/35"
+                      className="text-primary/35 dark:text-chart-2"
                       animate={{ strokeDashoffset: [0, -28] }}
                       transition={{
                         duration: 1.5,
@@ -286,7 +286,7 @@ const HeroSection = () => {
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeDasharray="6 8"
-                      className="text-primary/35"
+                      className="text-primary/35 dark:text-chart-2"
                       animate={{ strokeDashoffset: [0, -28] }}
                       transition={{
                         duration: 1.5,
@@ -300,7 +300,7 @@ const HeroSection = () => {
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeDasharray="6 8"
-                      className="text-primary/35"
+                      className="text-primary/35 dark:text-chart-2"
                       animate={{ strokeDashoffset: [0, -28] }}
                       transition={{
                         duration: 1.5,
@@ -314,7 +314,7 @@ const HeroSection = () => {
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeDasharray="6 8"
-                      className="text-primary/35"
+                      className="text-primary/35 dark:text-chart-2"
                       animate={{ strokeDashoffset: [0, -28] }}
                       transition={{
                         duration: 1.5,
@@ -330,7 +330,7 @@ const HeroSection = () => {
                       r="58"
                       stroke="currentColor"
                       strokeWidth="1.5"
-                      className="text-primary/20"
+                      className="text-primary/20 dark:text-chart-2"
                       animate={{ scale: [1, 1.06, 1] }}
                       transition={{
                         duration: 3,
@@ -345,7 +345,7 @@ const HeroSection = () => {
                       r="40"
                       stroke="currentColor"
                       strokeWidth="1.5"
-                      className="text-primary/40"
+                      className="text-primary/40     dark:text-chart-1"
                       animate={{ scale: [1, 1.08, 1] }}
                       transition={{
                         duration: 2.4,
@@ -355,23 +355,23 @@ const HeroSection = () => {
                     />
 
                     {/* Nodes */}
-                    <circle cx="120" cy="80" r="7" className="fill-primary" />
-                    <circle cx="120" cy="220" r="7" className="fill-primary" />
-                    <circle cx="480" cy="80" r="7" className="fill-primary" />
-                    <circle cx="480" cy="220" r="7" className="fill-primary" />
+                    <circle cx="120" cy="80" r="7" className="fill-primary dark:fill-chart-2" />
+                    <circle cx="120" cy="220" r="7" className="fill-primary dark:fill-chart-2" />
+                    <circle cx="480" cy="80" r="7" className="fill-primary dark:fill-chart-2" />
+                    <circle cx="480" cy="220" r="7" className="fill-primary dark:fill-chart-2" />
 
                     {/* Central node */}
                     <circle
                       cx="300"
                       cy="150"
                       r="25"
-                      className="fill-primary/10 stroke-primary"
+                      className="fill-primary/10 stroke-primary dark:text-chart-2"
                       strokeWidth="2"
                     />
 
                     <foreignObject x="278" y="128" width="44" height="44">
                       <div className="flex size-11 items-center justify-center">
-                        <FiZap className="size-5 text-primary" />
+                        <FiZap className="size-5 text-primary dark:text-chart-2" />
                       </div>
                     </foreignObject>
                   </svg>
