@@ -159,7 +159,7 @@ export default function LoginForm({ quickLoginAccounts }: { quickLoginAccounts: 
             </div>
           </div>
 
-          <Button type="submit" disabled={isSubmitting} className="min-h-11 w-full rounded-lg font-semibold">
+          <Button type="submit" disabled={isSubmitting} className="min-h-11 w-full rounded-lg font-semibold cursor-pointer">
             {isPending && <Spinner />}
             {isPending ? "Signing in..." : "Sign in"}
           </Button>
