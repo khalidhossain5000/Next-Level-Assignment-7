@@ -150,16 +150,22 @@ const MyOutages = () => {
 
                       {/* Actions */}
                       <TableCell className={`pr-6 ${cellBorder}`}>
-                        <div className="flex items-center justify-end gap-1.5">
-                          {outage.priority === "NORMAL" && (
-                            <PriorityInfoModal outageId={outage.id} />
-                          )}
+                        {outage.status === "RESTORED" ? (
+                          <p className="text-right text-sm font-medium text-green-700 dark:text-green-400">
+                            Congratulations! Power has been restored.
+                          </p>
+                        ) : (
+                          <div className="flex items-center justify-end gap-1.5">
+                            {outage.priority === "NORMAL" && (
+                              <PriorityInfoModal outageId={outage.id} />
+                            )}
 
-                          <UpdateOutageModal outage={outage} />
-                          {outage.status === "REPORTED" && (
-                            <DeleteMyOutageConfirmModal outageId={outage.id} />
-                          )}
-                        </div>
+                            <UpdateOutageModal outage={outage} />
+                            {outage.status === "REPORTED" && (
+                              <DeleteMyOutageConfirmModal outageId={outage.id} />
+                            )}
+                          </div>
+                        )}
                       </TableCell>
                     </TableRow>
                   );
@@ -232,14 +238,22 @@ const MyOutages = () => {
 
                 {/* Actions */}
                 <div className="flex shrink-0 items-center gap-1">
-                  {outage.priority === "NORMAL" && (
-                    <PriorityInfoModal outageId={outage.id} />
-                  )}
+                  {outage.status === "RESTORED" ? (
+                    <p className="text-right text-sm font-medium text-green-700 dark:text-green-400">
+                      Congratulations! Power has been restored.
+                    </p>
+                  ) : (
+                    <>
+                      {outage.priority === "NORMAL" && (
+                        <PriorityInfoModal outageId={outage.id} />
+                      )}
 
-                  <UpdateOutageModal outage={outage} />
+                      <UpdateOutageModal outage={outage} />
 
-                  {outage.status === "REPORTED" && (
-                    <DeleteMyOutageConfirmModal outageId={outage.id} />
+                      {outage.status === "REPORTED" && (
+                        <DeleteMyOutageConfirmModal outageId={outage.id} />
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -290,13 +304,21 @@ const MyOutages = () => {
                 </div>
 
                 <div className="flex shrink-0 items-center gap-1">
-                  {outage.priority === "NORMAL" && (
-                    <PriorityInfoModal outageId={outage.id} />
+                  {outage.status === "RESTORED" ? (
+                    <p className="text-right text-sm font-medium text-green-700 dark:text-green-400">
+                      Congratulations! Power has been restored.
+                    </p>
+                  ) : (
+                    <>
+                      {outage.priority === "NORMAL" && (
+                        <PriorityInfoModal outageId={outage.id} />
+                      )}
+
+                      <UpdateOutageModal outage={outage} />
+
+                      <DeleteMyOutageConfirmModal outageId={outage.id} />
+                    </>
                   )}
-
-                  <UpdateOutageModal outage={outage} />
-
-                  <DeleteMyOutageConfirmModal outageId={outage.id} />
                 </div>
               </div>
             </CardContent>
