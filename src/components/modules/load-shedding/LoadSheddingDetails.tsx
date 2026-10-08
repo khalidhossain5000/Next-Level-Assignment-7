@@ -125,6 +125,9 @@ const LoadSheddingDetails = ({ id }: IProps) => {
                     <div className="flex min-w-0 flex-col justify-center p-5 sm:p-8 lg:p-10">
                         <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary">
                             <Activity className="size-3.5" /> Planned outage
+
+
+
                         </span>
                         <h1 className="mt-5 break-words font-manrope text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
                             {schedule.title}
