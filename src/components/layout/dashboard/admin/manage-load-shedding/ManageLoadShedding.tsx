@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-
 import { useGetLoadSheddingSchedule } from "@/hooks";
 import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
+import { useUrlListState } from "@/hooks/use-url-list-state.hook";
 
 import {
   Table,
@@ -38,8 +37,7 @@ const headClass =
   "h-12 whitespace-nowrap border-b border-border bg-muted/40 font-semibold text-foreground";
 
 const ManageLoadShedding = () => {
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const { page, limit, updateQuery } = useUrlListState();
 
   const { data: loadShedding, isPending } = useGetLoadSheddingSchedule({
     page,
@@ -310,10 +308,9 @@ const ManageLoadShedding = () => {
             itemsPerPage={meta?.limit ?? limit}
             totalItems={meta?.total ?? 0}
             totalPages={meta?.totalPages ?? 1}
-            onPageChange={setPage}
+            onPageChange={(value) => updateQuery({ page: value }, "push")}
             onItemsPerPageChange={(value) => {
-              setLimit(value);
-              setPage(1);
+              updateQuery({ limit: value, page: 1 });
             }}
           />
         </div>

@@ -1,8 +1,7 @@
 "use client";
 
-import { ArrowRight, CalendarClock, Clock3, MapPin, Zap } from "lucide-react";
+import { ArrowRight, CalendarClock, Clock3, MapPin } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 
 import FilterSidebar from "@/components/layout/shared/filter-search-sidebar/FilterSearchSidebar";
 
@@ -14,13 +13,10 @@ import { PaginationUi } from "@/components/layout/shared/pagination-ui/Paginatio
 import type { IPlannedOutage } from "@/types";
 import { useGetPlannedOutage } from "@/hooks";
 import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
+import { useUrlListState } from "@/hooks/use-url-list-state.hook";
 
 const PlannedOutages = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const { searchTerm, sortOrder, page, limit, updateQuery } = useUrlListState();
   const debouncedSearch = useDebounce(searchTerm, 500);
 
   const { data, isPending } = useGetPlannedOutage({
@@ -55,17 +51,16 @@ const PlannedOutages = () => {
           sortOrder={sortOrder}
           showSortOrder={true}
           onSearchChange={(value) => {
-            setSearchTerm(value);
-            setPage(1);
+            updateQuery({ searchTerm: value, page: 1 });
           }}
           onSortOrderChange={() => {
-            setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-            setPage(1);
+            updateQuery({
+              sortOrder: sortOrder === "asc" ? "desc" : "asc",
+              page: 1,
+            });
           }}
           onReset={() => {
-            setSearchTerm("");
-            setSortOrder("asc");
-            setPage(1);
+            updateQuery({ searchTerm: null, sortOrder: null, page: 1 });
           }}
         />
       </div>
@@ -216,10 +211,9 @@ const PlannedOutages = () => {
               itemsPerPage={meta?.limit ?? limit}
               totalItems={meta?.total ?? 0}
               totalPages={meta?.totalPages ?? 1}
-              onPageChange={setPage}
+              onPageChange={(value) => updateQuery({ page: value }, "push")}
               onItemsPerPageChange={(value) => {
-                setLimit(value);
-                setPage(1);
+                updateQuery({ limit: value, page: 1 });
               }}
             />
           </div>

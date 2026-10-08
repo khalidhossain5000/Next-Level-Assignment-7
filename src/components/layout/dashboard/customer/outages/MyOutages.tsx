@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-
 import { useGetMyOutages } from "@/hooks";
 import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
+import { useUrlListState } from "@/hooks/use-url-list-state.hook";
 
 import {
   Table,
@@ -26,8 +25,7 @@ import { getPriorityClassName, getStatusClassName } from "@/lib/utils";
 import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 const MyOutages = () => {
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const { page, limit, updateQuery } = useUrlListState();
   const { data: myOutages, isPending } = useGetMyOutages({ page, limit });
 
   const outages = myOutages?.data?.data ?? myOutages?.data ?? [];
@@ -313,10 +311,9 @@ const MyOutages = () => {
             itemsPerPage={meta?.limit ?? limit}
             totalItems={meta?.total ?? outages.length}
             totalPages={meta?.totalPages ?? 1}
-            onPageChange={setPage}
+            onPageChange={(value) => updateQuery({ page: value }, "push")}
             onItemsPerPageChange={(value) => {
-              setLimit(value);
-              setPage(1);
+              updateQuery({ limit: value, page: 1 });
             }}
           />
         </div>

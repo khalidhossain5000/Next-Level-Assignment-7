@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-
 import { useGetPayments } from "@/hooks";
 import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
+import { useUrlListState } from "@/hooks/use-url-list-state.hook";
 
 import {
   Table,
@@ -24,8 +23,7 @@ import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 
 const PaymentHistory = () => {
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const { page, limit, updateQuery } = useUrlListState();
   const { data, isPending } = useGetPayments({ page, limit });
 
   const payments: IPaymentRecord[] = data?.data?.data ?? data?.data ?? [];
@@ -275,10 +273,9 @@ const PaymentHistory = () => {
             itemsPerPage={meta?.limit ?? limit}
             totalItems={meta?.total ?? payments.length}
             totalPages={meta?.totalPages ?? 1}
-            onPageChange={setPage}
+            onPageChange={(value) => updateQuery({ page: value }, "push")}
             onItemsPerPageChange={(value) => {
-              setLimit(value);
-              setPage(1);
+              updateQuery({ limit: value, page: 1 });
             }}
           />
         </div>

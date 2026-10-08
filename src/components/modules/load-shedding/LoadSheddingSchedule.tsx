@@ -1,8 +1,7 @@
 "use client";
 
-import { ArrowRight, CalendarClock, Clock3, MapPin, Zap } from "lucide-react";
+import { ArrowRight, CalendarClock, Clock3, MapPin } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 
 import FilterSidebar from "@/components/layout/shared/filter-search-sidebar/FilterSearchSidebar";
 
@@ -13,11 +12,10 @@ import { useGetLoadSheddingSchedule } from "@/hooks";
 import useDebounce from "@/hooks/debounce.hook";
 import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
 import type { LoadSheddingSchedule } from "@/types";
+import { useUrlListState } from "@/hooks/use-url-list-state.hook";
 
 const LoadSheddingSchedules = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const { searchTerm, page, limit, updateQuery } = useUrlListState();
 
   const debouncedSearch = useDebounce(searchTerm, 500);
 
@@ -53,12 +51,10 @@ const LoadSheddingSchedules = () => {
         <FilterSidebar
           searchTerm={searchTerm}
           onSearchChange={(value) => {
-            setSearchTerm(value);
-            setPage(1);
+            updateQuery({ searchTerm: value, page: 1 });
           }}
           onReset={() => {
-            setSearchTerm("");
-            setPage(1);
+            updateQuery({ searchTerm: null, page: 1 });
           }}
         />
       </div>
@@ -213,10 +209,9 @@ const LoadSheddingSchedules = () => {
               itemsPerPage={meta?.limit ?? limit}
               totalItems={meta?.total ?? 0}
               totalPages={meta?.totalPages ?? 1}
-              onPageChange={setPage}
+              onPageChange={(value) => updateQuery({ page: value }, "push")}
               onItemsPerPageChange={(value) => {
-                setLimit(value);
-                setPage(1);
+                updateQuery({ limit: value, page: 1 });
               }}
             />
           </div>

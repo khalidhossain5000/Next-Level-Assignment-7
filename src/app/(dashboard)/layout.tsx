@@ -1,5 +1,6 @@
 
 import type { ReactNode } from "react";
+import { Suspense } from "react";
 import DashboardSidebar from "@/components/layout/dashboard/common/DashboardSidebar/DashboardSidebar";
 import MobileSidebar from "@/components/layout/dashboard/common/DashboardSidebar/MobileSidebar";
 import AuthGuard from "@/components/auth/auth-guard";
@@ -14,7 +15,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     <DashboardSidebar />
                 </div>
                 <MobileSidebar />
-                <main className="min-w-0 flex-1 p-3 md:p-6">{children}</main>
+                <main className="min-w-0 flex-1 p-3 md:p-6">
+                    <Suspense fallback={null}>{children}</Suspense>
+                </main>
 
             </div>
         </AuthGuard>

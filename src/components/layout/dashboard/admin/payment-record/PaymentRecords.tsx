@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import {
   FiCreditCard,
   FiFileText,
 } from "react-icons/fi";
 import { useGetPaymentRecords } from "@/hooks";
 import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
+import { useUrlListState } from "@/hooks/use-url-list-state.hook";
 import {
   Table,
   TableBody,
@@ -39,8 +39,7 @@ const formatAmount = (amount: string) => {
 };
 
 const PaymentRecords = () => {
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const { page, limit, updateQuery } = useUrlListState();
 
   const { data, isPending } = useGetPaymentRecords(page, limit);
 
@@ -267,10 +266,9 @@ const PaymentRecords = () => {
             itemsPerPage={meta?.limit ?? limit}
             totalItems={meta?.total ?? 0}
             totalPages={meta?.totalPages ?? 1}
-            onPageChange={setPage}
+            onPageChange={(value) => updateQuery({ page: value }, "push")}
             onItemsPerPageChange={(value) => {
-              setLimit(value);
-              setPage(1);
+              updateQuery({ limit: value, page: 1 });
             }}
           />
         </div>

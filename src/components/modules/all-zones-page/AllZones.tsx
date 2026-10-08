@@ -2,7 +2,6 @@
 
 import { ArrowRight, Zap } from "lucide-react";
 import Image from "next/image";
-import {  useState } from "react";
 
 import FilterSidebar from "@/components/layout/shared/filter-search-sidebar/FilterSearchSidebar";
 
@@ -14,14 +13,11 @@ import useDebounce from "@/hooks/debounce.hook";
 import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
 import PublicDataSkeleton from "@/components/loader/skleton-loading/others/public-data.skeleton";
 import type { Zone } from "@/types";
+import { useUrlListState } from "@/hooks/use-url-list-state.hook";
 
 
 const AllZones = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const { searchTerm, sortOrder, page, limit, updateQuery } = useUrlListState();
   const debouncedSearch = useDebounce(searchTerm, 500);
 
   const { data, isPending } = useGetAllZone({
@@ -44,17 +40,16 @@ const AllZones = () => {
           sortOrder={sortOrder}
           showSortOrder={true}
           onSearchChange={(value) => {
-            setSearchTerm(value);
-            setPage(1);
+            updateQuery({ searchTerm: value, page: 1 });
           }}
           onSortOrderChange={() => {
-            setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-            setPage(1);
+            updateQuery({
+              sortOrder: sortOrder === "asc" ? "desc" : "asc",
+              page: 1,
+            });
           }}
           onReset={() => {
-            setSearchTerm("");
-            setSortOrder("asc");
-            setPage(1);
+            updateQuery({ searchTerm: null, sortOrder: null, page: 1 });
           }}
         />
       </div>
@@ -183,10 +178,9 @@ const AllZones = () => {
               itemsPerPage={data?.meta?.limit ?? limit}
               totalItems={data?.meta?.total ?? 0}
               totalPages={data?.meta?.totalPages ?? 1}
-              onPageChange={setPage}
+              onPageChange={(value) => updateQuery({ page: value }, "push")}
               onItemsPerPageChange={(value) => {
-                setLimit(value);
-                setPage(1);
+                updateQuery({ limit: value, page: 1 });
               }}
             />
           </div>
