@@ -1,10 +1,15 @@
 import { addZone, getAllZone, getZoneDetails } from "@/api";
 import type { IZoneQueryParams } from "@/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useAddZone() {
+      const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: addZone
+        mutationFn: addZone,
+        onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-zone"] })
+    }
+  
     })
 }
 
