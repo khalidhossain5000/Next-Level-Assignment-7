@@ -40,6 +40,7 @@ interface TechnicianProfile {
   expertise?: string[];
   experience?: number;
   bio?: string;
+  technicianvProfileVerificationStatus?:"PENDING" | "APPROVED" | "REJECTED"
 }
 
 interface Technician {
@@ -61,16 +62,15 @@ const AssignTechnicianModal = ({ outageId }: AssignTechnicianModalProps) => {
   const { data: technician, isPending: technicianPending } =
     useGetAllTechnician();
 
+
   const { mutate: assignTechnician, isPending: assigning } =
     useAssignTechnician();
 
   const [selectedTechnicianId, setSelectedTechnicianId] = useState("");
 
-  const technicians: Technician[] = Array.isArray(technician)
-    ? technician
-    : (technician?.data ?? []);
+  const technicians: Technician[] = technician?.data?.filter((tech:Technician)=>tech?.technicianProfile?.technicianvProfileVerificationStatus==="APPROVED")
 
-  const selectedTechnician = technicians.find(
+  const selectedTechnician = technicians?.find(
     (item) => item.id === selectedTechnicianId,
   );
 
@@ -129,11 +129,11 @@ const AssignTechnicianModal = ({ outageId }: AssignTechnicianModalProps) => {
 
           <DialogHeader className="items-center text-center">
             <DialogTitle className="font-manrope text-lg font-bold text-card-foreground">
-              Assign Technician
+              Assign Approved Technician
             </DialogTitle>
 
             <DialogDescription className="text-sm text-muted-foreground">
-              Select a technician to handle this reported outage.
+              Select a approved technician to handle this reported outage.
             </DialogDescription>
           </DialogHeader>
         </div>
