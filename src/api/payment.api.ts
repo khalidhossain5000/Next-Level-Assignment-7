@@ -1,21 +1,22 @@
 import apiClient from "@/lib/apiClient";
+import type { IQueryParams } from "@/types";
 
-export function makePayment(outageReportId:string){
-    return apiClient("/payment/create",{
-        method:"POST",
-        body:{outageReportId}
+export function makePayment(outageReportId: string) {
+    return apiClient("/payment/create", {
+        method: "POST",
+        body: { outageReportId }
     })
 }
 
 
-export function getPayments(){
-    return apiClient("/payment")
+export function getPayments(params: IQueryParams = {}) {
+    return apiClient("/payment", { query: params })
 }
 
 
 
 
-export function getPaymentDetails(id:string){
+export function getPaymentDetails(id: string) {
     return apiClient(`/payment/${id}`)
 }
 
@@ -23,5 +24,5 @@ export function getPaymentDetails(id:string){
 //get all payment record for admin
 
 export function getAllPaymentRecords(page: number = 1, limit: number = 10) {
-  return apiClient(`/admin/payment-record?page=${page}&limit=${limit}`);
+    return apiClient(`/admin/payment-record?page=${page}&limit=${limit}`);
 }

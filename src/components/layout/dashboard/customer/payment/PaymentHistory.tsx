@@ -1,8 +1,9 @@
 "use client";
 
-import { FiCreditCard } from "react-icons/fi";
+import { useState } from "react";
 
 import { useGetPayments } from "@/hooks";
+import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
 
 import {
   Table,
@@ -23,9 +24,12 @@ import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 
 const PaymentHistory = () => {
-  const { data, isPending } = useGetPayments();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const { data, isPending } = useGetPayments({ page, limit });
 
-  const payments: IPaymentRecord[] = data?.data ?? [];
+  const payments: IPaymentRecord[] = data?.data?.data ?? data?.data ?? [];
+  const meta = data?.data?.meta ?? data?.meta;
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleString("en-BD", {
@@ -42,12 +46,12 @@ const PaymentHistory = () => {
     return provider.replaceAll("_", " ");
   };
 
- 
-  if (isPending) return <PaymentHistorySkeleton/>
+
+  if (isPending) return <PaymentHistorySkeleton />
 
   if (payments.length === 0) {
     return (
-      <EmptyText title="No Payments Found" description="You have not made any payments yet."/>
+      <EmptyText title="No Payments Found" description="You have not made any payments yet." />
     );
   }
 
@@ -263,6 +267,22 @@ const PaymentHistory = () => {
           </Card>
         ))}
       </div>
+
+      {payments.length > 0 && (
+        <div className="w-full min-w-0 border-t border-border/60 pt-5 sm:pt-6">
+          <PaginationUi
+            currentPage={meta?.page ?? page}
+            itemsPerPage={meta?.limit ?? limit}
+            totalItems={meta?.total ?? payments.length}
+            totalPages={meta?.totalPages ?? 1}
+            onPageChange={setPage}
+            onItemsPerPageChange={(value) => {
+              setLimit(value);
+              setPage(1);
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };

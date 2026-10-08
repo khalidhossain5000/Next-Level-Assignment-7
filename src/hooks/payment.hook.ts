@@ -1,31 +1,32 @@
 import { getAllPaymentRecords, getPaymentDetails, getPayments, makePayment } from "@/api";
+import type { IQueryParams } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-export function useMakePayment(){
+export function useMakePayment() {
     return useMutation({
-        mutationFn:makePayment
+        mutationFn: makePayment
     })
 }
 
-export function useGetPayments(){
+export function useGetPayments(params: IQueryParams = {}) {
     return useQuery({
-        queryKey:["payments"],
-        queryFn:getPayments
+        queryKey: ["payments", params],
+        queryFn: () => getPayments(params)
     })
 }
 
-export function useGetPaymentDetails(){
-      return useQuery({
-        queryKey:["payment-details"],
-        queryFn:()=>getPaymentDetails
+export function useGetPaymentDetails() {
+    return useQuery({
+        queryKey: ["payment-details"],
+        queryFn: () => getPaymentDetails
     })
 }
 
 
 
 export function useGetPaymentRecords(page: number = 1, limit: number = 10) {
-  return useQuery({
-    queryKey: ["payment-record", page, limit],
-    queryFn: () => getAllPaymentRecords(page, limit),
-  });
+    return useQuery({
+        queryKey: ["payment-record", page, limit],
+        queryFn: () => getAllPaymentRecords(page, limit),
+    });
 }
