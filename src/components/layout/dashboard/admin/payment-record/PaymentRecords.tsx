@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import {
-  FiChevronLeft,
-  FiChevronRight,
   FiCreditCard,
   FiFileText,
 } from "react-icons/fi";
 import { useGetPaymentRecords } from "@/hooks";
+import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
 import {
   Table,
   TableBody,
@@ -18,7 +17,6 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 import type { IMeta, IPaymentRecord } from "@/types";
 import { getPaymentsClassName } from "@/lib/utils";
@@ -42,8 +40,9 @@ const formatAmount = (amount: string) => {
 
 const PaymentRecords = () => {
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
 
-  const { data, isPending } = useGetPaymentRecords(page);
+  const { data, isPending } = useGetPaymentRecords(page, limit);
 
   const records: IPaymentRecord[] = data?.data?.data ?? [];
   const meta: IMeta | undefined = data?.data?.meta;
@@ -53,16 +52,16 @@ const PaymentRecords = () => {
 
   if (isPending) {
     return (
-      <MyOutagesSkleton/>
+      <MyOutagesSkleton />
     );
   }
 
   if (records.length === 0) {
     return (
-    <EmptyText title=" No Payment Records Found" description="No priority restoration payments have been made yet."/>
+      <EmptyText title=" No Payment Records Found" description="No priority restoration payments have been made yet." />
     );
   }
- 
+
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
       {/* Desktop */}
@@ -261,53 +260,19 @@ const PaymentRecords = () => {
         ))}
       </div>
 
-      {/* Pagination */}
-      {meta && meta.totalPages > 1 && (
-        <div className="flex items-center justify-between gap-3 border-t border-border pt-4">
-          <p className="text-xs text-muted-foreground">
-            Page {meta.page} of {meta.totalPages} · {meta.total} total records
-          </p>
-
-          <div className="flex items-center gap-1.5">
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="size-8 rounded-lg"
-              disabled={page <= 1}
-              onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-            >
-              <FiChevronLeft className="size-4" />
-            </Button>
-
-            {Array.from({ length: meta.totalPages }, (_, i) => i + 1).map(
-              (pageNumber) => (
-                <Button
-                  key={pageNumber}
-                  type="button"
-                  variant={pageNumber === page ? "default" : "outline"}
-                  size="icon"
-                  className="size-8 rounded-lg text-xs font-medium"
-                  onClick={() => setPage(pageNumber)}
-                >
-                  {pageNumber}
-                </Button>
-              )
-            )}
-
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="size-8 rounded-lg"
-              disabled={page >= meta.totalPages}
-              onClick={() =>
-                setPage((prev) => Math.min(meta.totalPages, prev + 1))
-              }
-            >
-              <FiChevronRight className="size-4" />
-            </Button>
-          </div>
+      {records.length > 0 && (
+        <div className="w-full min-w-0 border-t border-border/60 pt-5 sm:pt-6">
+          <PaginationUi
+            currentPage={meta?.page ?? page}
+            itemsPerPage={meta?.limit ?? limit}
+            totalItems={meta?.total ?? 0}
+            totalPages={meta?.totalPages ?? 1}
+            onPageChange={setPage}
+            onItemsPerPageChange={(value) => {
+              setLimit(value);
+              setPage(1);
+            }}
+          />
         </div>
       )}
     </div>
