@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 
-import { FiCalendar, FiZap } from "react-icons/fi";
-
 import { useGetLoadSheddingSchedule } from "@/hooks";
+import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
 
 import {
   Table,
@@ -18,19 +17,10 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 import UpdateLoadSheddingModal from "@/components/modal/update-load-shedding.modal";
 import { getLoadSheddingStatusClassName } from "@/lib/utils";
-import type { ILoadShedding, IMeta } from "@/types";
+import type { ILoadShedding } from "@/types";
 import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 
@@ -49,20 +39,15 @@ const headClass =
 
 const ManageLoadShedding = () => {
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
 
   const { data: loadShedding, isPending } = useGetLoadSheddingSchedule({
-    page
+    page,
+    limit,
   });
 
   const schedules: ILoadShedding[] = loadShedding?.data?.data ?? [];
-
-  const meta: IMeta | undefined = loadShedding?.data?.meta;
-
-  const getPageNumbers = () => {
-    if (!meta) return [];
-
-    return Array.from({ length: meta.totalPages }, (_, i) => i + 1);
-  };
+  const meta = loadShedding?.data?.meta;
 
   if (isPending) {
     return <MyOutagesSkleton />;
@@ -70,10 +55,10 @@ const ManageLoadShedding = () => {
 
   if (schedules.length === 0) {
     return (
-    <EmptyText title="No Load Shedding Schedules" description=" No load shedding has been scheduled yet."/>
+      <EmptyText title="No Load Shedding Schedules" description=" No load shedding has been scheduled yet." />
     );
   }
- 
+
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6">
       {/* Desktop Table */}
@@ -318,60 +303,20 @@ const ManageLoadShedding = () => {
         ))}
       </div>
 
-      {/* Pagination */}
-      {meta && meta.totalPages > 1 && (
-        <Pagination className="pt-2">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-
-                  if (page > 1) {
-                    setPage(page - 1);
-                  }
-                }}
-                className={
-                  page <= 1 ? "pointer-events-none opacity-50" : undefined
-                }
-              />
-            </PaginationItem>
-
-            {getPageNumbers().map((pageNumber) => (
-              <PaginationItem key={pageNumber}>
-                <PaginationLink
-                  href="#"
-                  isActive={pageNumber === page}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setPage(pageNumber);
-                  }}
-                >
-                  {pageNumber}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-
-            <PaginationItem>
-              <PaginationNext
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-
-                  if (page < meta.totalPages) {
-                    setPage(page + 1);
-                  }
-                }}
-                className={
-                  page >= meta.totalPages
-                    ? "pointer-events-none opacity-50"
-                    : undefined
-                }
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+      {schedules.length > 0 && (
+        <div className="w-full min-w-0 border-t border-border/60 pt-5 sm:pt-6">
+          <PaginationUi
+            currentPage={meta?.page ?? page}
+            itemsPerPage={meta?.limit ?? limit}
+            totalItems={meta?.total ?? 0}
+            totalPages={meta?.totalPages ?? 1}
+            onPageChange={setPage}
+            onItemsPerPageChange={(value) => {
+              setLimit(value);
+              setPage(1);
+            }}
+          />
+        </div>
       )}
     </div>
   );
