@@ -1,5 +1,11 @@
 import PageHeader from "@/components/layout/shared/page-header/PageHeader";
 import LoadSheddingSchedules from "@/components/modules/load-shedding/LoadSheddingSchedule";
+import { createPageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = createPageMetadata(
+  "Load-Shedding Schedules",
+  "Find zone-wise load-shedding schedules, time slots, and areas affected by supply interruptions.",
+);
 
 const page = () => {
   return (

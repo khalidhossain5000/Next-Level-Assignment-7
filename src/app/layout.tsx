@@ -13,8 +13,23 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 
 export const metadata: Metadata = {
-  title: "Power Pulse - Load Shedding & Power Management Platform",
-  description:  "Track load shedding schedules, planned outages, and power supply updates for your zone with Power Pulse.",
+  title: {
+    default: "Power Pulse | Load Shedding and Outage Updates",
+    template: "%s | Power Pulse",
+  },
+  description: "Track load-shedding schedules, planned outages, and power supply updates for your zone with Power Pulse.",
+  openGraph: {
+    title: "Power Pulse | Load Shedding and Outage Updates",
+    description: "Track load-shedding schedules, planned outages, and power supply updates for your zone with Power Pulse.",
+    siteName: "Power Pulse",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Power Pulse | Load Shedding and Outage Updates",
+    description: "Track load-shedding schedules, planned outages, and power supply updates for your zone with Power Pulse.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

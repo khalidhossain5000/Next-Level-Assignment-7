@@ -1,5 +1,11 @@
 import PageHeader from "@/components/layout/shared/page-header/PageHeader";
 import AllZones from "@/components/modules/all-zones-page/AllZones";
+import { createPageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = createPageMetadata(
+  "Power Zones",
+  "Browse power zones, service areas, substations, and electricity status across the network.",
+);
 
 
 const Page = () => {

@@ -1,6 +1,12 @@
 import PageHeader from "@/components/layout/shared/page-header/PageHeader";
 
 import PlannedOutages from "@/components/modules/planned-outage/PlannedOutages";
+import { createPageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = createPageMetadata(
+  "Planned Outages",
+  "Review scheduled maintenance, affected areas, outage reasons, and expected restoration times.",
+);
 
 const page = () => {
   return (

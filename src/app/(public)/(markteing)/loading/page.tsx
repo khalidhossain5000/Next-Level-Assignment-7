@@ -1,5 +1,11 @@
 import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
-import GlobalPageLoading from "@/components/loader/global-loader/Global-Page.loader";
+import { createPageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = createPageMetadata(
+    "Loading",
+    "Power Pulse is loading power schedules and service updates.",
+    { noIndex: true },
+);
 
 const page = () => {
     return (

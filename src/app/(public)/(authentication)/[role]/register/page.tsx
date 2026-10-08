@@ -3,6 +3,7 @@ import RegisterForm from "@/components/form/register-form";
 import { type TUserRole, USER_ROLES } from "@/types";
 import Image from "next/image";
 import { Suspense } from "react";
+import { createPageMetadata } from "@/lib/seo-metadata";
 
 import { notFound } from "next/navigation";
 
@@ -10,6 +11,18 @@ interface RegisterPageProps {
     params: Promise<{
         role: string;
     }>;
+}
+
+export async function generateMetadata({ params }: RegisterPageProps) {
+    const { role } = await params;
+    const roleName = role.toLowerCase();
+    const formattedRole = roleName.charAt(0).toUpperCase() + roleName.slice(1);
+
+    return createPageMetadata(
+        `${formattedRole} Registration`,
+        `Create a Power Pulse ${roleName} account to access power schedules and service tools.`,
+        { noIndex: true },
+    );
 }
 
 const RegisterPage = async ({ params }: RegisterPageProps) => {

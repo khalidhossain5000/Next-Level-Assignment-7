@@ -1,5 +1,12 @@
 import { House, ShieldAlert } from "lucide-react";
 import Link from "next/link";
+import { createPageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = createPageMetadata(
+    "Access Restricted",
+    "This Power Pulse area is limited to accounts with the required role.",
+    { noIndex: true },
+);
 
 export default function UnauthorizedPage() {
     return (

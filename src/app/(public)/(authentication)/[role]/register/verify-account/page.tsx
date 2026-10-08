@@ -1,6 +1,13 @@
 import Logo from "@/assets/svg/Logo";
 import VerifyAccountForm from "@/components/form/verify-account-form";
 import { HiOutlineEnvelope } from "react-icons/hi2";
+import { createPageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = createPageMetadata(
+    "Verify Your Account",
+    "Verify your Power Pulse account to complete registration.",
+    { noIndex: true },
+);
 
 const VerifyAccountPage = async ({ searchParams }: { searchParams: Promise<{ email: string }> }) => {
     const { email } = await searchParams;

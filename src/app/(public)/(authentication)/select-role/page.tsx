@@ -1,6 +1,13 @@
 import Link from "next/link";
 import { HiOutlineWrenchScrewdriver, HiOutlineUserGroup, HiOutlineArrowRight } from "react-icons/hi2";
 import { withRedirect } from "@/lib/redirect";
+import { createPageMetadata } from "@/lib/seo-metadata";
+
+export const metadata = createPageMetadata(
+    "Choose Your Account Role",
+    "Choose whether to create a Power Pulse customer or technician account.",
+    { noIndex: true },
+);
 
 const roleOptions = [
     {
