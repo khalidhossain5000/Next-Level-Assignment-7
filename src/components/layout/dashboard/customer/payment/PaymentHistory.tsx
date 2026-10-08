@@ -16,26 +16,14 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PaymentHistorySkeleton from "@/components/loader/skleton-loading/dashboard/payment-history.skeleton";
+import type { IPaymentRecord } from "@/types";
 
-interface IPayment {
-  id: string;
-  amount: string;
-  provider: string;
-  transactionId: string;
-  status: "PENDING" | "COMPLETED" | "FAILED" | "REFUNDED";
-  paidAt: string | null;
-  createdAt: string;
-  outage: {
-    id: string;
-    cause: string;
-    priority: string;
-  };
-}
+
 
 const PaymentHistory = () => {
   const { data, isPending } = useGetPayments();
 
-  const payments: IPayment[] = data?.data ?? [];
+  const payments: IPaymentRecord[] = data?.data ?? [];
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleString("en-BD", {
