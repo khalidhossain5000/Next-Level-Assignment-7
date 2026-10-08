@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { FiCalendar } from "react-icons/fi";
 
 import { useGetPlannedOutage } from "@/hooks";
+import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
 
 import {
   Table,
@@ -15,18 +15,10 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import MyOutagesSkleton from "@/components/loader/skleton-loading/dashboard/my-outages.skleton";
 import UpdatePlannedOutageModal from "@/components/modal/update-planned-outage.modal";
 import { getPlannedOutageStatusClassName } from "@/lib/utils";
-import type { IMeta, IPlannedOutage } from "@/types";
+import type { IPlannedOutage } from "@/types";
 import EmptyText from "@/components/layout/shared/empty-text/EmptyText";
 
 const formatDate = (date: string) => {
@@ -41,18 +33,15 @@ const headClass =
 
 const ManagePlannedOutage = () => {
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
 
   const { data: plannedOutage, isPending } = useGetPlannedOutage({
-    page
+    page,
+    limit,
   });
 
   const outages: IPlannedOutage[] = plannedOutage?.data?.data ?? [];
-  const meta: IMeta | undefined = plannedOutage?.data?.meta;
-
-  const getPageNumbers = () => {
-    if (!meta) return [];
-    return Array.from({ length: meta.totalPages }, (_, i) => i + 1);
-  };
+  const meta = plannedOutage?.data?.meta;
 
   if (isPending) {
     return <MyOutagesSkleton />;
@@ -60,7 +49,7 @@ const ManagePlannedOutage = () => {
 
   if (outages.length === 0) {
     return (
-    <EmptyText title=" No Planned Outages" description="No planned maintenance outages have been scheduled yet."/>
+      <EmptyText title=" No Planned Outages" description="No planned maintenance outages have been scheduled yet." />
     );
   }
 
@@ -292,54 +281,20 @@ const ManagePlannedOutage = () => {
         ))}
       </div>
 
-      {/* Pagination */}
-      {meta && meta.totalPages > 1 && (
-        <Pagination className="pt-2">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (page > 1) setPage(page - 1);
-                }}
-                className={
-                  page <= 1 ? "pointer-events-none opacity-50" : undefined
-                }
-              />
-            </PaginationItem>
-
-            {getPageNumbers().map((pageNumber) => (
-              <PaginationItem key={pageNumber}>
-                <PaginationLink
-                  href="#"
-                  isActive={pageNumber === page}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setPage(pageNumber);
-                  }}
-                >
-                  {pageNumber}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-
-            <PaginationItem>
-              <PaginationNext
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (page < meta.totalPages) setPage(page + 1);
-                }}
-                className={
-                  page >= meta.totalPages
-                    ? "pointer-events-none opacity-50"
-                    : undefined
-                }
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+      {outages.length > 0 && (
+        <div className="w-full min-w-0 border-t border-border/60 pt-5 sm:pt-6">
+          <PaginationUi
+            currentPage={meta?.page ?? page}
+            itemsPerPage={meta?.limit ?? limit}
+            totalItems={meta?.total ?? 0}
+            totalPages={meta?.totalPages ?? 1}
+            onPageChange={setPage}
+            onItemsPerPageChange={(value) => {
+              setLimit(value);
+              setPage(1);
+            }}
+          />
+        </div>
       )}
     </div>
   );
