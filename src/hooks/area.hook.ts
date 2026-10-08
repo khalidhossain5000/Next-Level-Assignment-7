@@ -1,9 +1,14 @@
 import { addArea, getArea } from "@/api";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useAddArea(){
+      const queryClient = useQueryClient()
     return useMutation({
-        mutationFn:addArea
+        mutationFn:addArea,
+        onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-areas"] })
+    }
+  
     })
 }
 
