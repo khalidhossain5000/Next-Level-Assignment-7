@@ -164,7 +164,7 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
           <Button
             type="submit"
             disabled={isPending}
-            className="min-h-11 w-full rounded-lg font-semibold"
+            className="min-h-11 w-full rounded-lg font-semibold cursor-pointer"
           >
             {isPending && <Spinner />} {isPending ? "Submitting...." : "Submit"}
           </Button>
