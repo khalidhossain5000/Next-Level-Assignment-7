@@ -53,7 +53,7 @@ const ReportOutageForm = () => {
 
       reportOutage(outageData, {
         onSuccess: (res) => {
-          console.log(res, "Outage Reported Successfully");
+
 
           form.reset();
 

@@ -44,7 +44,7 @@ export interface IAssignTechnician {
     technicianId: string
 }
 export function assignTechnician(payload: IAssignTechnician) {
-    console.log(payload,"payload")
+
     return apiClient(`/outage/${payload.outageId}/assign-technician`, {
         method: "PATCH",
         body: {

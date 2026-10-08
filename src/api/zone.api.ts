@@ -15,7 +15,7 @@ export function addZone(payload: IAddZonePayload) {
 
 
 export function getAllZone(params: IZoneQueryParams = {}) {
-    console.log(params,"params from zone get")
+ 
     return apiClient("/zone", { query: params })
 }
 

@@ -39,14 +39,7 @@ const UpdateLoadSheddingModal = ({ id, title, currentAreaId }: IProps) => {
         },
 
         onSubmit: async ({ value }) => {
-            console.log(
-                {
-                    id,
-                    title: value.title,
-                    areaId: value.areaId,
-                },
-                "update load shedding value"
-            );
+           
 
             updateLoadShedding({
                 id: id ?? "",

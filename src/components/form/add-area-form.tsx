@@ -45,7 +45,7 @@ const AddAreaForm = () => {
     },
 
     onSubmit: async ({ value }) => {
-      console.log(value, "area value");
+     
 
       const areaData = {
         name: value.name,
@@ -56,7 +56,7 @@ const AddAreaForm = () => {
 
       addArea(areaData, {
         onSuccess: (res) => {
-          console.log(res, "Area Added Successfully");
+       
 
           form.reset();
 

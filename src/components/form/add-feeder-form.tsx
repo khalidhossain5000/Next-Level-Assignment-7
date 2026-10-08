@@ -48,7 +48,7 @@ const AddFeederForm = () => {
     },
 
     onSubmit: async ({ value }) => {
-      console.log(value, "feeder value");
+ 
 
       const feederData = {
         name: value.name,
@@ -59,7 +59,7 @@ const AddFeederForm = () => {
 
       addFeeder(feederData, {
         onSuccess: (res) => {
-          console.log(res, "Feeder Added Successfully");
+        
 
           form.reset();
 

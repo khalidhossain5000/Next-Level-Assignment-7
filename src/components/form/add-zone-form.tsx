@@ -41,7 +41,7 @@ const AddZoneForm = () => {
     },
 
     onSubmit: async ({ value }) => {
-      console.log(value, "zone value");
+  
 
       const zoneData = {
         name: value.name,
@@ -56,7 +56,7 @@ const AddZoneForm = () => {
         },
         {
           onSuccess: (res) => {
-            console.log(res, "Zone Added Successfully");
+        
             form.reset();
             // Remove image preview
             if (imagePreview) {

@@ -36,7 +36,7 @@ const DeleteMyOutageConfirmModal = ({
     deleteOutage(outageId, {
       onSuccess: (res) => {
         setOpen(false);
-        console.log(res,'res dlete')
+   
         toast.success(res.message || "Outage Deleted Successfully");
       },
 

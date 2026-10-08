@@ -56,7 +56,7 @@ const Settings = () => {
       onSubmit: updateUserProfileSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value, "update profile value");
+
       const profileData = {
         name: value.name as string,
       };

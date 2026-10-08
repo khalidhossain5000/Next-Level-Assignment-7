@@ -48,7 +48,7 @@ const PlannedOutageForm = () => {
     },
 
     onSubmit: async ({ value }) => {
-      console.log(value, "planned outage value");
+ 
 
       const plannedOutageData = {
         title: value.title,
@@ -61,7 +61,7 @@ const PlannedOutageForm = () => {
 
       addPlannedOutage(plannedOutageData, {
         onSuccess: (res) => {
-          console.log(res, "Planned Outage Added Successfully");
+        
 
           form.reset();
 

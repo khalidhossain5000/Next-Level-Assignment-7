@@ -20,7 +20,7 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
   const { mutate: register, isPending } = useRegisterUser()
   const router = useRouter()
   const searchParams = useSearchParams();
-  console.log(role, 'user role')
+
   const form = useForm({
     defaultValues: {
       name: "",
@@ -31,7 +31,7 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
       onSubmit: registerUserValidationSchema
     },
     onSubmit: ({ value }) => {
-      console.log(value, "register value")
+ 
       const registerData = {
         name: value.name,
         email: value.email,
@@ -40,7 +40,7 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
       }
       register(registerData, {
         onSuccess: (res) => {
-          console.log(res, "Register success res")
+ 
           toast.success(res.message || "Registration Success Otp send to email")
           const params = new URLSearchParams({ email: registerData.email })
           const redirect = getSafeRedirect(searchParams.get("redirect"), "")

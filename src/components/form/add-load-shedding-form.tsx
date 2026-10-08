@@ -58,7 +58,7 @@ const AddLoadSheddingScheduleForm = () => {
 
       addLoadShedding(loadSheddingData, {
         onSuccess: (res) => {
-          console.log(res, "Load Shedding Added Successfully");
+         
 
           form.reset();
 

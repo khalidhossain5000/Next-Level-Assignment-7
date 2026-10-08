@@ -103,7 +103,7 @@ export function updateUserStatus(payload:IUpdateUserStatus){
 
 export function updateTechProfile(payload: IUpdateTechProfilePayload) {
     const formData = new FormData();
-console.log(payload.data,"this is data")
+
     formData.append("data", JSON.stringify(payload.data));
     formData.append("resume", payload.resume);
 

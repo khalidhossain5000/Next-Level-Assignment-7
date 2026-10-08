@@ -59,7 +59,7 @@ const AddSubstationForm = () => {
 
       addSubstation(substationData, {
         onSuccess: (res) => {
-          console.log(res, "Substation Added Successfully");
+
           form.reset();
           toast.success(res.message || "Substation Added Successfully");
         },

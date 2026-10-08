@@ -48,7 +48,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
   }, []);
 
   const handleSubmitOtp = () => {
-    console.log(otp, "this is the otp");
+
     if (otp.length < 6) {
       setIsInvalid(true);
       return;
@@ -63,7 +63,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
     //--data is ready go for the api hit
     verifyEmail(verifyData, {
       onSuccess: async (res) => {
-        console.log(res, "otp verify success res");
+    
         toast.success("You account is verified and active now");
 
         // backend auto-logs in on verify, so refresh the cached user first
@@ -95,7 +95,7 @@ const VerifyAccountForm = ({ email }: { email: string }) => {
       { email },
       {
         onSuccess: (res) => {
-          console.log(res, "resend otp res");
+    
           toast.success(res.message || "OTP resent successfully,check now.");
           setTimer(RESEND_COOLDOWN);
         },
