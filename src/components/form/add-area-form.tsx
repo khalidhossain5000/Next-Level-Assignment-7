@@ -34,9 +34,9 @@ const AddAreaForm = () => {
 
   const form = useForm({
     defaultValues: {
-      name: "Mymensingh Sadar Area",
-      code: "MSA001",
-      address: "Mymensingh Sadar, Mymensingh",
+      name: "",
+      code: "",
+      address: "",
       feederId: "",
     },
 

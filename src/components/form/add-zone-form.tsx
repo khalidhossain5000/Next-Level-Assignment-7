@@ -31,9 +31,9 @@ const AddZoneForm = () => {
 
   const form = useForm({
     defaultValues: {
-      name: "Khulna Distrubution zone",
-      code: "KHD-005",
-      description: "this is the khulna distribution zone",
+      name: "",
+      code: "",
+      description: "",
       zoneImage: null as File | null,
     },
     validators: {

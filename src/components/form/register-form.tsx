@@ -23,9 +23,9 @@ const RegisterForm = ({ role }: { role: TUserRole }) => {
   console.log(role, 'user role')
   const form = useForm({
     defaultValues: {
-      name: "Main Customer",
-      email: "admin@powerpulse.coms",
-      password: "admin"
+      name: "",
+      email: "",
+      password: ""
     },
     validators: {
       onSubmit: registerUserValidationSchema

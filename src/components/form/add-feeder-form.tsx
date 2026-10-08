@@ -37,9 +37,9 @@ const AddFeederForm = () => {
 
   const form = useForm({
     defaultValues: {
-      name: "Mymensingh Industrial Feeder",
-      code: "FD-RNG-004",
-      voltageLevel: "190 kV",
+      name: "",
+      code: "",
+      voltageLevel: "",
       substationId: "",
     },
 
@@ -92,7 +92,7 @@ const AddFeederForm = () => {
       {/* Main Card */}
       <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         {/* Decorative gradient glow */}
-        <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-gradient-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
+        <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-linear-to-br from-primary/25 via-primary/10 to-transparent blur-3xl" />
 
         {/* Header */}
         <div className="relative border-b border-border px-6 py-6 sm:px-8">
