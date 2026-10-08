@@ -13,6 +13,8 @@ import ModeToggle from "@/components/layout/shared/modeToggle/ModeToggle";
 const MobileSidebar = () => {
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
+    const isSettingsActive =
+        pathname === "/settings" || pathname.startsWith("/settings/");
 
     // Temporary role for UI development.
     // Later, replace this with the role from your API/auth data.
@@ -26,19 +28,19 @@ const MobileSidebar = () => {
         <section>
             {/* Mobile Navbar */}
             <div className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/80 lg:hidden">
-                    <Logo />
-                <div className="flex items-center gap-2"> 
+                <Logo />
+                <div className="flex items-center gap-2">
                     <ModeToggle />
-                        <button
-                    type="button"
-                    onClick={() => setOpen(true)}
-                    aria-label="Open menu"
-                    className="rounded-full p-2.5 text-foreground/70 transition-colors hover:bg-muted hover:text-foreground active:scale-95"
-                >
-                    <FiMenu className="size-5" />
-                </button>
+                    <button
+                        type="button"
+                        onClick={() => setOpen(true)}
+                        aria-label="Open menu"
+                        className="rounded-full p-2.5 text-foreground/70 transition-colors hover:bg-muted hover:text-foreground active:scale-95"
+                    >
+                        <FiMenu className="size-5" />
+                    </button>
                 </div>
-            
+
             </div>
 
             {/* Overlay */}
@@ -91,8 +93,8 @@ const MobileSidebar = () => {
                                 onClick={() => setOpen(false)}
                                 aria-current={isActive ? "page" : undefined}
                                 className={`group relative flex items-center gap-3 rounded-lg py-2.5 pl-4 pr-3 text-sm font-medium transition-colors ${isActive
-                                        ? "bg-sidebar-primary/10 text-sidebar-primary"
-                                        : "text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                    ? "bg-sidebar-primary/10 text-sidebar-primary"
+                                    : "text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                                     }`}
                             >
                                 {isActive && (
@@ -111,8 +113,15 @@ const MobileSidebar = () => {
                     <Link
                         href="/settings"
                         onClick={() => setOpen(false)}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-sidebar-foreground/65 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                        aria-current={isSettingsActive ? "page" : undefined}
+                        className={`relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${isSettingsActive
+                            ? "bg-sidebar-primary/10 text-sidebar-primary"
+                            : "text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                            }`}
                     >
+                        {isSettingsActive && (
+                            <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-sidebar-primary" />
+                        )}
                         <FiSettings className="size-5 shrink-0" />
                         <span>Settings</span>
                     </Link>
