@@ -1,0 +1,108 @@
+"use client";
+
+import { useEffect } from "react";
+import { Activity, House, RotateCcw, TriangleAlert } from "lucide-react";
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+
+interface ErrorPageProps {
+	error: Error & { digest?: string };
+	retry: () => void;
+}
+
+export default function ErrorPage({ error, retry }: ErrorPageProps) {
+	useEffect(() => {
+		console.error(error);
+	}, [error]);
+
+	return (
+		<main
+			role="alert"
+			className="relative isolate flex min-h-svh items-center justify-center overflow-hidden bg-background px-5 py-16 text-foreground sm:px-8"
+		>
+			<div
+				aria-hidden="true"
+				className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_oklch,var(--border)_45%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--border)_45%,transparent)_1px,transparent_1px)] bg-size-[56px_56px] mask-[radial-gradient(ellipse_at_center,black_0%,transparent_76%)]"
+			/>
+			<div
+				aria-hidden="true"
+				className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-destructive/70 to-transparent"
+			/>
+
+			<div className="relative grid w-full max-w-6xl items-center gap-10 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+				<div className="flex flex-col items-center md:items-start">
+					<div className="inline-flex items-center gap-2 rounded-full border border-destructive/20 bg-destructive/5 px-3 py-1.5 text-xs font-semibold text-destructive">
+						<span className="relative flex size-2">
+							<span className="absolute inline-flex size-full animate-ping rounded-full bg-destructive opacity-40 motion-reduce:animate-none" />
+							<span className="relative inline-flex size-2 rounded-full bg-destructive" />
+						</span>
+						POWER PULSE <span className="text-destructive/40">/</span> ERROR
+					</div>
+
+					<div className="mt-8 flex items-center gap-3 font-manrope text-8xl font-extrabold leading-none sm:text-9xl">
+						<span>5</span>
+						<span className="relative inline-flex size-[0.78em] items-center justify-center rounded-full border-[0.09em] border-destructive/30 text-destructive">
+							<span className="absolute inset-1 rounded-full border border-dashed border-destructive/40" />
+							<TriangleAlert aria-hidden="true" className="size-[0.35em]" />
+						</span>
+						<span>0</span>
+					</div>
+
+					<div
+						aria-hidden="true"
+						className="mt-7 flex w-full max-w-xs items-center gap-2 text-destructive/60 md:max-w-sm"
+					>
+						<span className="h-px flex-1 bg-current" />
+						<Activity className="size-4" />
+						<span className="h-px w-8 bg-current" />
+						<span className="size-1.5 rounded-full bg-current" />
+						<span className="h-px flex-1 bg-current" />
+					</div>
+				</div>
+
+				<section className="mx-auto max-w-xl text-center md:mx-0 md:text-left">
+					<p className="inline-flex items-center gap-2 text-sm font-semibold text-destructive">
+						<TriangleAlert aria-hidden="true" className="size-4" />
+						Something went wrong
+					</p>
+					<h1 className="mt-3 font-manrope text-3xl font-bold leading-tight sm:text-4xl">
+						This page hit an unexpected interruption.
+					</h1>
+					<p className="mt-4 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+						The service couldn’t finish loading this page. You can try the
+						request again or return to the Power Pulse home page.
+					</p>
+
+					<div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center md:justify-start">
+						<Button
+							type="button"
+							size="lg"
+							onClick={retry}
+							className="min-h-12 gap-2 bg-destructive text-destructive-foreground hover:bg-destructive/90"
+						>
+							<RotateCcw aria-hidden="true" className="size-4" />
+							Try again
+						</Button>
+						<Link
+							href="/"
+							className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-border bg-background px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+						>
+							<House aria-hidden="true" className="size-4" />
+							Back to home
+						</Link>
+					</div>
+
+					{error.digest && (
+						<p className="mt-7 text-xs text-muted-foreground">
+							Reference ID{" "}
+							<span className="font-mono font-semibold text-foreground">
+								{error.digest}
+							</span>
+						</p>
+					)}
+				</section>
+			</div>
+		</main>
+	);
+}
