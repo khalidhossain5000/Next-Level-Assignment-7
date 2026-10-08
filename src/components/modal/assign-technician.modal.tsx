@@ -90,6 +90,8 @@ const AssignTechnicianModal = ({ outageId }: AssignTechnicianModalProps) => {
           setSelectedTechnicianId("");
         },
         onError: (error) => {
+
+          console.log(error,"assign technican error")
           toast.error(
             (error as any)?.data?.message ||
               error?.message ||

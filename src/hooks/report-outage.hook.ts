@@ -52,8 +52,12 @@ export function useUpdateStatus() {
 
 
 export function useAssignTechnician() {
+      const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: assignTechnician
+        mutationFn: assignTechnician,
+         onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["technican"] })
+    }
     })
 }
 
