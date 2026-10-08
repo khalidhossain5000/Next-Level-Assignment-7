@@ -35,10 +35,9 @@ const PlannedOutageForm = () => {
 
   const form = useForm({
     defaultValues: {
-      title: "Emergency Network Inspection",
-      reason: "Preventive maintenance",
-      description:
-        "Temporary power interruption required to inspect and maintain critical network components.",
+      title: "",
+      reason: "",
+      description:"",
       startTime: "",
       endTime: "",
       areaId: "",

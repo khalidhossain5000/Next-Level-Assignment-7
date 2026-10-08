@@ -1,7 +1,3 @@
-
-
-
-
 "use client";
 
 import {
@@ -38,10 +34,10 @@ const AddLoadSheddingScheduleForm = () => {
 
   const form = useForm({
     defaultValues: {
-      title: "Sylhet Sadar Scheduled Load Shedding",
+      title: "",
       startTime: "",
       endTime: "",
-      reason: "Scheduled maintenance and load balancing",
+      reason: "",
       areaId: "",
     },
 
@@ -50,7 +46,7 @@ const AddLoadSheddingScheduleForm = () => {
     },
 
     onSubmit: async ({ value }) => {
-      console.log(value, "load shedding value");
+    
 
       const loadSheddingData = {
         title: value.title,

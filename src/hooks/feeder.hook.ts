@@ -2,7 +2,7 @@ import { addFeeder, getFeeder } from "@/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useAddFeeder(){
-      const queryClient = useQueryClient()
+    const queryClient = useQueryClient()
     return useMutation({
         mutationFn:addFeeder,
          onSuccess: () => {
