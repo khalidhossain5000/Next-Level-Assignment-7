@@ -1,4 +1,4 @@
-import type LoadSheddingDetails from "@/components/modules/load-shedding/LoadSheddingDetails";
+import LoadSheddingDetails from "@/components/modules/load-shedding/LoadSheddingDetails";
 import { createPageMetadata } from "@/lib/seo-metadata";
 import AuthGuard from "@/components/auth/auth-guard";
 
@@ -12,9 +12,9 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <AuthGuard>
-      <section>
+ 
         <LoadSheddingDetails id={id} />
-      </section>
+ 
     </AuthGuard>
   );
 };
