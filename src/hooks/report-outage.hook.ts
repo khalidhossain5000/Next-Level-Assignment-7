@@ -1,4 +1,5 @@
 import { assignTechnician, deleteMyOutage, getAllOutages, getCurrentTechnicainOutage, getMyOutages, getOutagesStats, reportOutage, updateMyOutage, updateOutageStatus } from "@/api";
+import type { IQueryParams } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useReportOutage() {
@@ -28,10 +29,10 @@ export function useGetOutageStats() {
 }
 
 
-export function useGetAllOutages() {
+export function useGetAllOutages(params: IQueryParams = {}) {
     return useQuery({
-        queryKey: ["all-outages"],
-        queryFn: getAllOutages
+        queryKey: ["all-outages", params],
+        queryFn: () => getAllOutages(params)
     })
 }
 

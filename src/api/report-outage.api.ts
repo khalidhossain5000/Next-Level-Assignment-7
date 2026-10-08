@@ -1,55 +1,55 @@
 import apiClient from "@/lib/apiClient";
-import type { IReportOutagePayload } from "@/types";
+import type { IQueryParams, IReportOutagePayload } from "@/types";
 
-export function reportOutage(payload:IReportOutagePayload){
-    return apiClient("/outage",{
-        method:"POST",
-        body:payload
+export function reportOutage(payload: IReportOutagePayload) {
+    return apiClient("/outage", {
+        method: "POST",
+        body: payload
     })
 }
 
 
-export function getMyOutages(){
+export function getMyOutages() {
     return apiClient("/outage/my-outage")
 }
 
 //for admin 
 
-export function getAllOutages(){
-    return apiClient("/outage")
+export function getAllOutages(params: IQueryParams = {}) {
+    return apiClient("/outage", { query: params })
 }
 
-export function getOutagesStats(){
+export function getOutagesStats() {
     return apiClient("/outage/counts")
 }
 
-export interface IUpdateStatus{
-    id:string;
-    status:string
+export interface IUpdateStatus {
+    id: string;
+    status: string
 }
-export function updateOutageStatus(payload:IUpdateStatus){
-    
-    return apiClient(`/outage/${payload.id}/status`,{
-        method:"PATCH",
+export function updateOutageStatus(payload: IUpdateStatus) {
+
+    return apiClient(`/outage/${payload.id}/status`, {
+        method: "PATCH",
         body: {
-            status:payload.status
+            status: payload.status
         }
-        
+
     })
 }
 
 
-export interface IAssignTechnician{
-    outageId:string;
-    technicianId:string
+export interface IAssignTechnician {
+    outageId: string;
+    technicianId: string
 }
-export function assignTechnician(payload:IAssignTechnician){
- return apiClient(`/outage/${payload.outageId}/assign-technician`,{
-        method:"PATCH",
-         body: {
-      technicianId: payload.technicianId,
-    },
-        
+export function assignTechnician(payload: IAssignTechnician) {
+    return apiClient(`/outage/${payload.outageId}/assign-technician`, {
+        method: "PATCH",
+        body: {
+            technicianId: payload.technicianId,
+        },
+
     })
 }
 
@@ -66,7 +66,7 @@ export function assignTechnician(payload:IAssignTechnician){
 
 //get current technican assinged
 
-export function getCurrentTechnicainOutage(){
+export function getCurrentTechnicainOutage() {
     return apiClient("/outage/my-assigned-outages")
 }
 
@@ -92,8 +92,8 @@ export function updateMyOutage(payload: IUpdateOutagePayload) {
 
 //delete my outage
 
-export function deleteMyOutage(outageId:string){
-    return apiClient(`/outage/${outageId}`,{
-        method:"DELETE"
+export function deleteMyOutage(outageId: string) {
+    return apiClient(`/outage/${outageId}`, {
+        method: "DELETE"
     })
 }

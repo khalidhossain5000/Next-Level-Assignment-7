@@ -1,8 +1,10 @@
 "use client";
 
 import { FiMapPin, FiZap } from "react-icons/fi";
+import { useState } from "react";
 
 import { useGetAllOutages } from "@/hooks";
+import { PaginationUi } from "@/components/layout/shared/pagination-ui/PaginationUi";
 
 import {
   Table,
@@ -66,7 +68,9 @@ const renderActions = (outage: IAllOutage) => (
 );
 
 const AllReportedOutages = () => {
-  const { data, isPending } = useGetAllOutages();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const { data, isPending } = useGetAllOutages({ page, limit });
 
   const outages: IAllOutage[] = data?.data ?? [];
 
@@ -76,7 +80,7 @@ const AllReportedOutages = () => {
 
   if (outages.length === 0) {
     return (
-    <EmptyText title="No Outages Reported" description="No customers have reported any power outages yet."/>
+      <EmptyText title="No Outages Reported" description="No customers have reported any power outages yet." />
     );
   }
 
@@ -239,11 +243,10 @@ const AllReportedOutages = () => {
                 {/* Technician */}
                 <div className="hidden shrink-0 lg:block">
                   <p
-                    className={`max-w-28 truncate text-xs ${
-                      outage.techician
+                    className={`max-w-28 truncate text-xs ${outage.techician
                         ? "font-medium text-card-foreground"
                         : "text-muted-foreground"
-                    }`}
+                      }`}
                   >
                     {outage.techician?.name ?? "Unassigned"}
                   </p>
@@ -332,6 +335,22 @@ const AllReportedOutages = () => {
           </Card>
         ))}
       </div>
+
+      {outages.length > 0 && (
+        <div className="w-full min-w-0 border-t border-border/60 pt-5 sm:pt-6">
+          <PaginationUi
+            currentPage={data?.meta?.page ?? page}
+            itemsPerPage={data?.meta?.limit ?? limit}
+            totalItems={data?.meta?.total ?? 0}
+            totalPages={data?.meta?.totalPages ?? 1}
+            onPageChange={setPage}
+            onItemsPerPageChange={(value) => {
+              setLimit(value);
+              setPage(1);
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
