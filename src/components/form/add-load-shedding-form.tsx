@@ -35,8 +35,8 @@ const AddLoadSheddingScheduleForm = () => {
   const form = useForm({
     defaultValues: {
       title: "",
-      startTime: "",
-      endTime: "",
+      startTime: "2026-10-22T05:00",
+      endTime: "2026-10-26T17:00",
       reason: "",
       areaId: "",
     },
@@ -46,7 +46,7 @@ const AddLoadSheddingScheduleForm = () => {
     },
 
     onSubmit: async ({ value }) => {
-    
+
 
       const loadSheddingData = {
         title: value.title,
@@ -58,7 +58,7 @@ const AddLoadSheddingScheduleForm = () => {
 
       addLoadShedding(loadSheddingData, {
         onSuccess: (res) => {
-         
+
 
           form.reset();
 
@@ -77,7 +77,7 @@ const AddLoadSheddingScheduleForm = () => {
 
           toast.error(
             message ||
-              "Something went wrong when adding load shedding schedule",
+            "Something went wrong when adding load shedding schedule",
           );
         },
       });

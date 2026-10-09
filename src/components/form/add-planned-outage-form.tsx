@@ -49,8 +49,8 @@ const PlannedOutageForm = () => {
       title: "",
       reason: "",
       description: "",
-      startTime: "",
-      endTime: "",
+      startTime: "2026-10-22T05:00",
+      endTime: "2026-10-26T17:00",
       areaId: "",
     },
 
