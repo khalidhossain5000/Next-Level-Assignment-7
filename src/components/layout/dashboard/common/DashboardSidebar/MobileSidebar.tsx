@@ -55,7 +55,7 @@ const MobileSidebar = () => {
     return (
         <section>
             {/* Mobile Navbar */}
-            <div className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/80 lg:hidden">
+            <div className="sticky top-0 z-40 flex h-16 w-full items-center justify-between border-b border-border bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/80 lg:hidden">
                 <Logo />
                 <div className="flex items-center gap-2">
                     <ModeToggle />
@@ -63,7 +63,7 @@ const MobileSidebar = () => {
                         type="button"
                         onClick={() => setOpen(true)}
                         aria-label="Open menu"
-                        className="rounded-full p-2.5 text-foreground/70 transition-colors hover:bg-muted hover:text-foreground active:scale-95"
+                        className="cursor-pointer rounded-full p-2.5 text-foreground/70 transition-colors hover:bg-muted hover:text-foreground active:scale-95"
                     >
                         <FiMenu className="size-5" />
                     </button>
