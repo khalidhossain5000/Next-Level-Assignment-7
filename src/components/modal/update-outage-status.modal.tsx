@@ -42,22 +42,22 @@ const outageStatusOptions = [
     value: "ACKNOWLEDGED",
     label: "Acknowledged",
   },
-  {
-    value: "ASSIGNED",
-    label: "Assigned",
-  },
-  {
-    value: "IN_PROGRESS",
-    label: "In Progress",
-  },
-  {
-    value: "RESTORED",
-    label: "Restored",
-  },
-  {
-    value: "CANCELLED",
-    label: "Cancelled",
-  },
+  // {
+  //   value: "ASSIGNED",
+  //   label: "Assigned",
+  // },
+  // {
+  //   value: "IN_PROGRESS",
+  //   label: "In Progress",
+  // },
+  // {
+  //   value: "RESTORED",
+  //   label: "Restored",
+  // },
+  // {
+  //   value: "CANCELLED",
+  //   label: "Cancelled",
+  // },
 ] as const;
 
 const UpdateReportedOutageStatus = ({
