@@ -65,8 +65,12 @@ export function useGetAllTechnician(){
 
 
 export function useApproveTechnician(){
+        const queryClient = useQueryClient()
     return useMutation({
-        mutationFn:approveTechnicanProfile
+        mutationFn:approveTechnicanProfile,
+          onSuccess:()=>{
+      queryClient.invalidateQueries({queryKey:["technican"]})
+    }
     })
 }
 
