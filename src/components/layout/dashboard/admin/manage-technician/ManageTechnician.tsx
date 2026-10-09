@@ -116,7 +116,7 @@ const ManageTechnician = () => {
           size="sm"
           disabled={isThisRowPending}
           onClick={() =>
-            handleUpdateStatus(item.id, TechnicianProfileStatus.APPROVED)
+            handleUpdateStatus(item?.technicianProfile?.id as string, TechnicianProfileStatus.APPROVED)
           }
           className={`${height} gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 cursor-pointer`}
         >

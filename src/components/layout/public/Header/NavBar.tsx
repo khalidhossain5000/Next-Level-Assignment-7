@@ -17,7 +17,11 @@ const NavBar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const { data, isPending } = useGetMe();
+
   const user = data?.data;
+
+console.log(user,"User data current")
+
   const isLoggedIn = !!user;
   const router = useRouter();
   const routes = [

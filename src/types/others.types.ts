@@ -1,6 +1,7 @@
 import type { TechnicianProfileStatus } from "./auth.types";
 
 export interface TechnicianProfile {
+  id:string;
   availability?: "AVAILABLE" | "BUSY";
   expertise?: string[];
   experience?: number;
