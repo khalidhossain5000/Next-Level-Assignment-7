@@ -25,6 +25,16 @@ import { addPlannedOutageSchema } from "@/validation";
 
 import { toast } from "sonner";
 
+const getMinDateTime = () => {
+  const date = new Date();
+  date.setSeconds(0, 0);
+  date.setMinutes(date.getMinutes() + 1);
+
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60_000)
+    .toISOString()
+    .slice(0, 16);
+};
+
 const PlannedOutageForm = () => {
   const { data, isPending: areaPending } = useGetArea();
 
@@ -32,12 +42,13 @@ const PlannedOutageForm = () => {
     useAddPlannedOutage();
 
   const areas = data?.data ?? [];
+  const minDateTime = getMinDateTime();
 
   const form = useForm({
     defaultValues: {
       title: "",
       reason: "",
-      description:"",
+      description: "",
       startTime: "",
       endTime: "",
       areaId: "",
@@ -48,7 +59,7 @@ const PlannedOutageForm = () => {
     },
 
     onSubmit: async ({ value }) => {
- 
+
 
       const plannedOutageData = {
         title: value.title,
@@ -61,7 +72,7 @@ const PlannedOutageForm = () => {
 
       addPlannedOutage(plannedOutageData, {
         onSuccess: (res) => {
-        
+
 
           form.reset();
 
@@ -180,6 +191,7 @@ const PlannedOutageForm = () => {
                         <Input
                           id={field.name}
                           type="datetime-local"
+                          min={minDateTime}
                           name={field.name}
                           value={field.state.value}
                           onBlur={field.handleBlur}
@@ -219,6 +231,11 @@ const PlannedOutageForm = () => {
                         <Input
                           id={field.name}
                           type="datetime-local"
+                          min={
+                            field.state.value > minDateTime
+                              ? field.state.value
+                              : minDateTime
+                          }
                           name={field.name}
                           value={field.state.value}
                           onBlur={field.handleBlur}
