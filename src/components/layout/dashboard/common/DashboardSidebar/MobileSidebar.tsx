@@ -3,26 +3,54 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FiLogOut, FiMenu, FiSettings, FiX } from "react-icons/fi";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import Logo from "@/assets/svg/Logo";
 import { sidebarRoutes } from "./sidebarRoutes";
-import type { TUserRole } from "@/types";
+import { useGetMe, useLogout } from "@/hooks";
 import ModeToggle from "@/components/layout/shared/modeToggle/ModeToggle";
 
 const MobileSidebar = () => {
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
+    const router = useRouter();
+    const queryClient = useQueryClient();
+    const { data: getMe } = useGetMe();
+    const { mutate: logout, isPending: logoutPending } = useLogout();
     const isSettingsActive =
         pathname === "/settings" || pathname.startsWith("/settings/");
 
-    // Temporary role for UI development.
-    // Later, replace this with the role from your API/auth data.
-    const currentRole: TUserRole = "ADMIN";
+    const currentUser = getMe?.data;
+    const currentRole = currentUser?.role;
+    const userName = currentUser?.name ?? "Account";
+    const userInitials = userName
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part: string) => part[0])
+        .join("")
+        .toUpperCase();
 
     const navItems = sidebarRoutes.filter((route) =>
-        route.roles.includes(currentRole)
+        route.roles.includes(currentRole ?? "")
     );
+
+    const handleLogout = () => {
+        logout(undefined, {
+            onSuccess: () => {
+                toast.info("Log out success");
+                queryClient.removeQueries({ queryKey: ["user"] });
+                setOpen(false);
+                router.push("/login");
+            },
+            onError: () => {
+                toast.error("Log out failed");
+            },
+        });
+    };
 
     return (
         <section>
@@ -129,24 +157,25 @@ const MobileSidebar = () => {
                     {/* User */}
                     <div className="mt-3 flex items-center gap-3 rounded-lg bg-sidebar-accent/40 px-3 py-2.5">
                         <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-sidebar-primary text-sidebar-primary-foreground">
-                            <span className="text-sm font-medium">KH</span>
+                            <span className="text-sm font-medium">{userInitials}</span>
                         </div>
 
                         <div className="min-w-0 flex-1">
                             <p className="truncate text-sm font-medium text-sidebar-foreground">
-                                Khalid Hossain
+                                {userName}
                             </p>
 
                             <p className="truncate text-xs text-sidebar-foreground/55">
-                                khalid@example.com
+                                {currentUser?.email ?? ""}
                             </p>
                         </div>
 
                         <button
                             type="button"
-                            onClick={() => setOpen(false)}
+                            onClick={handleLogout}
+                            disabled={logoutPending}
                             aria-label="Log out"
-                            className="shrink-0 rounded-md p-1.5 text-sidebar-foreground/50 transition-colors hover:bg-sidebar-background hover:text-sidebar-foreground"
+                            className="shrink-0 rounded-md p-1.5 text-sidebar-foreground/50 transition-colors hover:bg-sidebar-background hover:text-sidebar-foreground disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             <FiLogOut className="size-4" />
                         </button>
