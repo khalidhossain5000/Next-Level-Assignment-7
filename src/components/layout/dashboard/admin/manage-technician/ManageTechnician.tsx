@@ -132,7 +132,7 @@ const ManageTechnician = () => {
           onClick={() =>
             handleUpdateStatus(item.id, TechnicianProfileStatus.REJECTED)
           }
-          className={`${height} gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30`}
+          className={`${height} gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30 cursor-pointer`}
         >
           <FiX className="size-3.5" />
           Reject

@@ -68,7 +68,7 @@ export function getAllTechnician(){
 //approve tehnicna profile 
 
 export function approveTechnicanProfile(payload:ITechnicanPayload){
-    return apiClient("/admin/technician/update-status",{
+    return apiClient("/technician/update-status",{
         method:"PATCH",
         body:payload
     })
