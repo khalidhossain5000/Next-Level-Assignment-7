@@ -84,6 +84,7 @@ const UpdateReportedOutageStatus = ({
         },
         onError: (error) => {
           const updateError = error as { data?: { message?: string }; message?: string };
+          console.log(error,"update outag status error")
           toast.error(
             updateError.data?.message ||
             updateError.message ||
