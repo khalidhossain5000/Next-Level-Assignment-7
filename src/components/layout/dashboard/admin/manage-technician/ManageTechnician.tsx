@@ -4,7 +4,6 @@
 
 import { toast } from "sonner";
 import {
-  FiAward,
   FiCheckCircle,
   FiClock,
   FiExternalLink,
@@ -13,7 +12,7 @@ import {
 } from "react-icons/fi";
 
 import { useApproveTechnician, useGetAllTechnician } from "@/hooks";
-import  { type Technician, TechnicianProfileStatus } from "@/types";
+import { type Technician, TechnicianProfileStatus } from "@/types";
 
 import {
   Table,
@@ -91,11 +90,11 @@ const ManageTechnician = () => {
     });
   };
 
-  
+
   const renderAction = (item: Technician, compact = false) => {
     const verificationStatus =
       item.technicianProfile?.technicianvProfileVerificationStatus;
-console.log(item,"This is item in render action")
+    console.log(item, "This is item in render action")
     if (verificationStatus === TechnicianProfileStatus.APPROVED) {
       return (
         <span className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -106,7 +105,15 @@ console.log(item,"This is item in render action")
     }
 
     const isThisRowPending =
-      approving && (variables as any)?.technicianId === item.id;
+      approving &&
+      ((variables as any)?.technicianId === item.id ||
+        (variables as any)?.technicianId === item.technicianProfile?.id);
+    const isApprovingThisRow =
+      isThisRowPending &&
+      (variables as any)?.status === TechnicianProfileStatus.APPROVED;
+    const isRejectingThisRow =
+      isThisRowPending &&
+      (variables as any)?.status === TechnicianProfileStatus.REJECTED;
     const height = compact ? "h-8" : "h-9";
 
     return (
@@ -118,10 +125,10 @@ console.log(item,"This is item in render action")
           onClick={() =>
             handleUpdateStatus(item?.technicianProfile?.id as string, TechnicianProfileStatus.APPROVED)
           }
-          className={`${height} gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 cursor-pointer`}
+          className={`${height} gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 cursor-pointer disabled:cursor-not-allowed`}
         >
           <FiCheckCircle className="size-3.5" />
-          Approve
+          {isApprovingThisRow ? "Approving..." : "Approve"}
         </Button>
 
         <Button
@@ -132,10 +139,10 @@ console.log(item,"This is item in render action")
           onClick={() =>
             handleUpdateStatus(item.id, TechnicianProfileStatus.REJECTED)
           }
-          className={`${height} gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30 cursor-pointer`}
+          className={`${height} gap-1.5 rounded-lg border-red-200 px-3 text-xs font-semibold text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/30 cursor-pointer disabled:cursor-not-allowed`}
         >
           <FiX className="size-3.5" />
-          Reject
+          {isRejectingThisRow ? "Rejecting..." : "Reject"}
         </Button>
       </>
     );
@@ -147,7 +154,7 @@ console.log(item,"This is item in render action")
 
   if (technicians.length === 0) {
     return (
-     <EmptyText title="No Technicians Found" description="  No technician accounts have been registered yet."/>
+      <EmptyText title="No Technicians Found" description="  No technician accounts have been registered yet." />
     );
   }
 
